@@ -16,7 +16,8 @@ public class UserService {
         // 1. userName 중복 체크
         userRepository.findByUserName(userName)
                 .ifPresent(user -> {
-                    throw new RuntimeException(userName + "already exits");
+                    // 중복이면 RuntimeException throw하고 ExceptionManger로 이동
+                    throw new RuntimeException(userName + " is already exits");
                 });
 
         // 2. save
