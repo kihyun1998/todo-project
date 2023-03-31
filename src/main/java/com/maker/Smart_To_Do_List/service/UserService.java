@@ -1,6 +1,8 @@
 package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.User;
+import com.maker.Smart_To_Do_List.exception.AppException;
+import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ public class UserService {
         userRepository.findByUserName(userName)
                 .ifPresent(user -> {
                     // 중복이면 RuntimeException throw하고 ExceptionManger로 이동
-                    throw new RuntimeException(userName + " is already exits");
+                    throw new AppException(ErrorCode.USERNAME_DUPLICATED, userName + " is already exits");
                 });
 
         // 2. save

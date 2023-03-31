@@ -14,4 +14,12 @@ public class ExceptionManager {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(e.getMessage());
     }
+
+
+    // Custom Exception ( UserName duplicated error )
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<?> appExceptionHandler(AppException e){
+        return ResponseEntity.status(e.getErrorCode().getHttpStatus())
+                .body(e.getErrorCode().name()+" "+e.getMessage());
+    }
 }
