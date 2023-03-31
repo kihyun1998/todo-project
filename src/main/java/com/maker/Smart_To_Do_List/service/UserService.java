@@ -5,6 +5,7 @@ import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,11 +15,12 @@ import java.util.Date;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
 
     public String join(String loginId, String loginPw, String userName, String userEmail){
 
         // 1. userName 중복 체크
-        userRepository.findByUserName(loginId)
+        userRepository.findByLoginId(loginId)
                 .ifPresent(user -> {
                     // 중복이면 RuntimeException throw하고 ExceptionManger로 이동
                     throw new AppException(ErrorCode.USERNAME_DUPLICATED, loginId + " is already exits");
@@ -27,7 +29,7 @@ public class UserService {
         // 2. save
         User user = User.builder()
                 .loginId(loginId)
-                .loginPw(loginPw)
+                .loginPw(encoder.encode(loginPw))
                 .userName(userName)
                 .userEmail(userEmail)
                 .build();
