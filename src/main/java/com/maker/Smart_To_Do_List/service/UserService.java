@@ -23,7 +23,7 @@ public class UserService {
         userRepository.findByLoginId(loginId)
                 .ifPresent(user -> {
                     // 중복이면 RuntimeException throw하고 ExceptionManger로 이동
-                    throw new AppException(ErrorCode.USERNAME_DUPLICATED, loginId + " is already exits");
+                    throw new AppException(ErrorCode.LOGIN_ID_DUPLICATED, loginId + " is already exits");
                 });
 
         // 2. save
@@ -37,5 +37,9 @@ public class UserService {
         userRepository.save(user);
 
         return "SUCCESS";
+    }
+
+    public static String login(String loginId, String loginPw){
+        return "token!";
     }
 }
