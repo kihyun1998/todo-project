@@ -30,8 +30,7 @@ dependencies {
 	implementation 'org.hibernate:hibernate-search:5.11.1.Final'
 
 	// Spring Security 추가
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 
 }

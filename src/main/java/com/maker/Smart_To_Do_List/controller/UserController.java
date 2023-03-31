@@ -19,6 +19,8 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody JoinRequest joinDto){
-        return ResponseEntity.ok().body("SUCCESS");
+
+        userService.join(joinDto.getUserName(), joinDto.getPassword());
+        return ResponseEntity.ok().body("Join is SUCCESS!!!");
     }
 }
