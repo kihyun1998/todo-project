@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Builder
 @Entity
@@ -16,8 +18,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
+    private String loginId;
+    private String loginPw;
     private String userName;
-    private String password;
+    @CreationTimestamp
+    private Date createdAt;
+    private String userEmail;
+
 }

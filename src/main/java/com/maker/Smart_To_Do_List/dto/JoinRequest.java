@@ -4,10 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class JoinRequest {
+    private String loginId;
+    private String loginPw;
     private String userName;
-    private String password;
+    private String userEmail;
 }

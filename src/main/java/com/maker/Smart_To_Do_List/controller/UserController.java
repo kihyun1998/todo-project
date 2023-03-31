@@ -20,7 +20,13 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody JoinRequest joinDto){
 
-        userService.join(joinDto.getUserName(), joinDto.getPassword());
+        userService.join(
+                joinDto.getLoginId(),
+                joinDto.getLoginPw(),
+                joinDto.getUserName(),
+                joinDto.getUserEmail()
+        );
+
         return ResponseEntity.ok().body("Join is SUCCESS!!!");
     }
 }
