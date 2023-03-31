@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,7 +35,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Join success")
     void join() throws Exception {
-        String userName = "test1";
+        String userName = "test12";
         String password = "qwer1234";
 
         mockMvc.perform(post("/api/v1/users/join")
@@ -48,6 +50,10 @@ class UserControllerTest {
     void joinFail() throws Exception {
         String userName = "test1";
         String password = "qwer1234";
+
+        // RunTimeException Throw 됐다고 가정
+        when(userService.join(any(),any()))
+                .thenThrow(new RuntimeException("UserID is duplicated!!!"));
 
         mockMvc.perform(post("/api/v1/users/join")
                         .contentType(MediaType.APPLICATION_JSON)
