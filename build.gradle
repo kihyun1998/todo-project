@@ -34,7 +34,8 @@ dependencies {
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 
 	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
-	testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '5.8.0'
+	testImplementation group: 'org.springframework.security', name: 'spring-security-test'
+	implementation group:'io.jsonwebtoken',name:'jjwt', version:'0.9.1'
 
 }
 

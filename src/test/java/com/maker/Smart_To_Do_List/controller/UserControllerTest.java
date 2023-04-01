@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Date;
@@ -38,28 +39,28 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Join success")
+    @WithMockUser
     void join() throws Exception {
         String loginId = "testId";
         String loginPw = "password";
         String userName = "test Man";
-//        Date createdAt = new Date(System.currentTimeMillis());
         String userEmail = "test@test.com";
 
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw,userName,userEmail))))
-                    .andDo(print())
-                    .andExpect(status().isOk());
+                        .andDo(print())
+                        .andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("Join fail - loginId duplication")
+    @WithMockUser
     void joinFail() throws Exception {
         String loginId = "testId";
         String loginPw = "password";
         String userName = "test Man";
-//        Date createdAt = new Date(System.currentTimeMillis());
         String userEmail = "test@test.com";
 
         // RunTimeException Throw 됐다고 가정
@@ -77,7 +78,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Login - Success")
-    @WithAnonymousUser
+    @WithMockUser
     void login() throws Exception{
         String loginId = "testId";
         String loginPw = "password";
@@ -97,7 +98,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Login - Fail(NO ID)")
-    @WithAnonymousUser
+    @WithMockUser
     void login_fail1() throws Exception{
         String loginId = "testId";
         String loginPw = "password";
@@ -114,7 +115,8 @@ class UserControllerTest {
     }
     @Test
     @DisplayName("Login - Fail(INCORRECT PWD)")
-    @WithAnonymousUser
+    @WithMockUser
+
     void login_fail2() throws Exception{
         String loginId = "testId";
         String loginPw = "password";

@@ -2,6 +2,7 @@ package com.maker.Smart_To_Do_List.controller;
 
 
 import com.maker.Smart_To_Do_List.dto.JoinRequest;
+import com.maker.Smart_To_Do_List.dto.LoginRequest;
 import com.maker.Smart_To_Do_List.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,15 @@ public class UserController {
         );
 
         return ResponseEntity.ok().body("Join is SUCCESS!!!");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginDto){
+        String token = userService.login(
+                loginDto.getLoginId(),
+                loginDto.getLoginPw()
+        );
+        return ResponseEntity.ok().body(token);
+
     }
 }

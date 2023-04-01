@@ -4,9 +4,11 @@ import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
+import com.maker.Smart_To_Do_List.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
@@ -16,6 +18,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+
+    @Value("S{jwt.token.secret}")
+    private String key;
+    private Long expiroTimeMs = 1000 * 60 * 60l;
 
     public String join(String loginId, String loginPw, String userName, String userEmail){
 
@@ -39,7 +45,20 @@ public class UserService {
         return "SUCCESS";
     }
 
-    public static String login(String loginId, String loginPw){
-        return "token!";
+    public String login(String loginId, String loginPw){
+        // NO LOGIN ID
+        User selectedUser = userRepository.findByLoginId(loginId)
+                .orElseThrow(()->new AppException(ErrorCode.LOGIN_ID_NOT_FOUND, loginId + "is not found!!"));
+
+        // INVALID PASSWORD
+        if(!encoder.matches(loginPw,selectedUser.getLoginPw())){
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "The password is wrong.");
+        }
+
+        // No Exception > token issuance
+        String token = JwtTokenUtil.createToken(selectedUser.getLoginId() ,key,expiroTimeMs);
+
+
+        return token;
     }
 }
