@@ -1,0 +1,24 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+  width: 250px;
+
+  padding-left: 30px;
+
+  border-right: 2px solid #EDEDED;
+  box-shadow: 2px 0px 3px #EDEDED;
+  /* text-align: center; */
+
+  background-color: #FBFBFA;
+}
+
+.menu a:visited {
+  color:#606060;
+}
+
+.menu a {
+  color:#606060;
+  text-decoration: none;
+}
