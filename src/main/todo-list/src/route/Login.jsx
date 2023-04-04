@@ -13,7 +13,8 @@ const Login = () => {
 
     async onClickLogin(e) {
       e.preventDefault();
-      // const res = await axios.post();
+      const res = await axios.post("/api/v1/users/login", {loginId:id, loginPw:pw});
+      console.log(res)
     }
   }
 
