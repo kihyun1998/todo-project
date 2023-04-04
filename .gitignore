@@ -30,4 +30,4 @@ replay_pid*
 build
 .idea
 
-*.properties
+application-sec.properties
