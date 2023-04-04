@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from "react"
+import { useEffect, useState } from 'react';
 
 function App() {
+  // message 초기값 설정 (""로 설정)
   const [message, setMessage] = useState("");
 
   // useEffect(함수, 배열) : 컴포넌트가 화면에 나타났을 때 자동 실행
@@ -20,21 +21,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>
           nowij : {message}
         </p>
       </header>
-      
     </div>
   );
 }
