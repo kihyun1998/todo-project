@@ -1,0 +1,16 @@
+.todo_list .element{
+  display: none;
+}
+
+.todo_list label {
+  display: block
+}
+
+.todo_list input {
+  margin-right: 20px;
+}
+
+.todo_list span::after {
+  content: "      |     ";
+  color: coral;
+}
