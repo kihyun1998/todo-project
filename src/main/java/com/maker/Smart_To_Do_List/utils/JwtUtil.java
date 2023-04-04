@@ -6,7 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
 
-public class JwtTokenUtil {
+public class JwtUtil {
     public static String createToken(String loginId, String key, long expireTimeMs){
         Claims claims = Jwts.claims(); //일종의 map같은 느낌 > 정보를 claims에 넣으면 된다.
         claims.put("loginId",loginId);
