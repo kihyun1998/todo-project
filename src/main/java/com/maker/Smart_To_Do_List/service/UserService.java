@@ -4,13 +4,11 @@ import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
-import com.maker.Smart_To_Do_List.utils.JwtTokenUtil;
+import com.maker.Smart_To_Do_List.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
-    @Value("S{jwt.token.secret}")
+    @Value("${jwt.token.secret}")
     private String key;
     private Long expiroTimeMs = 1000 * 60 * 60l;
 
@@ -56,7 +54,7 @@ public class UserService {
         }
 
         // No Exception > token issuance
-        String token = JwtTokenUtil.createToken(selectedUser.getLoginId() ,key,expiroTimeMs);
+        String token = JwtUtil.createToken(selectedUser.getLoginId() ,key,expiroTimeMs);
 
 
         return token;
