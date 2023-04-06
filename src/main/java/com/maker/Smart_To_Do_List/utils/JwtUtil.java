@@ -7,6 +7,19 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
 public class JwtUtil {
+
+    public static String getLoginId(String token, String secretKey){
+        return Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody().get("loginId",String.class);
+    }
+
+
+    public static boolean isExpired(String token, String secretKey){
+        return Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody().getExpiration().before(new Date());
+    }
     public static String createToken(String loginId, String key, long expireTimeMs){
         Claims claims = Jwts.claims(); //일종의 map같은 느낌 > 정보를 claims에 넣으면 된다.
         claims.put("loginId",loginId);
