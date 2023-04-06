@@ -15,6 +15,9 @@ const Login = () => {
       e.preventDefault();
       const res = await axios.post("/api/v1/users/login", {loginId:id, loginPw:pw});
       console.log(res)
+      if (res.data !== null) {
+        window.location.href = "/todo"
+      }
     }
   }
 
