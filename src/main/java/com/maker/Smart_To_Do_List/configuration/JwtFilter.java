@@ -1,7 +1,10 @@
 package com.maker.Smart_To_Do_List.configuration;
 
 import com.maker.Smart_To_Do_List.service.UserService;
+import com.maker.Smart_To_Do_List.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
     private final UserService userService;
@@ -24,7 +28,29 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String loginId = "";
+        final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+        log.info("authorization:{}",authorization);
+
+        // token 못 받거나 authorization 키 시작이 "Bearer " 가 아니면 error
+        if(authorization == null || !authorization.startsWith("Bearer ")){
+            log.error("INVALID AUTHORIZATION");
+            filterChain.doFilter(request,response);
+            return ;
+        }
+
+        // get Token
+        String token = authorization.split(" ")[1];
+
+        // Token 만류 여부 확인
+        if(JwtUtil.isExpired(token,secretKey)){
+            log.error("Token has expired !!");
+            filterChain.doFilter(request,response);
+            return ;
+        }
+
+        // Token에서 loginId 가져오기
+        String loginId = JwtUtil.getLoginId(token,secretKey);
+        log.info("loginId:{}",loginId);
 
 
         // grant
