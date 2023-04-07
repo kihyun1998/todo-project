@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .cors().and() // cors 허용
                 .authorizeRequests()
                 .antMatchers("/api/v1/users/join","/api/v1/users/login").permitAll() // 토큰 없이 허용
-                .antMatchers(HttpMethod.POST,"/api/v1/**").authenticated() // 토큰 받아야 허용
+                .anyRequest().authenticated() // 토큰 받아야 허용
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //jwt 사용할 때 씀
