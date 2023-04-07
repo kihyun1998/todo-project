@@ -12,6 +12,7 @@ import java.util.Date;
 public class JoinRequest {
     private String loginId;
     private String loginPw;
+    private String loginPwCheck;
     private String userName;
     private String userEmail;
 }

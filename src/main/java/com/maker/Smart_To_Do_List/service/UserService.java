@@ -21,7 +21,7 @@ public class UserService {
     private String key;
     private Long expiroTimeMs = 1000 * 60 * 60l;
 
-    public String join(String loginId, String loginPw, String userName, String userEmail){
+    public String join(String loginId, String loginPw,String loginPwCheck, String userName, String userEmail){
 
         // 1. userName 중복 체크
         userRepository.findByLoginId(loginId)
@@ -29,6 +29,10 @@ public class UserService {
                     // 중복이면 RuntimeException throw하고 ExceptionManger로 이동
                     throw new AppException(ErrorCode.DUPLICATED, loginId + " is already exits");
                 });
+
+        if(!loginPw.equals(loginPwCheck)){
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "Password is not match !");
+        }
 
         // 2. save
         User user = User.builder()
