@@ -20,6 +20,14 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody().getExpiration().before(new Date());
     }
+
+//    public static boolean validateToken(String token, String secretKey){
+//        return Jwts.parser().setSigningKey(secretKey)
+//                .parseClaimsJws(token)
+//                .getBody().getExpiration().before(new Date());
+//    }
+
+
     public static String createToken(String loginId, String key, long expireTimeMs){
         Claims claims = Jwts.claims(); //일종의 map같은 느낌 > 정보를 claims에 넣으면 된다.
         claims.put("loginId",loginId);
