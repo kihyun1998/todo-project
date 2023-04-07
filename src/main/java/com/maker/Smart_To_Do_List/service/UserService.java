@@ -27,7 +27,7 @@ public class UserService {
         userRepository.findByLoginId(loginId)
                 .ifPresent(user -> {
                     // 중복이면 RuntimeException throw하고 ExceptionManger로 이동
-                    throw new AppException(ErrorCode.LOGIN_ID_DUPLICATED, loginId + " is already exits");
+                    throw new AppException(ErrorCode.DUPLICATED, loginId + " is already exits");
                 });
 
         // 2. save
@@ -46,7 +46,7 @@ public class UserService {
     public String login(String loginId, String loginPw){
         // NO LOGIN ID
         User selectedUser = userRepository.findByLoginId(loginId)
-                .orElseThrow(()->new AppException(ErrorCode.LOGIN_ID_NOT_FOUND, loginId + "is not found!!"));
+                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));
 
         // INVALID PASSWORD
         if(!encoder.matches(loginPw,selectedUser.getLoginPw())){
