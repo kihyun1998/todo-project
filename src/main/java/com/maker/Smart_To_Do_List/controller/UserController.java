@@ -28,7 +28,7 @@ public class UserController {
         return ResponseEntity.ok().body("Join is SUCCESS!!!");
     }
 
-    @PostMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<String> login(@RequestBody LoginRequest loginDto){
         String token = userService.login(
                 loginDto.getLoginId(),
