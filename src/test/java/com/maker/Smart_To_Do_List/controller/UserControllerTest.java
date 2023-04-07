@@ -104,7 +104,7 @@ class UserControllerTest {
         String loginPw = "password";
 
         when(userService.login(any(),any()))
-                .thenThrow(new AppException(ErrorCode.LOGIN_ID_NOT_FOUND,""));
+                .thenThrow(new AppException(ErrorCode.NOT_FOUND,""));
 
         mockMvc.perform(post("/api/v1/users/login")
                         .with(csrf())
