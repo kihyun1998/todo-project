@@ -36,7 +36,7 @@ public class User {
     @CreationTimestamp
     private Date createdAt;
 
-    @Column(name = "user_email")
+    @Column(name = "user_email",nullable = false)
     private String userEmail;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)
