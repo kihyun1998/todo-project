@@ -8,7 +8,7 @@ import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.RefreshTokenRepository;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
-import com.maker.Smart_To_Do_List.utils.JwtUtil;
+import com.maker.Smart_To_Do_List.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,9 +27,8 @@ public class UserService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final BCryptPasswordEncoder encoder;
 
-    @Value("${jwt.secret}")
-    private String key;
-    private Long expiroTimeMs = 1000 * 60 * 60l;
+    private final JwtUtil jwtUtil;
+
 
 
     @Transactional
@@ -78,16 +77,21 @@ public class UserService {
         }
 
         // 토큰 생성 (createToken의 return값 수정해야 함)
-        TokenDto tokenDto = JwtUtil.createToken(loginUser.getLoginId(), key, expiroTimeMs);
+        TokenDto tokenDto = jwtUtil.createAllToken(loginUser.getLoginId());
 
         // Refresh 토큰 확인
         Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUserEmail(loginUser.getUserEmail());
 
         // refresh token 있으면 업데이트 없으면 생성
         if(refreshToken.isPresent()){
-            refreshTokenRepository.save(refreshToken.get().setRefreshToken(tokenDto.getRefreshToken()));
+            RefreshToken updatedToken = refreshToken.get();
+            updatedToken.setRefreshToken(tokenDto.getRefreshToken());
+            refreshTokenRepository.save(updatedToken);
         }else{
-            RefreshToken newToken = new RefreshToken(tokenDto.getAccessToken(),loginUser.getUserEmail());
+            RefreshToken newToken = RefreshToken.builder()
+                    .refreshToken(tokenDto.getAccessToken())
+                    .userEmail(loginUser.getUserEmail())
+                    .build();
             refreshTokenRepository.save(newToken);
         }
 
