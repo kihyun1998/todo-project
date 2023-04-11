@@ -41,10 +41,10 @@ public class UserService {
                     throw new AppException(ErrorCode.DUPLICATED, loginId + " is already exits");
                 });
 
-        // 2. 비밀번호 확인 검사
-        if(!loginPw.equals(loginPwCheck)){
-            throw new AppException(ErrorCode.INVALID_PASSWORD, "Password is not match !");
-        }
+        // 2. 비밀번호 확인 검사 >> front에서 해결하는걸로
+//        if(!loginPw.equals(loginPwCheck)){
+//            throw new AppException(ErrorCode.INVALID_PASSWORD, "Password is not match !");
+//        }
 
         // 3. email 중복 체크
         userRepository.findByUserEmail(userEmail)
@@ -66,7 +66,7 @@ public class UserService {
     }
 
     @Transactional
-    public GlobalResDto login(String loginId, String loginPw, HttpServletResponse response){
+    public GlobalResDto login(String loginId, String loginPw){ // , HttpServletResponse response 보류
         // 아이디 검사
         User loginUser = userRepository.findByLoginId(loginId)
                 .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));
@@ -94,8 +94,10 @@ public class UserService {
                     .build();
             refreshTokenRepository.save(newToken);
         }
-
-        setHeader(response,tokenDto);
+        
+        
+        //보류
+//        setHeader(response,tokenDto);
 
         return new GlobalResDto("Login Success !!",HttpStatus.OK.value());
     }

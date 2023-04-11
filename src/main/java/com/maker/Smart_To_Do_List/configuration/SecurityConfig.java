@@ -1,6 +1,8 @@
 package com.maker.Smart_To_Do_List.configuration;
 
 import com.maker.Smart_To_Do_List.service.UserService;
+import com.maker.Smart_To_Do_List.util.JwtUtil;
+import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +22,7 @@ import javax.persistence.Id;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserService userService;
+    private final JwtUtil jwtUtil;
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -38,7 +40,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //jwt 사용할 때 씀
                 .and()
-                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
