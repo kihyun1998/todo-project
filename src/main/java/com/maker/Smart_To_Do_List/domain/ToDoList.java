@@ -29,10 +29,8 @@ public class ToDoList {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "list", cascade = CascadeType.ALL)
-    private List<ToDo> toDos;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 }
