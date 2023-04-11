@@ -24,6 +24,7 @@ public class UserController {
         userService.join(
                 joinDto.getLoginId(),
                 joinDto.getLoginPw(),
+                joinDto.getLoginPwCheck(),
                 joinDto.getUserName(),
                 joinDto.getUserEmail()
         );
@@ -33,11 +34,12 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginDto){
-        String token = userService.login(
+        userService.login(
                 loginDto.getLoginId(),
                 loginDto.getLoginPw()
         );
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok().body("Login Success");
+
 
     }
 }
