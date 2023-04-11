@@ -1,4 +1,4 @@
-package com.maker.Smart_To_Do_List.utils;
+package com.maker.Smart_To_Do_List.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
