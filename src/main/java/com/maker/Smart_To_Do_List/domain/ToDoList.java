@@ -15,15 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(name = "list", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "list_id")})
+@Table(name = "toDoList", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "toDoList_id")})
 public class ToDoList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="list_id", unique = true, nullable = false)
+    @Column(name="toDoList_id", unique = true, nullable = false)
     private Long listId;
 
-    @Column(name = "list_name", nullable = false)
+    @Column(name = "toDoList_name", nullable = false)
     private String listName;
 
     @Column(name = "created_at")
@@ -32,5 +32,8 @@ public class ToDoList {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "toDoList")
+    private List<ToDo> todos;
 
 }
