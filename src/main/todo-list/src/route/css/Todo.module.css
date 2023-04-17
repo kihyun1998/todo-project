@@ -1,11 +1,44 @@
-.todo_list .element{
+.test {
+    width: 100%;
 
+    display: flex;
+    /* height: 100vh; */
+    flex-direction: column;
+    /* flex-grow: 1; */
 }
 
-.todo_list label {
-  display: block
+.test > div:nth-child(1) {
+    flex-grow: 9;
 }
 
-.todo_list input {
-  margin-right: 20px;
+
+.test > div:nth-child(2) {
+    flex-grow: 1;
+}
+
+.inputs > span {
+    height: 2rem;
+    width: 100%;
+    text-align: center;
+}
+
+.inputs span input {
+    height: 100%;
+    width: 90%;
+}
+
+.inputs > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 90%;
+}
+
+.inputs > div span{
+    width: 50px;
+    font-size: 2rem;
+}
+
+.inputs > div span:hover{
+    cursor: pointer;
 }
