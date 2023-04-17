@@ -101,7 +101,6 @@ const Todo = () => {
           <div key={idx}>
             <span>{idx + 1}</span>||
             <span>{td.todo}</span>||
-            <span>{td.category}</span>||
             <span>{td.date}</span>||
             <span>{td.time}</span>||
             <span>{td.difficulty}</span>
