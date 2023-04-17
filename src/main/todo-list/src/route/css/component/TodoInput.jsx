@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const TodoInput = ({iconName, description}) => {
-  const [isHover, setIsHover] = useState(false);
+const TodoInput = ({iconName, description, Component}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [isComponentHovered, setIsComponentHovered] = useState(false);
 
   const style = {
     textAlign: "center"
@@ -24,19 +26,41 @@ const TodoInput = ({iconName, description}) => {
     opacity: "0"
   }
 
-  return (
-    <span className="material-symbols-outlined"
-      onMouseEnter={()=>setIsHover(true)}
-      onMouseLeave={()=>setIsHover(false)}
-      style={style}
-    
-    >
-      {iconName}
+  const componentStyle = {
+    backgroundColor: "rgba(230, 230, 230, 1)",
+    position: "absolute",
+    transition: ".3s all",
+    transform: "translate(-35%, -120%)",
+    padding: "20px 100px 30px 10px",
+    opacity: "1"
+  }
 
-      <div style={Object.assign({}, descriptionStyle, !isHover&&disabled)}>
-      {description}
+  return (
+    <div>
+      <div 
+        style={Object.assign({}, componentStyle, !isClicked&&disabled)}
+        onMouseEnter={()=>setIsComponentHovered(true)}
+        onMouseLeave={()=>setIsComponentHovered(false)}
+        className="todoComponent"
+      >
+        {Component}
       </div>
-    </span>
+      <span className="material-symbols-outlined"
+        onMouseEnter={()=>setIsHovered(true)}
+        onMouseLeave={()=>setIsHovered(false)}
+        onClick={()=>setIsClicked(pre=>!pre)}
+        style={style}
+      >
+        {iconName}
+
+      </span>
+      <div style={Object.assign({}, descriptionStyle, !isHovered&&disabled)}>
+        {description}
+      </div>
+      
+      
+    </div>
+    
   );
 }
 
