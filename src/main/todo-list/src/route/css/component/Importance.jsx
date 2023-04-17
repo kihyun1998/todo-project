@@ -5,6 +5,8 @@ const Importance = () => {
   }
 
   const labelStyle = {
+    fontFamily: "'Sunflower', sans-serif",
+    fontWeight: 1000,
     fontSize: "1.2rem",
     cursor: "pointer"
   }
