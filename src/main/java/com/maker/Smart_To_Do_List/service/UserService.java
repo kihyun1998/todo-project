@@ -5,10 +5,10 @@ import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import com.maker.Smart_To_Do_List.utils.JwtUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import com.maker.Smart_To_Do_List.util.JwtUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +16,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    private final JwtUtil jwtUtil;
 
     @Value("${jwt.secret}")
     private String key;
