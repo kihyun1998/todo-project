@@ -1,5 +1,6 @@
-const Importance = () => {
+import { useEffect, useState } from "react"
 
+const Importance = ({returnParam}) => {
   const inputStyle = {
     display: "none",
   }
@@ -19,6 +20,32 @@ const Importance = () => {
   const fullStar = {
     fontVariationSettings: `'FILL' 1`,
   }
+
+  const selected = {
+    color:"yellow"
+  }
+
+  
+  const [importance, setImportance] = useState(-1);
+
+  const onClickImportance = (e) => {
+    switch(e.target.value) {
+      case "emptyStar": 
+        setImportance(0);
+        break;
+      case "halfStar":
+        setImportance(1);
+        break;
+      case "fullStar":
+        setImportance(2);
+        break;
+      default:
+        setImportance(-1);
+    }
+    // console.log(importance)
+  }
+
+  useEffect(()=>returnParam("importance", importance), [importance])
   
   return (
     <div>
@@ -27,29 +54,32 @@ const Importance = () => {
         id="emptyStar" 
         name="importance" 
         value="emptyStar" 
-        style={inputStyle}/>
+        style={inputStyle}
+        onChange={onClickImportance}
+        />
       <label 
-        htmlFor="emptyStar" 
-        className="material-symbols-outlined" 
-        style={starStyle}>
+        htmlFor="emptyStar"
+        className="material-symbols-outlined"
+        style={Object.assign({}, starStyle, importance===0&&selected)}>
         Star
       </label>
       <label 
-        htmlFor="emptyStar" 
+        htmlFor="emptyStar"
         style={labelStyle}>
         안해도 괜찮음
       </label> <br />
 
       <input 
-        type="radio" 
-        id="halfStar" 
-        name="importance" 
-        value="halfStar" 
-        style={inputStyle}/>
+        type="radio"
+        id="halfStar"
+        name="importance"
+        value="halfStar"
+        style={inputStyle}
+        onChange={onClickImportance}/>
       <label 
         htmlFor="halfStar" 
         className="material-symbols-outlined" 
-        style={starStyle}>
+        style={Object.assign({}, starStyle, importance===1&&selected)}>
         Star_Half
       </label>
       <label 
@@ -63,11 +93,12 @@ const Importance = () => {
         id="fullStar" 
         name="importance" 
         value="fullStar" 
-        style={inputStyle}/>
+        style={inputStyle}
+        onChange={onClickImportance}/>
       <label 
         htmlFor="fullStar" 
         className="material-symbols-outlined" 
-        style={Object.assign(fullStar, starStyle)}>
+        style={Object.assign({}, fullStar, starStyle, importance===2&&selected)}>
         Star
       </label>
       <label 
