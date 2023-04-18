@@ -11,7 +11,7 @@ const Menu = () => {
       <Link to={"/todo"}><h3>Todo 리스트</h3></Link>
       <Link to={"/users/login"}><h3>로그인</h3></Link>
       <Link to={"/users/join"}><h3>회원가입</h3></Link>
-      <Link to={"/account"}><h3>계정</h3></Link>
+      <Link to={"/mypage"}><h3>계정</h3></Link>
     </div>
   );
 }
