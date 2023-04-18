@@ -5,17 +5,21 @@ const TodoInput = ({iconName, description, Component}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isComponentHovered, setIsComponentHovered] = useState(false);
 
-  const style = {
+  const rootStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     textAlign: "center"
   }
 
   const descriptionStyle = {
-    width: "fit-content",
+    // width: "fit-content",
     fontFamily: 'Sunflower, sans',
     position: "absolute",
-    bottom:"5%",
-    left:"50%",
-    transform: "translate(-50%, -50%)",
+    // bottom:"5%",
+    // left:"50%",
+    transform: "translate(0, -200%)",
     fontSize:"1.5rem",
     fontWeight: 1000,
     transition: ".3s all",
@@ -23,25 +27,30 @@ const TodoInput = ({iconName, description, Component}) => {
   }
 
   const disabled = {
-    opacity: "0"
+    opacity: "0",
+    display: "none"
   }
 
   const componentStyle = {
     backgroundColor: "rgba(230, 230, 230, 1)",
     position: "absolute",
     transition: ".3s all",
-    transform: "translate(-35%, -120%)",
-    padding: "20px 100px 30px 10px",
+    height: "150px",
+    width: "250px",
+    transform: "translate(0, -110%)",
+    padding: "5px",
+    overflow: "hidden",
     opacity: "1"
   }
 
   return (
-    <div>
+    <div style={rootStyle}>
       <div 
         style={Object.assign({}, componentStyle, !isClicked&&disabled)}
         onMouseEnter={()=>setIsComponentHovered(true)}
         onMouseLeave={()=>setIsComponentHovered(false)}
         className="todoComponent"
+        
       >
         {Component}
       </div>
@@ -49,7 +58,6 @@ const TodoInput = ({iconName, description, Component}) => {
         onMouseEnter={()=>setIsHovered(true)}
         onMouseLeave={()=>setIsHovered(false)}
         onClick={()=>setIsClicked(pre=>!pre)}
-        style={style}
       >
         {iconName}
 

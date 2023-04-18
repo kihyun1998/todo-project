@@ -1,12 +1,38 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import styles from "./css/Todo.module.css"
 import Input from "./css/component/Input"
+import Button from "./css/component/Button"
 import TodoInput from "./css/component/TodoInput";
 import Importance from "./css/component/Importance";
+import EstimatedTime from "./css/component/EstimatedTime";
 
-const Test = () => {
-    const [todoContent, setTodoContent] = useState("")
+const Todo = () => {
+    const [content, setContent] = useState("")
+    const [importance, setImportance] = useState(-1);
+    const [deadline, setDeadline] = useState("0000-00-00");
+    const [estimatedTime, setEstimatedTime] = useState("00:00:00");
+    const [difficulty, setDifficulty] = useState(0);
+
+    const getParam = (todoType, param) => {
+        switch (todoType) {
+            case "importance":
+                setImportance(param);
+                break;
+            case "estimatedTime":
+                setEstimatedTime(param);
+                break;
+            case "difficulty":
+                setDifficulty(param);
+                break;
+            default:
+                console.log("getParamErr");
+        }
+    }
+
+    const onChangeContent = (e) => setContent(e.target.value)
+
+    // useEffect(()=>console.log(importance), [importance])
 
     return (
         <div className={styles.test}>
@@ -15,20 +41,31 @@ const Test = () => {
                 </div>
             </div>
             <div className={styles.inputs}>
-                <Input />
+                <Input 
+                    value={content}
+                    id="content"
+                    onChange={onChangeContent}
+                />
+                
                 <div>
                     <TodoInput 
                     iconName="hotel_class"
                     description="중요도"
-                    Component={<Importance />}
+                    Component={<Importance 
+                        returnParam={getParam}
+                    />}
                     />
                     <TodoInput 
                     iconName="event"
                     description="기한"
+                    
                     />
                     <TodoInput 
                     iconName="timer"
                     description="예상 소요 시간"
+                    Component={<EstimatedTime 
+                        returnParam={getParam}
+                    />}
                     />
                     <TodoInput 
                     iconName="device_thermostat"
@@ -40,4 +77,4 @@ const Test = () => {
     );
 }
 
-export default Test;
+export default Todo;
