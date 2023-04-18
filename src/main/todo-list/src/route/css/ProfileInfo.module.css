@@ -1,0 +1,28 @@
+.profileContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profileImg img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.profileDetails {
+  font-size: 20px;
+  color: #333;
+}
+
+.profileDetails h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.profileDetails p {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
