@@ -6,6 +6,7 @@ import Todo from "./route/Todo";
 import Login from "./route/Login";
 import Register from "./route/Register";
 import Account from "./route/Account"
+// import Test from "./route/Test"
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/users/login" element={<Login />}/>
           <Route path="/users/join" element={<Register />}/>
           <Route path="/account" element={<Account />} />
+          {/* <Route path="/test" element={<Test />} /> */}
         </Routes>
       </div>
     </BrowserRouter>
