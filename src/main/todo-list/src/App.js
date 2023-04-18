@@ -5,8 +5,7 @@ import Intro from "./route/Intro";
 import Todo from "./route/Todo";
 import Login from "./route/Login";
 import Register from "./route/Register";
-import Account from "./route/Account"
-// import Test from "./route/Test"
+import Mypage from "./route/Mypage"
 
 function App() {
 
@@ -19,8 +18,7 @@ function App() {
           <Route path="/" element={<Intro />}/>
           <Route path="/users/login" element={<Login />}/>
           <Route path="/users/join" element={<Register />}/>
-          <Route path="/account" element={<Account />} />
-          {/* <Route path="/test" element={<Test />} /> */}
+          <Route path="/mypage" element={<Mypage />} />
         </Routes>
       </div>
     </BrowserRouter>
