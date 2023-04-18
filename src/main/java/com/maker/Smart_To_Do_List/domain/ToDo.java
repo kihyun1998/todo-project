@@ -22,7 +22,7 @@ public class ToDo {
     private String todoTitle;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "list_id")
+    @JoinColumn(name = "toDoList_id")
     private ToDoList toDoList;
 
 }

@@ -34,12 +34,10 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginDto){
-        userService.login(
+        String token = userService.login(
                 loginDto.getLoginId(),
                 loginDto.getLoginPw()
         );
-        return ResponseEntity.ok().body("Login Success");
-
-
+        return ResponseEntity.ok().body(token);
     }
 }

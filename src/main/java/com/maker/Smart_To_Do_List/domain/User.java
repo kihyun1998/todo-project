@@ -40,6 +40,7 @@ public class User {
     private String userEmail;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)
-    private List<User> todoLists;
+    private List<ToDoList> todoLists;
+
 
 }
