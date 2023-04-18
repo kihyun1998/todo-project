@@ -31,3 +31,4 @@ build
 .idea
 
 application-sec.properties
+application.properties
