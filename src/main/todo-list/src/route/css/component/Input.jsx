@@ -1,8 +1,6 @@
 const Input = ({ type, label, value, id, name, onChange, onClick, DC=false }) => {
 
   let styleInput = {
-    "height": "30px",
-    "width": "300px",
     "borderTop": "0",
     "borderLeft": "0",
     "borderRight": "0",

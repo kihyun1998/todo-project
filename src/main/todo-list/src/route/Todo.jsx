@@ -1,115 +1,80 @@
-import { useEffect, useState } from "react";
-import styles from "./css/Todo.module.css";
-import Input from "./css/component/Input";
+import {useEffect, useState} from "react";
+
+import styles from "./css/Todo.module.css"
+import Input from "./css/component/Input"
+import Button from "./css/component/Button"
+import TodoInput from "./css/component/TodoInput";
+import Importance from "./css/component/Importance";
+import EstimatedTime from "./css/component/EstimatedTime";
 
 const Todo = () => {
-  const [todo, setTodo] = useState("");
-  const [deadline, setDeadlineDate] = useState("");
-  const [estimatedTime, setEstimatedTime] = useState(0);
-  const [difficulty, setDifficulty] = useState("mid");
-  const [todos, setTodos] = useState([]);
+    const [content, setContent] = useState("")
+    const [importance, setImportance] = useState(-1);
+    const [deadline, setDeadline] = useState("0000-00-00");
+    const [estimatedTime, setEstimatedTime] = useState("00:00:00");
+    const [difficulty, setDifficulty] = useState(0);
 
-  useEffect(() => {
-    const currentDate = new Date();
-    const dateStr = currentDate.toLocaleDateString('en-CA');
-    setDeadlineDate(dateStr);
-  }, [])
+    const getParam = (todoType, param) => {
+        switch (todoType) {
+            case "importance":
+                setImportance(param);
+                break;
+            case "estimatedTime":
+                setEstimatedTime(param);
+                break;
+            case "difficulty":
+                setDifficulty(param);
+                break;
+            default:
+                console.log("getParamErr");
+        }
+    }
 
-  const handlers = {
-    onChangeTodo: (e) => setTodo(e.target.value),
-    onChangeDeadlineDate: (e) => setDeadlineDate(e.target.value),
-    onClickDifficulty: (e) => setDifficulty(e.target.value),
-    onChangeEstimatedTime: (e) => setEstimatedTime(e.target.value),
-    onClickSubmit: (e) => {
-      e.preventDefault();
-      setTodos((prevTodos) => [
-        ...prevTodos,
-        {
-          todo: todo,
-          date: deadline,
-          time: estimatedTime,
-          difficulty: difficulty,
-        },
-      ]);
-      setTodo("");
-    },
-  };
+    const onChangeContent = (e) => setContent(e.target.value)
 
-  return (
-    <div className={styles.todo_list}>
-      <form>
-          <Input
-            type = "text"
-            label = "할 일"
-            value = {todo}
-            id = "todo"
-            onChange = {handlers.onChangeTodo}
-          /> <br />
-          
-          <Input
-            type = "date"
-            label = "마감기한"
-            value = {deadline}
-            id = "deadline"
-            onChange = {handlers.onChangeTodo}
-          /> <br />
-          
-          <Input
-            type = "number"
-            label = "예상소요시간"
-            value = {estimatedTime}
-            id = "estimatedTime"
-            onChange = {handlers.onChangeEstimatedTime}
-          /> <br />
+    // useEffect(()=>console.log(importance), [importance])
 
-          <h3>난이도</h3>
-          <Input
-            type = "radio"
-            label = "high"
-            name = "difficulty"
-            id = "high"
-            onChange = {handlers.onClickDifficulty}
-          />
-
-          <Input
-            type = "radio"
-            label = "mid"
-            name = "difficulty"
-            id = "mid"
-            onChange = {handlers.onClickDifficulty}
-            DC = {true}
-
-          />
-
-          <Input
-            type = "radio"
-            label = "low"
-            name = "difficulty"
-            id = "low"
-            onChange = {handlers.onClickDifficulty}
-          /> <br />
-
-
-        <button
-          onClick={handlers.onClickSubmit}
-        >
-          완료
-        </button>
-      </form>
-      {todos.map((td, idx) => {
-        return (
-          <div key={idx}>
-            <span>{idx + 1}</span>||
-            <span>{td.todo}</span>||
-            <span>{td.category}</span>||
-            <span>{td.date}</span>||
-            <span>{td.time}</span>||
-            <span>{td.difficulty}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
+    return (
+        <div className={styles.test}>
+            <div>
+                <div>
+                </div>
+            </div>
+            <div className={styles.inputs}>
+                <Input 
+                    value={content}
+                    id="content"
+                    onChange={onChangeContent}
+                />
+                
+                <div>
+                    <TodoInput 
+                    iconName="hotel_class"
+                    description="중요도"
+                    Component={<Importance 
+                        returnParam={getParam}
+                    />}
+                    />
+                    <TodoInput 
+                    iconName="event"
+                    description="기한"
+                    
+                    />
+                    <TodoInput 
+                    iconName="timer"
+                    description="예상 소요 시간"
+                    Component={<EstimatedTime 
+                        returnParam={getParam}
+                    />}
+                    />
+                    <TodoInput 
+                    iconName="device_thermostat"
+                    description="난이도"
+                    />
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default Todo;
