@@ -26,6 +26,8 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'org.hibernate:hibernate-search:5.11.1.Final'
 
@@ -34,11 +36,13 @@ dependencies {
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 
 	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
-	testImplementation group: 'org.springframework.security', name: 'spring-security-test'
-	implementation group:'io.jsonwebtoken',name:'jjwt', version:'0.9.1'
+	testImplementation 'org.springframework.security:spring-security-test'
+	implementation group:'io.jsonwebtoken',name:'jjwt', version:'0.11.2'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 	implementation 'org.bouncycastle:bcprov-jdk15on:1.61'
+
+
 
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
@@ -47,44 +51,3 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-//def frontendDir = "$projectDir/src/main/todo-list"
-//
-//sourceSets {
-//	main {
-//		resources { srcDirs = ["$projectDir/src/main/resources"]
-//		}
-//	}
-//}
-//
-//processResources { dependsOn "copyReactBuildFiles" }
-//
-//task installReact(type: Exec) {
-//	workingDir "$frontendDir"
-//	inputs.dir "$frontendDir"
-//	group = BasePlugin.BUILD_GROUP
-//	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-//		commandLine "npm.cmd", "audit", "fix"
-//		commandLine 'npm.cmd', 'install' }
-//	else {
-//		commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
-//	}
-//}
-//
-//task buildReact(type: Exec) {
-//	dependsOn "installReact"
-//	workingDir "$frontendDir"
-//	inputs.dir "$frontendDir"
-//	group = BasePlugin.BUILD_GROUP
-//	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-//		commandLine "npm.cmd", "run-script", "build"
-//	} else {
-//		commandLine "npm", "run-script", "build"
-//	}
-//}
-//
-//task copyReactBuildFiles(type: Copy) {
-//	dependsOn "buildReact"
-//	from "$frontendDir/build"
-//	into "$projectDir/src/main/resources/static"
-//}
