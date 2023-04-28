@@ -33,6 +33,7 @@ const TodoInput = ({iconName, description, Component}) => {
 
   const componentStyle = {
     backgroundColor: "rgba(230, 230, 230, 1)",
+    borderRadius: "20px",
     position: "absolute",
     transition: ".3s all",
     height: "150px",
@@ -42,6 +43,17 @@ const TodoInput = ({iconName, description, Component}) => {
     overflow: "hidden",
     opacity: "1"
   }
+
+  document.body.addEventListener("click", (e)=> {
+    console.log(isComponentHovered, isClicked)
+    if (isComponentHovered && !isClicked) {
+      setIsClicked(true);
+    } else if (isComponentHovered && isClicked) {
+      setIsClicked(true);
+    } else {
+      setIsClicked(true);
+    }
+  })
 
   return (
     <div style={rootStyle}>

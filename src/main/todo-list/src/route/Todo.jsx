@@ -6,6 +6,7 @@ import Button from "./css/component/Button"
 import TodoInput from "./css/component/TodoInput";
 import Importance from "./css/component/Importance";
 import EstimatedTime from "./css/component/EstimatedTime";
+import Deadline from "./css/component/Deadline";
 
 const Todo = () => {
     const [content, setContent] = useState("")
@@ -55,11 +56,15 @@ const Todo = () => {
                         returnParam={getParam}
                     />}
                     />
+                    
                     <TodoInput 
                     iconName="event"
                     description="기한"
-                    
+                    Component = {<Deadline
+                        returnParam={getParam}
+                    />}
                     />
+
                     <TodoInput 
                     iconName="timer"
                     description="예상 소요 시간"
@@ -67,6 +72,7 @@ const Todo = () => {
                         returnParam={getParam}
                     />}
                     />
+                    
                     <TodoInput 
                     iconName="device_thermostat"
                     description="난이도"
