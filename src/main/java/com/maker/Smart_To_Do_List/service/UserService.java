@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import com.maker.Smart_To_Do_List.util.JwtUtil;
 
+import java.security.Key;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
