@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components"
 
 const TimeCaseStyle = styled.div`
@@ -26,7 +26,7 @@ const TimeStyle = styled.div`
   background-color: ${params=>params.current?"darkgrey":"white"};
 `;
 
-const EstimatedTime = () => {
+const EstimatedTime = ({returnParam}) => {
   const estimatedTimeStyle = {
     display: "flex",
     alignItems: "center",
@@ -41,6 +41,10 @@ const EstimatedTime = () => {
   
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
+
+  useEffect(()=> {
+    returnParam("estimatedTime", hours*60 + minutes)
+  }, [hours, minutes])
 
 
   return (
