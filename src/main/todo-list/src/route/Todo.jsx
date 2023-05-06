@@ -40,7 +40,7 @@ const Todo = () => {
 
     // useEffect(()=>console.log(importance), [importance])
     const submit = async() => {
-        axios.post("/api/todo", {
+        axios.post("/api/v1/todos", {
             todoContent: content,
             todoImportance: importance,
             todoEstimatedTime: estimatedTime,
