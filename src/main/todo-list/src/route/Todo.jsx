@@ -7,12 +7,14 @@ import TodoInput from "./css/component/TodoInput";
 import Importance from "./css/component/Importance";
 import EstimatedTime from "./css/component/EstimatedTime";
 import Deadline from "./css/component/Deadline";
+import Difficulty from "./css/component/Difficulty";
+import axios from "axios";
 
 const Todo = () => {
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(-1);
     const [deadline, setDeadline] = useState("0000-00-00");
-    const [estimatedTime, setEstimatedTime] = useState("00:00:00");
+    const [estimatedTime, setEstimatedTime] = useState(0);
     const [difficulty, setDifficulty] = useState(0);
 
     const getParam = (todoType, param) => {
@@ -26,6 +28,9 @@ const Todo = () => {
             case "difficulty":
                 setDifficulty(param);
                 break;
+            case "deadline":
+                setDeadline(param);
+                break;
             default:
                 console.log("getParamErr");
         }
@@ -34,6 +39,15 @@ const Todo = () => {
     const onChangeContent = (e) => setContent(e.target.value)
 
     // useEffect(()=>console.log(importance), [importance])
+    const submit = async() => {
+        axios.post("/api/todo", {
+            todoContent: content,
+            todoImportance: importance,
+            todoEstimatedTime: estimatedTime,
+            todoDifficulty: difficulty,
+            todoDeadline: deadline,
+        })
+    }
 
     return (
         <div className={styles.test}>
@@ -50,32 +64,39 @@ const Todo = () => {
                 
                 <div>
                     <TodoInput 
-                    iconName="hotel_class"
-                    description="중요도"
-                    Component={<Importance 
-                        returnParam={getParam}
-                    />}
+                        iconName="hotel_class"
+                        description="중요도"
+                        Component={<Importance 
+                            returnParam={getParam}
+                        />}
                     />
                     
                     <TodoInput 
-                    iconName="event"
-                    description="기한"
-                    Component = {<Deadline
-                        returnParam={getParam}
-                    />}
+                        iconName="event"
+                        description="기한"
+                        Component = {<Deadline
+                            returnParam={getParam}
+                        />}
                     />
 
                     <TodoInput 
-                    iconName="timer"
-                    description="예상 소요 시간"
-                    Component={<EstimatedTime 
-                        returnParam={getParam}
-                    />}
+                        iconName="timer"
+                        description="예상 소요 시간"
+                        Component={<EstimatedTime 
+                            returnParam={getParam}
+                        />}
                     />
                     
                     <TodoInput 
-                    iconName="device_thermostat"
-                    description="난이도"
+                        iconName="Mood"
+                        description="난이도"
+                        Component={<Difficulty 
+                            returnParam={getParam}
+                        />}
+                    />
+                    <Button 
+                        text="추가"
+                        onClick={submit}
                     />
                 </div>
             </div>

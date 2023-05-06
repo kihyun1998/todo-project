@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react"
+import styled from "styled-components"
 
 const Importance = ({returnParam}) => {
+
+  const divStyle = {
+    textAlign: "left",
+    paddingLeft: "25px",
+  }
+
   const inputStyle = {
     display: "none",
   }
@@ -48,7 +55,7 @@ const Importance = ({returnParam}) => {
   useEffect(()=>returnParam("importance", importance), [importance])
   
   return (
-    <div>
+    <div style={divStyle}>
       <input 
         type="radio" 
         id="emptyStar" 

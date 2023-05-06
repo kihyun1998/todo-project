@@ -44,16 +44,12 @@ const TodoInput = ({iconName, description, Component}) => {
     opacity: "1"
   }
 
-  document.body.addEventListener("click", (e)=> {
-    console.log(isComponentHovered, isClicked)
-    if (isComponentHovered && !isClicked) {
-      setIsClicked(true);
-    } else if (isComponentHovered && isClicked) {
-      setIsClicked(true);
-    } else {
-      setIsClicked(true);
-    }
-  })
+  // document.body.addEventListener("click", (e)=> {
+  //   console.log(isComponentHovered, isClicked)
+  //   if (!isComponentHovered && isClicked && !isHovered) {
+  //     setIsClicked(false);
+  //   }
+  // })
 
   return (
     <div style={rootStyle}>

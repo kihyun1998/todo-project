@@ -1,18 +1,29 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Deadline = () => {
-  const Input = styled.input`
-    height: 100px;
-    border-radius: 20px;
-    margin-top: 20px;
-    font-family: 'Sunflower', sans-serif;
-    font-size: 15px;
-    font-weight: 1000;
-  `
+const Deadline = ({returnParam}) => {
+  const inputStyle = {
+    height: "100px",
+    borderRadius: "20px",
+    marginTop: "20px",
+    fontFamily: "Sunflower, sans-serif",
+    fontSize: "15px",
+    fontWeight: "1000",
+  }
+
+  const [deadline, setDeadline] = useState("0000-00-00");
+
+  useEffect(()=>{
+    returnParam("deadline", deadline);
+  }, [deadline])
+
+  const onChangeDealine = (e) => {
+    setDeadline(e.target.value);
+  }
 
   return (
     <div>
-      <Input type="date" />
+      <input style={inputStyle} type="date" onChange={onChangeDealine}/>
     </div>
   );
 }
