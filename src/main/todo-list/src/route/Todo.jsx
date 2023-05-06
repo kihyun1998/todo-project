@@ -16,6 +16,13 @@ const Todo = () => {
     const [deadline, setDeadline] = useState("0000-00-00");
     const [estimatedTime, setEstimatedTime] = useState(0);
     const [difficulty, setDifficulty] = useState(0);
+    const [todos, setTodos] = useState([{
+        todoContent: "Content Test",
+        todoImportance: 1,
+        todoEstimatedTime: "3600",
+        todoDifficulty: 1,
+        todoDeadline: "2023-06-10",
+    }]);
 
     const getParam = (todoType, param) => {
         switch (todoType) {
@@ -49,10 +56,31 @@ const Todo = () => {
         })
     }
 
+    useEffect(()=> {
+        getTodos()
+    }, [])
+
+    const getTodos = async() => {
+        const res = await axios.get("/api/v1/todos");
+        setTodos(res.data);
+    }
+
     return (
         <div className={styles.test}>
             <div>
                 <div>
+                    {todos.map((todo, idx)=>{
+                        return(
+                            <div key={idx}>
+                                <span>{idx}|</span>
+                                <span>{todo.todoContent}|</span>
+                                <span>{todo.todoImportance}|</span>
+                                <span>{todo.todoEstimatedTime}|</span>
+                                <span>{todo.todoDeadline}|</span>
+                                <span>{todo.todoDifficulty}|</span>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
             <div className={styles.inputs}>
