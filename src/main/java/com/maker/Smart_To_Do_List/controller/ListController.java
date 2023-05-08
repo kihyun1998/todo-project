@@ -1,29 +1,40 @@
 package com.maker.Smart_To_Do_List.controller;
 
 
+import com.maker.Smart_To_Do_List.auth.JwtUtil;
 import com.maker.Smart_To_Do_List.dto.CreateListRequest;
+import com.maker.Smart_To_Do_List.dto.ListDto;
 import com.maker.Smart_To_Do_List.service.ListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/list")
+@RequestMapping("/api/v1/{userId}")
 public class ListController {
 
     private final ListService listService;
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createList(@RequestBody CreateListRequest listDto){
 
+    @PostMapping("/create")
+    public ResponseEntity<String> createList(@RequestBody CreateListRequest listDto,
+                                             HttpServletRequest request){
+
+        String token = JwtUtil.getTokenByCookie(request);
         listService.createList(
-                listDto.getListName()
+                listDto.getListName(),
+                token
         );
 
         return ResponseEntity.ok().body("Create List Success!");
     }
+
+//    @RequestMapping(value = "{userId}",method = RequestMethod.GET)
+//    public ResponseEntity<ListDto> getToDoListInfo(@PathVariable("userId") final long userId){
+//        ListDto list = listService.getList(userId)
+//    }
 }

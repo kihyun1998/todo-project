@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CreateListRequest {
+public class ListDto {
     private String listName;
 }
