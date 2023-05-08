@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -19,16 +20,20 @@ import java.util.List;
 public class User {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true, nullable = false)
+    @Column(name = "user_id", unique = true)
     private Long userId;
 
-    @Column(name = "login_id",nullable = false)
+    @NotNull
+    @Column(name = "login_id", unique = true)
     private String loginId;
 
-    @Column(name = "login_pw",nullable = false)
+    @NotNull
+    @Column(name = "login_pw")
     private String loginPw;
 
+    @NotNull
     @Column(name = "userName")
     private String userName;
 
@@ -36,11 +41,7 @@ public class User {
     @CreationTimestamp
     private Date createdAt;
 
+    @NotNull
     @Column(name = "user_email")
     private String userEmail;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)
-    private List<ToDoList> todoLists;
-
-
 }

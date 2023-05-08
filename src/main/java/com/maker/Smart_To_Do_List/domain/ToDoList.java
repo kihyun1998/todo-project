@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -19,21 +20,21 @@ import java.util.List;
 public class ToDoList {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="toDoList_id", unique = true, nullable = false)
     private Long listId;
 
-    @Column(name = "toDoList_name", nullable = false)
+    @NotNull
+    @Column(name = "toDoList_name")
     private String listName;
 
     @Column(name = "created_at")
     private Date createdAt;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "toDoList")
-    private List<ToDo> todos;
 
 }
