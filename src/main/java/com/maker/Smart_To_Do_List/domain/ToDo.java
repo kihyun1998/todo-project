@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 public class ToDo {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todo_id", unique = true)
     private long todoId;

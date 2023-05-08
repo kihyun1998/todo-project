@@ -28,13 +28,12 @@ public class ListService {
             User selectedUser = userRepository.findByLoginId(loginId)
                     .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));;
 
-            userRepository.findByLoginId(loginId)
-                    .flatMap(user ->
-                            listRepository.findByListName(listName))
-                                .ifPresent(list -> {
-                                    throw new AppException(ErrorCode.DUPLICATED, listName + " is already exits");
-                                });
-
+            listRepository.findByListName(listName)
+                    .ifPresent(list ->{
+                        if (list.getUser().getLoginId().equals(loginId)){
+                            throw new AppException(ErrorCode.DUPLICATED, listName + " is already exits");
+                        }
+                    });
 
             ToDoList toDoList = ToDoList.builder()
                     .listName(listName)
@@ -47,5 +46,7 @@ public class ListService {
         }
         return "Token is wrong";
     }
+
+    //get  return > ListId, ListName
 
 }

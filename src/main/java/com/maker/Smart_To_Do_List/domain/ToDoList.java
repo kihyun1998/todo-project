@@ -21,7 +21,6 @@ import java.util.List;
 public class ToDoList {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="toDoList_id", unique = true, nullable = false)
     private Long listId;
