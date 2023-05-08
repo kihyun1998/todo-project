@@ -21,7 +21,6 @@ import java.util.List;
 public class ToDoList {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="toDoList_id", unique = true, nullable = false)
     private Long listId;
@@ -40,8 +39,7 @@ public class ToDoList {
      DESC_NAME : 이름 내림차순
      ***/
     @Column(name = "sort_by")
-    @ColumnDefault("ASC_Date")
-    private String sortBy;
+    private String sortBy = "ASC_Date";
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

@@ -38,6 +38,7 @@ public class JwtUtil {
         String token = null;
         Cookie[] myCookies = request.getCookies();
         for(int i=0; i< myCookies.length; i++){
+            System.out.println(myCookies[i].getName());
             if( myCookies[i].getName().equals("accessToken") ){
                 token = myCookies[i].getValue();
                 System.out.println(token);
