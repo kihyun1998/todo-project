@@ -33,6 +33,16 @@ public class ToDoList {
     @Column(name = "created_at")
     private Date createdAt;
 
+    /***
+     ASC_DATE : 생성 날짜 오름차순
+     DESC_DATE : 생성 날자 내림차순
+     ASC_NAME : 이름 오름차순
+     DESC_NAME : 이름 내림차순
+     ***/
+    @Column(name = "sort_by")
+    @ColumnDefault("ASC_Date")
+    private String sortBy;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

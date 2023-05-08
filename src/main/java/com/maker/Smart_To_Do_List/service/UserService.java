@@ -22,7 +22,7 @@ public class UserService {
     private String secretKey;
     private Long expireTimeMs = 1000 * 60 * 60l;
 
-    public String join(String loginId, String loginPw,String loginPwCheck, String userName, String userEmail, String sortBy){
+    public String join(String loginId, String loginPw,String loginPwCheck, String userName, String userEmail){
 
         // 1. userName 중복 체크
         userRepository.findByLoginId(loginId)
@@ -41,7 +41,6 @@ public class UserService {
                 .loginPw(encoder.encode(loginPw))
                 .userName(userName)
                 .userEmail(userEmail)
-                .sortBy(sortBy)
                 .build();
 
         userRepository.save(user);

@@ -27,6 +27,7 @@ public class ListController {
         String token = JwtUtil.getTokenByCookie(request);
         listService.createList(
                 listDto.getListName(),
+                listDto.getSortBy(),
                 token
         );
 

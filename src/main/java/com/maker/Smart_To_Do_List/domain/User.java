@@ -45,14 +45,4 @@ public class User {
     @NotNull
     @Column(name = "user_email",unique = true)
     private String userEmail;
-
-    /***
-     ASC_DATE : 생성 날짜 오름차순
-     DESC_DATE : 생성 날자 내림차순
-     ASC_NAME : 이름 오름차순
-     DESC_NAME : 이름 내림차순
-     ***/
-    @Column(name = "sort_by")
-    @ColumnDefault("ASC_Date")
-    private String sortBy;
 }

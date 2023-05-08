@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ListDto {
     private String listName;
+    private String sortBy;
 }

@@ -22,7 +22,7 @@ public class ListService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public String createList(String listName, String token){
+    public String createList(String listName, String sortBy,String token){
         if( token != null ){
             String loginId = JwtUtil.getLoginId(token,secretKey);
             User selectedUser = userRepository.findByLoginId(loginId)
@@ -39,6 +39,7 @@ public class ListService {
             ToDoList toDoList = ToDoList.builder()
                     .listName(listName)
                     .user(selectedUser)
+                    .sortBy(sortBy)
                     .build();
 
             listRepository.save(toDoList);

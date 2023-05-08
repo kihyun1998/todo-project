@@ -12,4 +12,5 @@ import java.util.Date;
 @Getter
 public class CreateListRequest {
     private String listName;
+    private String sortBy;
 }

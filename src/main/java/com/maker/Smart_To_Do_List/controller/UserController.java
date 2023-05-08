@@ -26,8 +26,7 @@ public class UserController {
                 joinDto.getLoginPw(),
                 joinDto.getLoginPwCheck(),
                 joinDto.getUserName(),
-                joinDto.getUserEmail(),
-                joinDto.getSortBy()
+                joinDto.getUserEmail()
         );
 
         return ResponseEntity.ok().body("Join is SUCCESS!!!");
