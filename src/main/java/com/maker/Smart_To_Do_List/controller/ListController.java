@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/{userId}")
+@RequestMapping("/api/v1/list")
 public class ListController {
 
     private final ListService listService;
