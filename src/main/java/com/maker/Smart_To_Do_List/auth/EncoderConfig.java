@@ -1,4 +1,4 @@
-package com.maker.Smart_To_Do_List.configuration;
+package com.maker.Smart_To_Do_List.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
