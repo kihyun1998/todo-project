@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -34,7 +35,7 @@ public class User {
     private String loginPw;
 
     @NotNull
-    @Column(name = "userName")
+    @Column(name = "userName",unique = true)
     private String userName;
 
     @Column(name = "created_at")
@@ -42,6 +43,16 @@ public class User {
     private Date createdAt;
 
     @NotNull
-    @Column(name = "user_email")
+    @Column(name = "user_email",unique = true)
     private String userEmail;
+
+    /***
+     ASC_DATE : 생성 날짜 오름차순
+     DESC_DATE : 생성 날자 내림차순
+     ASC_NAME : 이름 오름차순
+     DESC_NAME : 이름 내림차순
+     ***/
+    @Column(name = "sort_by")
+    @ColumnDefault("ASC_Date")
+    private String sortBy;
 }

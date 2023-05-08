@@ -15,4 +15,5 @@ public class JoinRequest {
     private String loginPwCheck;
     private String userName;
     private String userEmail;
+    private String sortBy;
 }
