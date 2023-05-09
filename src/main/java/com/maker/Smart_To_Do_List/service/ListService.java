@@ -2,6 +2,7 @@ package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
+import com.maker.Smart_To_Do_List.dto.ToDoListDto;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
@@ -12,6 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +32,8 @@ public class ListService {
         if( token != null ){
             String loginId = JwtUtil.getLoginId(token,secretKey);
             User selectedUser = userRepository.findByLoginId(loginId)
-                    .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));
+                    .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));;
+
             listRepository.findByListName(listName)
                     .ifPresent(list ->{
 
@@ -48,5 +53,12 @@ public class ListService {
         }
         return "Token is wrong";
     }
+
+    public List<ToDoList> getToDoList(long userId){
+        List<ToDoList> toDoLists = listRepository.findByUser_UserId(userId);
+        return toDoLists;
+    }
+
+    //get  return > ListId, ListName
 
 }

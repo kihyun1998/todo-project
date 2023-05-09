@@ -1,9 +1,11 @@
 package com.maker.Smart_To_Do_List.domain;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 
 @Builder
@@ -12,10 +14,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @Table(name = "todo", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "todo_id")})
-public class ToDo {
+public class ToDo extends BaseTimeEntity{
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "todo_id", unique = true)
     private long todoId;

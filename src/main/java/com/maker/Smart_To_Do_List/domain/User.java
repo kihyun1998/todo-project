@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Table(name = "user", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "user_id")})
-public class User {
+public class User extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,11 +38,10 @@ public class User {
     @Column(name = "userName",unique = true)
     private String userName;
 
-    @Column(name = "created_at")
-    @CreationTimestamp
-    private Date createdAt;
-
     @NotNull
     @Column(name = "user_email",unique = true)
     private String userEmail;
+//
+//    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+//    private List<ToDoList> toDoLists = new ArrayList<>();
 }

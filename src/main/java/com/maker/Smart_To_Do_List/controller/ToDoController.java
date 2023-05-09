@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/todos")
+@RequestMapping("/api/v1/list/{listId}")
 public class ToDoController {
 
-//     todo service 제작
 
     @PostMapping
     public ResponseEntity<String> writeTodo(Authentication authentication){
