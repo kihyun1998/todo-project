@@ -27,4 +27,11 @@ public class JwtService {
                 .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND,"User is not found!!"));
         return user.getUserId();
     }
+
+    public User getUser(HttpServletRequest request){
+        final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String token = authorization.split(" ")[1];
+        return userRepository.findByLoginId(JwtUtil.getLoginId(token,secretKey))
+                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND,"User is not found!!"));
+    }
 }
