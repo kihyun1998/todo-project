@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import styles from "./css/Menu.module.css";
 
@@ -26,6 +26,11 @@ const ToDoListAddBtn = styled.button`
   // font-weight: 1000
   color: green;
 `
+
+const activeStyle = {
+  backgroundColor : "#606060",
+  color: "white"
+}
 
 const Menu = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "toDoLists"]);
@@ -80,12 +85,12 @@ const Menu = () => {
 
   return (
     <div className={styles.menu}>
-      <Link to={"/"}>메인</Link>
+      <NavLink style={({isActive}) => (isActive ? activeStyle:{})}  to={"/"}>메인</NavLink>
       {cookies.accessToken==null?
       null:
       <div>
         <div>
-          <a>Todo 리스트</a>
+          Todo 리스트
           <Expend 
             className={`material-symbols-outlined ${styles.expend}`} 
             onClick={expendToDoList} 
@@ -108,16 +113,16 @@ const Menu = () => {
           <div>
             {toDoLists.map((toDoList, idx) => {
               return (
-                <div key={idx}>
-                  <Link  className={styles.todoList} to={`/todos/${toDoList.toDoListId}`}>
-                    {toDoList.toDoListName}
-                  </Link>
-                </div>
+                <NavLink key={idx} style={({isActive}) => (isActive ? activeStyle:{})}  className={styles.todoList} to={`/todos/${toDoList.toDoListId}`}>
+                  {toDoList.toDoListName}
+                </NavLink>
               )
             })}
             {inputExpended?
               <div>
                 <ToDoListInput 
+                  onChange={onChangeToDoListName}
+                  value={toDoListName}
                   className={styles.todoList}/>
                 <ToDoListAddBtn
                   className={`material-symbols-outlined`}
@@ -133,18 +138,16 @@ const Menu = () => {
       </div>}
       {cookies.accessToken==null?
       null:
-      <Link to={"/mypage"}>내정보</Link>}
+      <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/mypage"}>내정보</NavLink>}
       {cookies.accessToken==null?
       null:
-      <div>
-        <Link to={"/"} onClick={tempLogout}>로그아웃</Link>
-      </div>
+      <NavLink to={"/"} onClick={tempLogout}>로그아웃</NavLink>
       }
       {cookies.accessToken==null?
-      <Link to={"/users/login"}>로그인</Link>:
+      <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/users/login"}>로그인</NavLink>:
       null}
       {cookies.accessToken==null?
-      <Link to={"/users/join"}>회원가입</Link>:
+      <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/users/join"}>회원가입</NavLink>:
       null}
       
       {cookies.accessToken==null?

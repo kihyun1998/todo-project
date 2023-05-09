@@ -27,7 +27,7 @@ const Mypage = () => {
          naem = {res.data.userName}
          email = {res.data.userEmail}
       /> */}
-      <span style={{margin : "20px"}}>  
+      <span style={{marginLeft : "87px"}}>  
         <Button
           text={"비닐번호 변경"}
         />
