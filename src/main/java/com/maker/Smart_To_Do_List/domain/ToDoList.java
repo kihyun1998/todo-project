@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -23,17 +25,25 @@ public class ToDoList {
     @Column(name="toDoList_id", unique = true, nullable = false)
     private Long listId;
 
-    @Column(name = "toDoList_name", nullable = false)
+    @NotNull
+    @Column(name = "toDoList_name")
     private String listName;
 
     @Column(name = "created_at")
     private Date createdAt;
 
+    /***
+     ASC_DATE : 생성 날짜 오름차순
+     DESC_DATE : 생성 날자 내림차순
+     ASC_NAME : 이름 오름차순
+     DESC_NAME : 이름 내림차순
+     ***/
+    @Column(name = "sort_by")
+    private String sortBy = "ASC_Date";
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "toDoList")
-    private List<ToDo> todos;
 
 }

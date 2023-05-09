@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
-import com.maker.Smart_To_Do_List.util.JwtUtil;
+import com.maker.Smart_To_Do_List.auth.JwtUtil;
+
 
 @Service
 @RequiredArgsConstructor
@@ -18,8 +19,8 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
 
     @Value("${jwt.secret}")
-    private String key;
-    private Long expiroTimeMs = 1000 * 60 * 60l;
+    private String secretKey;
+    private Long expireTimeMs = 1000 * 60 * 60l;
 
     public String join(String loginId, String loginPw,String loginPwCheck, String userName, String userEmail){
 
@@ -58,7 +59,7 @@ public class UserService {
         }
 
         // No Exception > token issuance
-        String token = JwtUtil.createToken(selectedUser.getLoginId() ,key,expiroTimeMs);
+        String token = JwtUtil.createToken(selectedUser.getLoginId() ,secretKey ,expireTimeMs);
 
 
         return token;

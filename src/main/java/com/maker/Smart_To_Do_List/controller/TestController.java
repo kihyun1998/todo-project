@@ -12,4 +12,8 @@ public class TestController {
         return "Spring Boot and React 연동 테스트 \n";
     }
 
+    @GetMapping("/test")
+    public String testpage(){
+        return "test";
+    }
 }

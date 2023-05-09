@@ -1,7 +1,6 @@
-package com.maker.Smart_To_Do_List.configuration;
+package com.maker.Smart_To_Do_List.auth;
 
 import com.maker.Smart_To_Do_List.service.UserService;
-import com.maker.Smart_To_Do_List.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;

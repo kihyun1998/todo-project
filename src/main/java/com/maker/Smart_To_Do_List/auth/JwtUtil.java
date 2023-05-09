@@ -1,9 +1,11 @@
-package com.maker.Smart_To_Do_List.util;
+package com.maker.Smart_To_Do_List.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class JwtUtil {
@@ -30,5 +32,19 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis()+expireTimeMs)) // 끝난 날짜
                 .signWith(SignatureAlgorithm.HS256,key) // key 암호화
                 .compact();
+    }
+
+    public static String getTokenByCookie(HttpServletRequest request){
+        String token = null;
+        Cookie[] myCookies = request.getCookies();
+        for(int i=0; i< myCookies.length; i++){
+            System.out.println(myCookies[i].getName());
+            if( myCookies[i].getName().equals("accessToken") ){
+                token = myCookies[i].getValue();
+                System.out.println(token);
+                return token;
+            }
+        }
+        return null;
     }
 }

@@ -45,11 +45,12 @@ class UserControllerTest {
         String loginPw = "password";
         String userName = "test Man";
         String userEmail = "test@test.com";
+        String loginPwCheck = "password";
 
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw,userName,userEmail))))
+                        .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw, loginPwCheck,userName,userEmail))))
                         .andDo(print())
                         .andExpect(status().isOk());
     }
@@ -62,15 +63,16 @@ class UserControllerTest {
         String loginPw = "password";
         String userName = "test Man";
         String userEmail = "test@test.com";
+        String loginPwCheck = "password";
 
         // RunTimeException Throw 됐다고 가정
-        when(userService.join(any(),any(),any(),any()))
+        when(userService.join(any(),any(),any(),any(),any()))
                 .thenThrow(new RuntimeException("UserID is duplicated!!!"));
 
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw,userName,userEmail))))
+                        .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw, loginPwCheck,userName,userEmail))))
                 .andDo(print())
                 .andExpect(status().isConflict());
     }
