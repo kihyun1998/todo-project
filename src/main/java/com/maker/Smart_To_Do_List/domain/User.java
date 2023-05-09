@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,4 +41,7 @@ public class User extends BaseTimeEntity{
     @NotNull
     @Column(name = "user_email",unique = true)
     private String userEmail;
+//
+//    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+//    private List<ToDoList> toDoLists = new ArrayList<>();
 }

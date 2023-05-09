@@ -1,10 +1,13 @@
 package com.maker.Smart_To_Do_List.auth;
 
+import com.maker.Smart_To_Do_List.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -34,16 +37,9 @@ public class JwtUtil {
                 .compact();
     }
 
-    public static String getTokenByCookie(HttpServletRequest request){
-        String token = null;
-        Cookie[] myCookies = request.getCookies();
-        for(int i=0; i< myCookies.length; i++){
-            if( myCookies[i].getName().equals("accessToken") ){
-                token = myCookies[i].getValue();
-                System.out.println(token);
-                return token;
-            }
-        }
-        return null;
+    public static String getToken(HttpServletRequest request){
+
+        final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+        return authorization.split(" ")[1];
     }
 }

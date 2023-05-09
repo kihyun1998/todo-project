@@ -1,15 +1,13 @@
 package com.maker.Smart_To_Do_List.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Table(name = "toDoList", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "toDoList_id")})
 public class ToDoList extends BaseTimeEntity{
 
@@ -43,5 +42,8 @@ public class ToDoList extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+//
+//    @OneToMany(mappedBy = "toDoList",fetch = FetchType.LAZY)
+//    private List<ToDo> toDos = new ArrayList<>();
 
 }

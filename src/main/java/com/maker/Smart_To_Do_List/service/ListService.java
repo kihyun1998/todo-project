@@ -2,6 +2,7 @@ package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
+import com.maker.Smart_To_Do_List.dto.ToDoListDto;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
@@ -10,6 +11,9 @@ import com.maker.Smart_To_Do_List.auth.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +49,11 @@ public class ListService {
             return loginId + "의 To Do List 등록 완료";
         }
         return "Token is wrong";
+    }
+
+    public List<ToDoList> getToDoList(long userId){
+        List<ToDoList> toDoLists = listRepository.findByUser_UserId(userId);
+        return toDoLists;
     }
 
     //get  return > ListId, ListName
