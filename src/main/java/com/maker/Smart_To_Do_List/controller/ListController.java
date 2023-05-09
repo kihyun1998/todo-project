@@ -1,16 +1,13 @@
 package com.maker.Smart_To_Do_List.controller;
 
 
-import com.maker.Smart_To_Do_List.auth.JwtUtil;
 import com.maker.Smart_To_Do_List.dto.CreateListRequest;
-import com.maker.Smart_To_Do_List.dto.ListDto;
 import com.maker.Smart_To_Do_List.service.ListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
@@ -22,15 +19,15 @@ public class ListController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<String> createList(@RequestBody CreateListRequest listDto,
+    public ResponseEntity<String> createList(@RequestBody CreateListRequest createListDto,
                                              HttpServletRequest request){
 
         final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
         String token = authorization.split(" ")[1];
         System.out.println(token);
         listService.createList(
-                listDto.getListName(),
-                listDto.getSortBy(),
+                createListDto.getListName(),
+                createListDto.getSortBy(),
                 token
         );
 

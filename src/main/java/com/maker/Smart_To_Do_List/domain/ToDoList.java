@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Table(name = "toDoList", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "toDoList_id")})
-public class ToDoList {
+public class ToDoList extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +29,6 @@ public class ToDoList {
     @NotNull
     @Column(name = "toDoList_name")
     private String listName;
-
-    @Column(name = "created_at")
-    private Date createdAt;
 
     /***
      ASC_DATE : 생성 날짜 오름차순

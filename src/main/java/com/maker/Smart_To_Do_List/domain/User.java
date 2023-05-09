@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Table(name = "user", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "user_id")})
-public class User {
+public class User extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +36,6 @@ public class User {
     @NotNull
     @Column(name = "userName",unique = true)
     private String userName;
-
-    @Column(name = "created_at")
-    @CreationTimestamp
-    private Date createdAt;
 
     @NotNull
     @Column(name = "user_email",unique = true)
