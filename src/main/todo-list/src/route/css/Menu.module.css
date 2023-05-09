@@ -5,7 +5,7 @@
   height: 100vh;
   width: 250px;
 
-  padding-left: 30px;
+  /* padding-left: 30px; */
 
   border-right: 2px solid #EDEDED;
   box-shadow: 2px 0px 3px #EDEDED;
@@ -21,4 +21,18 @@
 .menu a {
   color:#606060;
   text-decoration: none;
+}
+
+.menu a:hover {
+  background-color: #606060;
+  color: white;
+  transition: all 0.75s;
+}
+
+.menu h3 {
+  padding-left: 20px;
+}
+
+.active{
+  background-color: #606060;
 }
