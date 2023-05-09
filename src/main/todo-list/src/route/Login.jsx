@@ -19,11 +19,10 @@ const Login = () => {
       try{
         res = await axios.post("/api/v1/users/login", {loginId:id, loginPw:pw});
         setCookie("accessToken", res.data);
-        console.log(res.data)
-        // window.location.href = "/todo";
+        window.location.href = "/todo";
         
-      } catch {
-        console.log(res.response.data)
+      } catch(err) {
+        console.log(err.response.data)
       }
       
       // if (res.data !== null) {

@@ -54,7 +54,7 @@ const Register = () => {
           userEmail: email
         });
 
-        console.log(res)
+        console.log(res.data)
       } catch (err) {
         console.log(err.response.data)
       }

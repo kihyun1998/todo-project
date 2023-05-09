@@ -21,4 +21,20 @@
 .menu a {
   color:#606060;
   text-decoration: none;
+  
+}
+
+.menu > div, .menu > a {
+  font-size: 25px;
+  margin: 20px 0px;
+}
+
+.todoList {
+  margin-left: 15px;
+  font-size: 20px;
+}
+
+.plus {
+  margin-left: 60px;
+  cursor: pointer;
 }

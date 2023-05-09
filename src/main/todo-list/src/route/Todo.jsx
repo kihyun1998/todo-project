@@ -14,7 +14,7 @@ import { useCookies } from 'react-cookie';
 
 const Todo = () => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
-
+    
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(-1);
     const [deadline, setDeadline] = useState("0000-00-00");
@@ -62,7 +62,6 @@ const Todo = () => {
         } catch(err) {
             console.log(err.response.data)
         }
-        
     }
 
     useEffect(()=> {
