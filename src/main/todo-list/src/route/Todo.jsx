@@ -12,7 +12,7 @@ import axios from "axios";
 import { useCookies } from 'react-cookie';
 
 
-const Todo = () => {
+const Todo = ( {toDoId} ) => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
     
     const [content, setContent] = useState("")
@@ -47,7 +47,7 @@ const Todo = () => {
         e.preventDefault();
         let res;
         try {
-            res = await axios.post("/api/v1/todos", {
+            res = await axios.post(`/api/v1/todo/${toDoId}`, {
                 todoContent: content,
                 todoImportance: importance,
                 todoEstimatedTime: estimatedTime,
@@ -71,7 +71,7 @@ const Todo = () => {
     const getTodos = async() => {
         let res;
         try{
-            res = await axios.get("/api/v1/todos", {
+            res = await axios.get(`/api/v1/list/${toDoId}`, {
                 headers: {
                     Authorization: `Bearer ${cookies.accessToken}`
                 }

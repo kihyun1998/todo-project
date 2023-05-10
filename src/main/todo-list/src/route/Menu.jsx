@@ -14,6 +14,7 @@ const Expend = styled.span`
 `
 
 const ToDoListInput = styled.input`
+  margin-left: 35px;
   width: 180px;
 `
 
@@ -58,22 +59,34 @@ const Menu = () => {
         }
       })
       console.log(res.data)
+      
     } catch(err) {
       console.log(err.response.data)
     }
   }
 
-  const getToDoListData = () => {
+  const getToDoListData = async() => {
     if (cookies.toDoLists != null) {
-        setToDoLists(cookies.toDoLists)
+      setToDoLists(cookies.toDoLists)
+    } else {
+      let res;
+      try{
+        res = await axios.get("/api/v1/list/lists", {
+          headers: {
+            Authorization: `Bearer ${cookies.accessToken}`
+          }
+        });
+        setCookie("toDoLists", JSON.stringify(res.data));
+      } catch(err) {
+        console.log(err.response.data);
+      }
+      
     }
   };
 
   useState(()=>{
     getToDoListData();
   }, [])
-
-  useState(()=>{console.log(toDoLists)}, [toDoLists])
 
   const expendToDoList  = () => {
     setExpended(pre=>!pre)
@@ -113,8 +126,8 @@ const Menu = () => {
           <div>
             {toDoLists.map((toDoList, idx) => {
               return (
-                <NavLink key={idx} style={({isActive}) => (isActive ? activeStyle:{})}  className={styles.todoList} to={`/todos/${toDoList.toDoListId}`}>
-                  {toDoList.toDoListName}
+                <NavLink key={idx} style={({isActive}) => (isActive ? activeStyle:{})}  className={styles.todoList} to={`/todo/${toDoList.listId}`}>
+                  {toDoList.listName}
                 </NavLink>
               )
             })}
@@ -122,8 +135,7 @@ const Menu = () => {
               <div>
                 <ToDoListInput 
                   onChange={onChangeToDoListName}
-                  value={toDoListName}
-                  className={styles.todoList}/>
+                  value={toDoListName}/>
                 <ToDoListAddBtn
                   className={`material-symbols-outlined`}
                   onClick={addToDoList}>

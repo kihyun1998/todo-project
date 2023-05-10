@@ -17,9 +17,10 @@ const Login = () => {
       e.preventDefault();
       let res;
       try{
-        res = await axios.post("/api/v1/users/login", {loginId:id, loginPw:pw});
+        res = await axios.post("/api/v1/user/login", {loginId:id, loginPw:pw});
+        console.log(res)
         setCookie("accessToken", res.data);
-        window.location.href = "/todo";
+        // window.location.href = "/todo";
         
       } catch(err) {
         console.log(err.response.data)

@@ -46,7 +46,7 @@ const Register = () => {
     async submit (e) {
       e.preventDefault();
       try{
-        const res = await axios.post("/api/v1/users/join", {
+        const res = await axios.post("/api/v1/user/join", {
           loginId: id,
           loginPw: pw,
           loginPwCheck: pwC,
@@ -55,6 +55,7 @@ const Register = () => {
         });
 
         console.log(res.data)
+        window.location.href = "/login";
       } catch (err) {
         console.log(err.response.data)
       }
