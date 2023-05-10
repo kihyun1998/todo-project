@@ -8,6 +8,9 @@
   width: 150px;
   height: 150px;
   object-fit: cover;
+  margin-top: 70px;
+  margin-bottom: 30px;
+  margin-left: 70px;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -23,6 +26,7 @@
 }
 
 .profileDetails p {
-  margin-top: 0;
+  margin-left: 70px;
+  margin-top: 20px;
   margin-bottom: 5px;
 }

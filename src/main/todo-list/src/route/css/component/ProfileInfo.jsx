@@ -1,29 +1,36 @@
 import React from 'react';
 import styles from "../ProfileInfo.module.css";
-
+import userimg from "../img/userimg.png" // 일단 기본 이미지 넣어서 띄워봄
 function ProfileInfo({ name, email,profileImg }) {
-  return (            //위에 나중에 서버랑 맞춰서 써야함
+  return (            //위에 나중에 서버랑 맞춰서 써야함  유저 이미지는 src = {이미지} 넣음 ㅇㅇ
     
     <div className={styles.profileDetails}>
-      <h1 style={ {margin : "20px"}}>
+      <h1 style={{
+        marginLeft : "70px" , marginTop:"50px"
+      }}>
         내 정보
       </h1>
+
       <div
         style={{
-          width: "10000%",
+          width: "500%",
+          marginLeft : "70px",
           borderBottom: "4px solid #aaa",
           lineHeight: "0.5em",
-          margin: "20px 0 20px",
         }}
       />
       
-      <div className="profile-img">
-        <img src={profileImg} alt="profile image" />
+      <div className={styles.profileImg}>
+        <img src={userimg} alt="profile image" /> 
       </div>
       
       <div style={{margin : "20px"}} className={styles.profileDetails}>
-        <h2>이름 : {name}</h2>
-        <p>이메일 : {email}</p>
+        {/* <img src= {userimg} /> */}
+        
+        <p> 이름 </p>
+        <p>{name}</p>
+        <p> 이메일 </p>
+        <p>{email}</p>
       </div>
     </div>
   );

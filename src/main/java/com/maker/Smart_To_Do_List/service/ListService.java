@@ -9,6 +9,8 @@ import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import com.maker.Smart_To_Do_List.auth.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ public class ListService {
 
             listRepository.findByListName(listName)
                     .ifPresent(list ->{
+
                         if (list.getUser().getLoginId().equals(loginId)){
                             throw new AppException(ErrorCode.DUPLICATED, listName + " is already exits");
                         }

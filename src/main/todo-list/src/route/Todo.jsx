@@ -9,20 +9,17 @@ import EstimatedTime from "./css/component/EstimatedTime";
 import Deadline from "./css/component/Deadline";
 import Difficulty from "./css/component/Difficulty";
 import axios from "axios";
+import { useCookies } from 'react-cookie';
+
 
 const Todo = () => {
+    const [cookies, setCookie] = useCookies(["accessToken"]);
+    
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(-1);
     const [deadline, setDeadline] = useState("0000-00-00");
     const [estimatedTime, setEstimatedTime] = useState(0);
     const [difficulty, setDifficulty] = useState(0);
-    const [todos, setTodos] = useState([{
-        todoContent: "Content Test",
-        todoImportance: 1,
-        todoEstimatedTime: "3600",
-        todoDifficulty: 1,
-        todoDeadline: "2023-06-10",
-    }]);
 
     const getParam = (todoType, param) => {
         switch (todoType) {
@@ -46,14 +43,25 @@ const Todo = () => {
     const onChangeContent = (e) => setContent(e.target.value)
 
     // useEffect(()=>console.log(importance), [importance])
-    const submit = async() => {
-        axios.post("/api/v1/todos", {
-            todoContent: content,
-            todoImportance: importance,
-            todoEstimatedTime: estimatedTime,
-            todoDifficulty: difficulty,
-            todoDeadline: deadline,
-        })
+    const submit = async(e) => {
+        e.preventDefault();
+        let res;
+        try {
+            res = await axios.post("/api/v1/todos", {
+                todoContent: content,
+                todoImportance: importance,
+                todoEstimatedTime: estimatedTime,
+                todoDifficulty: difficulty,
+                todoDeadline: deadline,
+            }, {
+                headers : {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                }
+            })
+            console.log(res.data)
+        } catch(err) {
+            console.log(err.response.data)
+        }
     }
 
     useEffect(()=> {
@@ -61,26 +69,25 @@ const Todo = () => {
     }, [])
 
     const getTodos = async() => {
-        const res = await axios.get("/api/v1/todos");
-        setTodos(res.data);
+        let res;
+        try{
+            res = await axios.get("/api/v1/todos", {
+                headers: {
+                    Authorization: `Bearer ${cookies.accessToken}`
+                }
+            });
+            console.log(res.data)
+        } catch(err) {
+            console.log(err.response.data)
+        }
+        
+        // setTodos(res.data);
     }
 
     return (
         <div className={styles.test}>
             <div>
                 <div>
-                    {todos.map((todo, idx)=>{
-                        return(
-                            <div key={idx}>
-                                <span>{idx}|</span>
-                                <span>{todo.todoContent}|</span>
-                                <span>{todo.todoImportance}|</span>
-                                <span>{todo.todoEstimatedTime}|</span>
-                                <span>{todo.todoDeadline}|</span>
-                                <span>{todo.todoDifficulty}|</span>
-                            </div>
-                        )
-                    })}
                 </div>
             </div>
             <div className={styles.inputs}>
