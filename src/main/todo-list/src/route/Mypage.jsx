@@ -2,34 +2,43 @@ import React, { useEffect, useState } from "react";
 import Button from "./css/component/Button";
 import ProfileInfo from "./css/component/ProfileInfo";
 import axios from "axios";
+import { useCookies } from "react-cookie";
+
 const Mypage = () => {
+  const [userInfo,setUserInfo] = useState({});
+  const [cookies, setCookie] = useCookies(["accessToken"]);
 
-  
-  // const [res,setRes] = useState({}) 
-
-  // useEffect(async()=>{
-
-  //   setRes(await axios.get(`/Mypage?userName=${userName}`))
-  //                           // 서버에서 정해주는 값을 넣어줘야함
-  // }, [])
-
-
-  const user = {
-  name : '홍길동',
-  email : 'abcd@bu.ac.kr'
+  const getUserInfo = async() => {
+    let res;
+    try {
+      res = await axios.get(`/api/v1/user/info`, {
+        headers: {
+          Authorization: `Bearer ${cookies.accessToken}`
+        }
+      });
+      setUserInfo(res.data)
+    } catch(err) {
+      console.log(err.response.data)
+    }
+    
   }
+
+  useEffect(()=>{
+    
+    getUserInfo();
+    
+  }, [])
+
 
   return (
     <div>
-
-    <ProfileInfo {...user} /> 
-      {/* <ProfileInfo 
-         naem = {res.data.userName}
-         email = {res.data.userEmail}
-      /> */}
-      <span style={{margin : "20px"}}>  
+      <ProfileInfo 
+         name = {userInfo.userName}
+         email = {userInfo.userEmail}
+      />
+      <span style={{marginLeft : "87px"}}>  
         <Button
-          text={"비닐번호 변경"}
+          text={"비밀번호 변경"}
         />
       </span>
 

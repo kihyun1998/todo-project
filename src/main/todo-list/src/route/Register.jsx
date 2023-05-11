@@ -38,6 +38,29 @@ const Register = () => {
       }
     },
 
+    checkIdDup(e) {
+      e.preventDefault();
+      console.log("아직 구현X")
+    },
+
+    async submit (e) {
+      e.preventDefault();
+      try{
+        const res = await axios.post("/api/v1/user/join", {
+          loginId: id,
+          loginPw: pw,
+          loginPwCheck: pwC,
+          userName: name,
+          userEmail: email
+        });
+
+        console.log(res.data)
+        window.location.href = "/login";
+      } catch (err) {
+        console.log(err.response.data)
+      }
+    }
+
   }
 
   useEffect(()=>{
@@ -68,6 +91,7 @@ const Register = () => {
         />
         <Button
           text={"중복확인"}
+          onClick={handlers.checkIdDup}
         />
         <br />
 
@@ -113,8 +137,13 @@ const Register = () => {
           onChange={handlers.onChangeEmail}
           value={email}
         />
-        <Button
+        {/* <Button
           text={"인증"}
+        />*/}
+        <br />
+        <Button
+          text={"가입"}
+          onClick={handlers.submit}
         />
       </form>
     </div>

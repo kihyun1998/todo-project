@@ -7,6 +7,7 @@ import Login from "./route/Login";
 import Register from "./route/Register";
 import Mypage from "./route/Mypage"
 
+
 function App() {
 
   return (
@@ -14,7 +15,7 @@ function App() {
       <div className={styles.app}>
         <Menu />
         <Routes>
-          <Route path="/Todo" element={<Todo />}/>
+          <Route path="/todo/:toDoId" element={<Todo />}/>
           <Route path="/" element={<Intro />}/>
           <Route path="/users/login" element={<Login />}/>
           <Route path="/users/join" element={<Register />}/>

@@ -12,10 +12,12 @@ import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.ListService;
 import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,9 +36,24 @@ public class ListController {
     private String secretKey;
 
 
+//    @PostMapping("/create")
+//    public ResponseEntity<String> createList(@RequestBody CreateListRequest listDto,
+//                                             HttpServletRequest request){
+//
+//        String token = JwtUtil.getTokenByCookie(request);
+//        listService.createList(
+//                listDto.getListName(),
+//                listDto.getSortBy(),
+//                token
+//        );
+//
+//        return ResponseEntity.ok().body("Create List Success!");
+//    }
+
     @PostMapping("/create")
     public ResponseEntity<String> createList(@RequestBody CreateListRequest createListDto,
                                              HttpServletRequest request){
+
 
         String token = JwtUtil.getToken(request);
         System.out.println(token);
@@ -48,6 +65,7 @@ public class ListController {
 
         return ResponseEntity.ok().body("Create List Success!");
     }
+
 
     @GetMapping("/lists")
     public ResponseEntity<?> getToDoList(HttpServletRequest request){
