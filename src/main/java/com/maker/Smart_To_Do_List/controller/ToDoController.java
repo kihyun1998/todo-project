@@ -1,19 +1,30 @@
 package com.maker.Smart_To_Do_List.controller;
 
+import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
+import com.maker.Smart_To_Do_List.service.ToDoService;
+import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/list/{listId}")
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/list")
 public class ToDoController {
 
+    private final ToDoService toDoService;
 
-    @PostMapping
-    public ResponseEntity<String> writeTodo(Authentication authentication){
-        return ResponseEntity.ok().body(authentication.getName() + "님의 할일 등록 완료");
+    @PostMapping("/{listId}/create")
+    public ResponseEntity<String> createTodo(
+            @RequestBody CreateToDoRequest createToDoDto,
+            @PathVariable("listId") final long listId){
+
+            toDoService.createToDo(
+                    createToDoDto,
+                    listId
+            );
+
+        return ResponseEntity.ok().body("Create ToDo Success");
     }
 }

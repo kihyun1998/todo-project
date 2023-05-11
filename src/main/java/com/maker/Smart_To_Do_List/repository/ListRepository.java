@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface ListRepository extends JpaRepository<ToDoList, Long> {
     Optional<ToDoList> findByListName(String listName);
+    Optional<ToDoList> findByListId(Long listId);
     List<ToDoList> findByUser_UserId(Long userId);
 }

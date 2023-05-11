@@ -30,7 +30,7 @@ public class ListService {
         if( token != null ){
             String loginId = JwtUtil.getLoginId(token,secretKey);
             User selectedUser = userRepository.findByLoginId(loginId)
-                    .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));;
+                    .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));
 
             listRepository.findByListName(listName)
                     .ifPresent(list ->{
@@ -55,7 +55,4 @@ public class ListService {
         List<ToDoList> toDoLists = listRepository.findByUser_UserId(userId);
         return toDoLists;
     }
-
-    //get  return > ListId, ListName
-
 }
