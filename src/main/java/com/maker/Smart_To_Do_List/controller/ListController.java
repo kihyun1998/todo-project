@@ -35,21 +35,6 @@ public class ListController {
     @Value("${jwt.secret}")
     private String secretKey;
 
-
-//    @PostMapping("/create")
-//    public ResponseEntity<String> createList(@RequestBody CreateListRequest listDto,
-//                                             HttpServletRequest request){
-//
-//        String token = JwtUtil.getTokenByCookie(request);
-//        listService.createList(
-//                listDto.getListName(),
-//                listDto.getSortBy(),
-//                token
-//        );
-//
-//        return ResponseEntity.ok().body("Create List Success!");
-//    }
-
     @PostMapping("/create")
     public ResponseEntity<String> createList(@RequestBody CreateListRequest createListDto,
                                              HttpServletRequest request){
@@ -68,9 +53,9 @@ public class ListController {
 
 
     @GetMapping("/lists")
-    public ResponseEntity<?> getToDoList(HttpServletRequest request){
+    public ResponseEntity<?> getToDoLists(HttpServletRequest request){
         Long userId = jwtService.getUserId(request);
-        List<ToDoList> toDoLists = listService.getToDoList(userId);
+        List<ToDoList> toDoLists = listService.getToDoLists(userId);
         List<ToDoListDto> toDoListDtoLists = ToDoListMapper.convertToDtoList(toDoLists);
         return new ResponseEntity<>(toDoListDtoLists, HttpStatus.OK);
     }

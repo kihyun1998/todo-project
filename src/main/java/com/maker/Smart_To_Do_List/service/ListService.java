@@ -54,7 +54,7 @@ public class ListService {
         return "Token is wrong";
     }
 
-    public List<ToDoList> getToDoList(long userId){
+    public List<ToDoList> getToDoLists(long userId){
         List<ToDoList> toDoLists = listRepository.findByUser_UserId(userId);
         return toDoLists;
     }
