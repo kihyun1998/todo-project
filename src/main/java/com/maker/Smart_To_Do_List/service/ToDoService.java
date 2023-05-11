@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +38,9 @@ public class ToDoService {
 
         toDoRepository.save(toDo);
         return listId + "에 저장 완료";
+    }
+
+    public List<ToDo> getToDos(long listId){
+        return toDoRepository.findByToDoList_ListId(listId);
     }
 }

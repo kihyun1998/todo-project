@@ -56,12 +56,7 @@ public class ListController {
     public ResponseEntity<?> getToDoLists(HttpServletRequest request){
         Long userId = jwtService.getUserId(request);
         List<ToDoList> toDoLists = listService.getToDoLists(userId);
-        List<ToDoListDto> toDoListDtoLists = ToDoListMapper.convertToDtoList(toDoLists);
-        return new ResponseEntity<>(toDoListDtoLists, HttpStatus.OK);
+        List<ToDoListDto> toDoListDtoList = ToDoListMapper.convertToDtoList(toDoLists);
+        return new ResponseEntity<>(toDoListDtoList, HttpStatus.OK);
     }
-
-//    @RequestMapping(value = "{userId}",method = RequestMethod.GET)
-//    public ResponseEntity<ListDto> getToDoListInfo(@PathVariable("userId") final long userId){
-//        ListDto list = listService.getList(userId)
-//    }
 }

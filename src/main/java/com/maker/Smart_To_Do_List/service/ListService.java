@@ -55,7 +55,7 @@ public class ListService {
     }
 
     public List<ToDoList> getToDoLists(long userId){
-        List<ToDoList> toDoLists = listRepository.findByUser_UserId(userId);
-        return toDoLists;
+        return listRepository.findByUser_UserId(userId);
     }
+
 }

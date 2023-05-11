@@ -17,16 +17,16 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "toDoList", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "toDoList_id")})
+@Table(name = "toDoList", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "lzist_id")})
 public class ToDoList extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="toDoList_id", unique = true, nullable = false)
+    @Column(name="list_id", unique = true, nullable = false)
     private Long listId;
 
     @NotNull
-    @Column(name = "toDoList_name")
+    @Column(name = "list_name")
     private String listName;
 
     /***
@@ -42,8 +42,4 @@ public class ToDoList extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-//
-//    @OneToMany(mappedBy = "toDoList",fetch = FetchType.LAZY)
-//    private List<ToDo> toDos = new ArrayList<>();
-
 }

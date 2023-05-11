@@ -49,7 +49,7 @@ public class ToDo extends BaseTimeEntity{
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "toDoList_id")
+    @JoinColumn(name = "list_id")
     private ToDoList toDoList;
 
 }
