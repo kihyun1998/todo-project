@@ -17,8 +17,8 @@ function App() {
         <Routes>
           <Route path="/todo/:toDoId" element={<Todo />}/>
           <Route path="/" element={<Intro />}/>
-          <Route path="/users/login" element={<Login />}/>
-          <Route path="/users/join" element={<Register />}/>
+          <Route path="/user/login" element={<Login />}/>
+          <Route path="/user/join" element={<Register />}/>
           <Route path="/mypage" element={<Mypage />} />
         </Routes>
       </div>
