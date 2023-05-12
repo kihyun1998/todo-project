@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import styles from "./css/Menu.module.css";
 
@@ -40,9 +40,13 @@ const Menu = () => {
   const [inputExpended, setInputExpended] = useState(false);
   const [toDoListName, setToDoListName] = useState("");
   const [toDoLists, setToDoLists] = useState([]);
+  const [_, set_] = useState(0);
 
   const tempLogin = () => setCookie("accessToken", "temp");
-  const tempLogout = () => removeCookie("accessToken", "temp");
+  const tempLogout = () => {
+    removeCookie("accessToken");
+    removeCookie("toDoLists");
+  }
   const onChangeToDoListName = (e) => setToDoListName(e.target.value);
 
   const addToDoList = async() => {
@@ -58,7 +62,8 @@ const Menu = () => {
           Authorization: `Bearer ${cookies.accessToken}`
         }
       })
-      console.log(res.data)
+      getToDoListData();
+      expendInput();
       
     } catch(err) {
       console.log(err.response.data)
@@ -66,9 +71,7 @@ const Menu = () => {
   }
 
   const getToDoListData = async() => {
-    if (cookies.toDoLists != null) {
-      setToDoLists(cookies.toDoLists)
-    } else {
+    if (cookies.accessToken != null) {
       let res;
       try{
         res = await axios.get("/api/v1/list/lists", {
@@ -76,7 +79,7 @@ const Menu = () => {
             Authorization: `Bearer ${cookies.accessToken}`
           }
         });
-        setCookie("toDoLists", JSON.stringify(res.data));
+        await setCookie("toDoLists", res.data);
       } catch(err) {
         console.log(err.response.data);
       }
@@ -84,7 +87,11 @@ const Menu = () => {
     }
   };
 
-  useState(()=>{
+  useEffect(()=>{
+    setToDoLists([...cookies.toDoLists]);
+  }, [cookies.toDoLists])
+
+  useEffect(()=>{
     getToDoListData();
   }, [])
 
@@ -156,10 +163,10 @@ const Menu = () => {
       <NavLink to={"/"} onClick={tempLogout}>로그아웃</NavLink>
       }
       {cookies.accessToken==null?
-      <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/users/login"}>로그인</NavLink>:
+      <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/login"}>로그인</NavLink>:
       null}
       {cookies.accessToken==null?
-      <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/users/join"}>회원가입</NavLink>:
+      <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/join"}>회원가입</NavLink>:
       null}
       
       {cookies.accessToken==null?

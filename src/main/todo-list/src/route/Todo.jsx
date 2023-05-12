@@ -8,18 +8,25 @@ import Importance from "./css/component/Importance";
 import EstimatedTime from "./css/component/EstimatedTime";
 import Deadline from "./css/component/Deadline";
 import Difficulty from "./css/component/Difficulty";
+import ToDoTable from "./css/component/ToDoTable"
+
 import axios from "axios";
 import { useCookies } from 'react-cookie';
+import { useParams } from "react-router-dom";
 
 
-const Todo = ( {toDoId} ) => {
+const Todo = () => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
-    
+    const {toDoId} = useParams();
+
+    const [todos, setTodos] = useState([]);
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(-1);
     const [deadline, setDeadline] = useState("0000-00-00");
     const [estimatedTime, setEstimatedTime] = useState(0);
     const [difficulty, setDifficulty] = useState(0);
+
+    
 
     const getParam = (todoType, param) => {
         switch (todoType) {
@@ -47,18 +54,23 @@ const Todo = ( {toDoId} ) => {
         e.preventDefault();
         let res;
         try {
-            res = await axios.post(`/api/v1/todo/${toDoId}`, {
-                todoContent: content,
-                todoImportance: importance,
-                todoEstimatedTime: estimatedTime,
-                todoDifficulty: difficulty,
-                todoDeadline: deadline,
+            res = await axios.post(`/api/v1/list/${toDoId}/create`, {
+                todoTitle: content,
+                importance: importance,
+                estimatedTime: estimatedTime,
+                difficulty: difficulty,
+                deadline: deadline,
             }, {
                 headers : {
                     Authorization: `Bearer ${cookies.accessToken}`
                 }
             })
-            console.log(res.data)
+            getTodos()
+            setContent("")
+            setImportance(-1);
+            setDeadline("0000-00-00");
+            setEstimatedTime(0);
+            setDifficulty(0);
         } catch(err) {
             console.log(err.response.data)
         }
@@ -71,11 +83,12 @@ const Todo = ( {toDoId} ) => {
     const getTodos = async() => {
         let res;
         try{
-            res = await axios.get(`/api/v1/list/${toDoId}`, {
+            res = await axios.get(`/api/v1/list/${toDoId}/todos`, {
                 headers: {
                     Authorization: `Bearer ${cookies.accessToken}`
                 }
             });
+            setTodos([...res.data])
             console.log(res.data)
         } catch(err) {
             console.log(err.response.data)
@@ -87,8 +100,9 @@ const Todo = ( {toDoId} ) => {
     return (
         <div className={styles.test}>
             <div>
-                <div>
-                </div>
+                <ToDoTable 
+                    todos={todos}
+                />
             </div>
             <div className={styles.inputs}>
                 <Input 

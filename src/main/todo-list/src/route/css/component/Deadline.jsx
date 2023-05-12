@@ -11,7 +11,7 @@ const Deadline = ({returnParam}) => {
     fontWeight: "1000",
   }
 
-  const [deadline, setDeadline] = useState("0000-00-00");
+  const [deadline, setDeadline] = useState("0000-00-00T00:00");
 
   useEffect(()=>{
     returnParam("deadline", deadline);
@@ -23,7 +23,7 @@ const Deadline = ({returnParam}) => {
 
   return (
     <div>
-      <input style={inputStyle} type="date" onChange={onChangeDealine}/>
+      <input style={inputStyle} type="datetime-local" onChange={onChangeDealine}/>
     </div>
   );
 }

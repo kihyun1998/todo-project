@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "./css/component/Input";
 import Button from "./css/component/Button";
 import { useCookies } from 'react-cookie';
 
 const Login = () => {
   const [cookies, setCookie] = useCookies(['accessToken']);
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
@@ -20,7 +22,7 @@ const Login = () => {
         res = await axios.post("/api/v1/user/login", {loginId:id, loginPw:pw});
         console.log(res)
         setCookie("accessToken", res.data);
-        // window.location.href = "/todo";
+        navigate("/");
         
       } catch(err) {
         console.log(err.response.data)
