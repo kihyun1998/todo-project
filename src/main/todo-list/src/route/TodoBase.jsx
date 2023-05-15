@@ -8,14 +8,14 @@ import Importance from "./css/component/Importance";
 import EstimatedTime from "./css/component/EstimatedTime";
 import Deadline from "./css/component/Deadline";
 import Difficulty from "./css/component/Difficulty";
-import ToDoTable from "./css/component/ToDoTable"
+import TodoTable from "./css/component/TodoTable"
 
 import axios from "axios";
 import { useCookies } from 'react-cookie';
 import { useParams } from "react-router-dom";
 
 
-const Todo = () => {
+const TodoBase = () => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const {toDoId} = useParams();
 
@@ -77,8 +77,9 @@ const Todo = () => {
     }
 
     useEffect(()=> {
-        getTodos()
-    }, [])
+        setTodos([]);
+        getTodos();
+    }, [toDoId])
 
     const getTodos = async() => {
         let res;
@@ -89,7 +90,6 @@ const Todo = () => {
                 }
             });
             setTodos([...res.data])
-            console.log(res.data)
         } catch(err) {
             console.log(err.response.data)
         }
@@ -100,7 +100,7 @@ const Todo = () => {
     return (
         <div className={styles.test}>
             <div>
-                <ToDoTable 
+                <TodoTable 
                     todos={todos}
                 />
             </div>
@@ -153,4 +153,4 @@ const Todo = () => {
     );
 }
 
-export default Todo;
+export default TodoBase;

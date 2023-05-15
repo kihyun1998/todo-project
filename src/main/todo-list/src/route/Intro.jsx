@@ -15,8 +15,8 @@ const Intro = () => {
 
   return (
     <div className={styles.intro}>
-      <h1>스마트 To do List</h1>
-      <h3>여기에는 소개가 들어갈 예정</h3>
+      <h1>시하</h1>
+      <h3>시온이의 하루라는 뜻</h3>
       {message}
     </div>
   );

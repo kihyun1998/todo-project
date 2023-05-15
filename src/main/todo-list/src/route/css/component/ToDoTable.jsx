@@ -1,18 +1,16 @@
+import Todo from "./Todo"
+
 const ToDoTable = ({todos}) => {
 
   return (
     <div>
-      {todos.map((todo, idx)=>{
-        return(
-          <div key={idx}>
-            <span>{todo.todoTitle}</span>
-            <span>{todo.difficulty}</span>
-            <span>{todo.importance}</span>
-            <span>{todo.status}</span>
-            <span>{todo.deadline}</span>
-          </div>
-        )
-      })}
+      toDoId, todoTitle, estimatedTime, deadline, difficulty, importance, status
+      {todos.map((todo, idx)=>
+        <Todo
+          key={idx}
+          todo={todo}
+        />
+      )}
     </div>
   );
 }

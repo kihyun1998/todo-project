@@ -4,7 +4,10 @@ import styled from "styled-components";
 const Deadline = ({returnParam}) => {
   const inputStyle = {
     height: "100px",
-    borderRadius: "20px",
+    // borderRadius: "20px",
+    border: "0",
+    backgroundColor: "darkgrey",
+    color: "white",
     marginTop: "20px",
     fontFamily: "Sunflower, sans-serif",
     fontSize: "15px",

@@ -42,6 +42,11 @@
   display: block;
   padding-left: 35px;
   font-size: 25px;
+  margin-top: 5px;
+}
+
+.todoList::before {
+  content: "• ";
 }
 
 .plus {
