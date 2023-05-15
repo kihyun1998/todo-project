@@ -2,6 +2,7 @@ package com.maker.Smart_To_Do_List.controller;
 
 
 import com.maker.Smart_To_Do_List.domain.User;
+import com.maker.Smart_To_Do_List.dto.ChangePasswordRequest;
 import com.maker.Smart_To_Do_List.dto.JoinRequest;
 import com.maker.Smart_To_Do_List.dto.LoginRequest;
 import com.maker.Smart_To_Do_List.dto.UserDto;
@@ -24,7 +25,6 @@ public class UserController {
 
     private final UserService userService;
     private final JwtService jwtService;
-    private final BCryptPasswordEncoder encoder;
 
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody JoinRequest joinDto){
@@ -58,14 +58,13 @@ public class UserController {
 
     @PutMapping("/info")
     public ResponseEntity<?> changePassword(HttpServletRequest request,
-                                            HttpServletResponse response,
-                                            @RequestBody String password){
+                                            @RequestBody ChangePasswordRequest changePasswordRequest){
         Long userId = jwtService.getUserId(request);
-        userService.changePassword(
+        User updateUser = userService.changePassword(
                 userId,
-                encoder.encode(password)
+                changePasswordRequest
         );
 
-        return ResponseEntity.ok().body("Change Success!");
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
     }
 }

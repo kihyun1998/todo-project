@@ -1,6 +1,7 @@
 package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.User;
+import com.maker.Smart_To_Do_List.dto.ChangePasswordRequest;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
@@ -10,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import com.maker.Smart_To_Do_List.auth.JwtUtil;
+
+import java.util.Optional;
 
 
 @Service
@@ -55,6 +58,7 @@ public class UserService {
         User selectedUser = userRepository.findByLoginId(loginId)
                 .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));
 
+        System.out.println(selectedUser.getLoginPw());
         // INVALID PASSWORD
         if(!encoder.matches(loginPw,selectedUser.getLoginPw())){
             throw new AppException(ErrorCode.INVALID_PASSWORD, "The password is wrong.");
@@ -64,15 +68,22 @@ public class UserService {
         return JwtUtil.createToken(selectedUser.getLoginId() ,secretKey ,expireTimeMs);
     }
 
-    public String changePassword(Long userId,String pw){
+    public User changePassword(Long userId, ChangePasswordRequest changePasswordRequest){
 
-        User user = userRepository.findByUserId(userId)
-                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, userId + "is not found!!"));
+        Optional<User> user = userRepository.findByUserId(userId);
+        if (user.isEmpty()){
+            throw new AppException(ErrorCode.NOT_FOUND, userId + "is not found!!");
+        }
 
-        user.setLoginPw(pw);
-        userRepository.save(user);
+        // INVALID PASSWORD
+        User updateUser = user.get();
+        if(!encoder.matches(changePasswordRequest.getPassword(),updateUser.getLoginPw())){
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "The password is wrong.");
+        }
 
-        return "Success!";
+        updateUser.setLoginPw(encoder.encode(changePasswordRequest.getChangePassword()));
+        return userRepository.save(updateUser);
+
 
     }
 }
