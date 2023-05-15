@@ -5,6 +5,7 @@ import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+    private final JwtService jwtService;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -59,9 +61,19 @@ public class UserService {
         }
 
         // No Exception > token issuance
-        String token = JwtUtil.createToken(selectedUser.getLoginId() ,secretKey ,expireTimeMs);
+        return JwtUtil.createToken(selectedUser.getLoginId() ,secretKey ,expireTimeMs);
+    }
 
+    public String changePassword(Long userId,String pw){
 
-        return token;
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, userId + "is not found!!"));
+
+        user.setLoginPw(pw);
+        System.out.println("user is "+user);
+        userRepository.save(user);
+
+        return "Success!";
+
     }
 }

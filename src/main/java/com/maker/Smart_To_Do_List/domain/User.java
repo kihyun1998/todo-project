@@ -1,9 +1,6 @@
 package com.maker.Smart_To_Do_List.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Table(name = "user", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "user_id")})
 public class User extends BaseTimeEntity{
 
