@@ -70,7 +70,6 @@ public class UserService {
                 .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, userId + "is not found!!"));
 
         user.setLoginPw(pw);
-        System.out.println("user is "+user);
         userRepository.save(user);
 
         return "Success!";
