@@ -88,7 +88,8 @@ const Menu = () => {
   };
 
   useEffect(()=>{
-    setToDoLists([...cookies.toDoLists]);
+    if(cookies.toDoLists != null)
+      setToDoLists([...cookies.toDoLists]);
   }, [cookies.toDoLists])
 
   useEffect(()=>{

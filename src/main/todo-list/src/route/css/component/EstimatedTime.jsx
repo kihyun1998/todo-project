@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components"
 
 const TimeCaseStyle = styled.div`
+  height: ${props=>props.clicked?"150px":"30px"};
   overflow-y: ${props=>props.clicked?"scroll":"hidden"};
   width: 80px;
-  height: ${props=>props.clicked?"150px":"30px"};
   background-color: white;
 
   transition: .3s all;
@@ -15,15 +15,16 @@ const TimeCaseStyle = styled.div`
   //   -webkit-scroll-snap-type: mandatory;
   //   -ms-scroll-snap-type: mandatory;
 
-  // &::-webkit-scrollbar {
-  //   width: 20px;
-  //   height: 10px;
-  // }
+  &::-webkit-scrollbar {
+    display: none;
+    // width: 20px;
+    // height: 10px;
+  }
 `;
 
 const TimeStyle = styled.div`
   height: 30px;
-  background-color: ${params=>params.current?"darkgrey":"white"};
+  background-color: ${params=>params.current?"darkgrey":"black"};
 `;
 
 const EstimatedTime = ({returnParam}) => {
