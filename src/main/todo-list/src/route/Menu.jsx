@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import styles from "./css/Menu.module.css";
+import axios from "axios";
+import styled from "styled-components";
 
 import Button from "./css/component/Button";
 import Input from "./css/component/Input"
-import axios from "axios";
-import styled from "styled-components";
+import TodoList from "./css/component/TodoList";
+import todoList from "./css/component/TodoList";
+
 
 const Expend = styled.span`
   cursor: pointer;
@@ -41,11 +44,13 @@ const Menu = () => {
   const [toDoListName, setToDoListName] = useState("");
   const [toDoLists, setToDoLists] = useState([]);
   const [_, set_] = useState(0);
+  const navigate = useNavigate();
 
   const tempLogin = () => setCookie("accessToken", "temp");
   const tempLogout = () => {
     removeCookie("accessToken");
     removeCookie("toDoLists");
+    navigate("/");
   }
   const onChangeToDoListName = (e) => setToDoListName(e.target.value);
 
@@ -94,7 +99,7 @@ const Menu = () => {
 
   useEffect(()=>{
     getToDoListData();
-  }, [])
+  }, [cookies.accessToken])
 
   const expendToDoList  = () => {
     setExpended(pre=>!pre)
@@ -132,13 +137,14 @@ const Menu = () => {
         </div>
         {expended&&toDoLists?
           <div>
-            {toDoLists.map((toDoList, idx) => {
-              return (
-                <NavLink key={idx} style={({isActive}) => (isActive ? activeStyle:{})}  className={styles.todoList} to={`/todo/${toDoList.listId}`}>
-                  {toDoList.listName}
-                </NavLink>
-              )
-            })}
+            {toDoLists.map((toDoList, idx) => 
+              <TodoList 
+                key={idx}
+                className={styles.todoList} 
+                to={`/todo/${toDoList.listId}`}
+                text={toDoList.listName}
+              />
+            )}
             {inputExpended?
               <div>
                 <ToDoListInput 

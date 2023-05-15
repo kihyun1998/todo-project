@@ -38,17 +38,6 @@
   padding: 0px 0px 0px 20px;
 }
 
-.todoList {
-  display: block;
-  padding-left: 35px;
-  font-size: 25px;
-  margin-top: 5px;
-}
-
-.todoList::before {
-  content: "• ";
-}
-
 .plus {
   margin-left: 55px;
   cursor: pointer;
