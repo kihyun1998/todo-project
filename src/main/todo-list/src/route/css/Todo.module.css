@@ -1,10 +1,9 @@
 .test {
-    width: 85%;
-
+    width: 80%;
+    padding-left: 30px;
+    padding-top: 30px;
     display: flex;
-    /* height: 100vh; */
     flex-direction: column;
-    /* flex-grow: 1; */
 }
 
 .test > div:nth-child(1) {
@@ -18,13 +17,12 @@
 
 .inputs > span {
     height: 2rem;
-    width: 100%;
-    text-align: center;
+    width: 90%;
 }
 
 .inputs span input {
     height: 100%;
-    width: 90%;
+    width: 95%;
 }
 
 .inputs > div {
