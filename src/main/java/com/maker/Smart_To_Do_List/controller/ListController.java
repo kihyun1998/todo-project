@@ -4,9 +4,11 @@ package com.maker.Smart_To_Do_List.controller;
 import com.maker.Smart_To_Do_List.auth.JwtUtil;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
+import com.maker.Smart_To_Do_List.dto.ChangeListNameRequest;
 import com.maker.Smart_To_Do_List.dto.CreateListRequest;
 import com.maker.Smart_To_Do_List.dto.ToDoListDto;
 import com.maker.Smart_To_Do_List.mapper.ToDoListMapper;
+import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.ListService;
@@ -21,7 +23,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +36,7 @@ public class ListController {
     private final ListService listService;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final ListRepository listRepository;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -58,5 +64,30 @@ public class ListController {
         List<ToDoList> toDoLists = listService.getToDoLists(userId);
         List<ToDoListDto> toDoListDtoList = ToDoListMapper.convertToDtoList(toDoLists);
         return new ResponseEntity<>(toDoListDtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{listId}")
+    public ResponseEntity<?> getToDoList(HttpServletRequest request,
+                                                @PathVariable("listId") final long listId){
+        // 사용자 검증
+        Long userId = jwtService.getUserId(request);
+        ToDoListDto toDoListDto = listService.getToDoList(listId);
+        return new ResponseEntity<>(toDoListDto, HttpStatus.OK);
+
+    }
+
+    @PutMapping("/{listId}")
+    public ResponseEntity<?> changeToDoListName(HttpServletRequest request,
+                                                @RequestBody ChangeListNameRequest changeListNameRequest,
+                                                @PathVariable("listId") final long listId){
+        // 사용자 검증
+        Long userId = jwtService.getUserId(request);
+        ToDoListDto toDoListDto = listService.changeListName(
+                listId,
+                userId,
+                changeListNameRequest
+        );
+        return new ResponseEntity<>(toDoListDto, HttpStatus.OK);
+
     }
 }
