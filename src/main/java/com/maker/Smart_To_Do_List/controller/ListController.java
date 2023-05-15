@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
@@ -88,6 +89,12 @@ public class ListController {
                 changeListNameRequest
         );
         return new ResponseEntity<>(toDoListDto, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/{listId}")
+    public ResponseEntity<Void> deleteToDoList(
+            @PathVariable("listId") final long listId) throws IOException{
+        listService.deleteToDoList(listId);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

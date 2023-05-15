@@ -16,6 +16,7 @@ import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,6 +88,16 @@ public class ListService {
         updateToDoList.setListName(changeListNameRequest.getChangeListName());
         ToDoList saveList = listRepository.save(updateToDoList);
         return ToDoListMapper.convertToDto(saveList);
+    }
+
+    public void deleteToDoList(Long listId) throws IOException{
+        Optional<ToDoList> toDoList = listRepository.findByListId(listId);
+        if (toDoList.isEmpty()){
+            throw new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!");
+        }
+
+        ToDoList deleteToDoList = toDoList.get();
+        listRepository.deleteById(listId);
     }
 
 }
