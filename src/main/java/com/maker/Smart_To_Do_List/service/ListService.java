@@ -46,11 +46,12 @@ public class ListService {
 
             ToDoList toDoList = ToDoList.builder()
                     .listName(listName)
-                    .user(selectedUser)
                     .sortBy(sortBy)
                     .build();
-
-            listRepository.save(toDoList);
+//                  .user(selectedUser)
+            selectedUser.addToDoList(toDoList);
+            userRepository.save(selectedUser);
+//            listRepository.save(toDoList);
             return loginId + "의 To Do List 등록 완료";
         }
         return "Token is wrong";

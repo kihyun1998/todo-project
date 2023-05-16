@@ -15,6 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Table(name = "todo", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "todo_id")})
 public class ToDo extends BaseTimeEntity{
 
@@ -48,7 +49,7 @@ public class ToDo extends BaseTimeEntity{
     private int status;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "list_id")
     private ToDoList toDoList;
 

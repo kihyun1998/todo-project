@@ -39,7 +39,13 @@ public class User extends BaseTimeEntity{
     @NotNull
     @Column(name = "user_email",unique = true)
     private String userEmail;
-//
-//    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
-//    private List<ToDoList> toDoLists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,orphanRemoval=true)
+    private List<ToDoList> toDoLists = new ArrayList<>();
+
+    public void addToDoList(ToDoList toDoList){
+        toDoLists.add(toDoList);
+        toDoList.setUser(this);
+    }
 }

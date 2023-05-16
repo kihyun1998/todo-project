@@ -2,13 +2,10 @@ package com.maker.Smart_To_Do_List.domain;
 
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -38,8 +35,19 @@ public class ToDoList extends BaseTimeEntity{
     @Column(name = "sort_by")
     private String sortBy = "ASC_Date";
 
+    @OneToMany(mappedBy = "toDoList",fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,orphanRemoval=true)
+    private List<ToDo> toDos = new ArrayList<>();
+
+    public void addToDo(ToDo toDo){
+        toDos.add(toDo);
+        toDo.setToDoList(this);
+    }
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+
 }

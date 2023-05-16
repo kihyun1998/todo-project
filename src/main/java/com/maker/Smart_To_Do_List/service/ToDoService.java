@@ -33,10 +33,12 @@ public class ToDoService {
                 .difficulty(createToDoRequest.getDifficulty())
                 .importance(createToDoRequest.getImportance())
                 .status(createToDoRequest.getStatus())
-                .toDoList(selectedList)
                 .build();
+//              .toDoList(selectedList)
 
-        toDoRepository.save(toDo);
+        selectedList.addToDo(toDo);
+        listRepository.save(selectedList);
+//        toDoRepository.save(toDo);
         return listId + "에 저장 완료";
     }
 
