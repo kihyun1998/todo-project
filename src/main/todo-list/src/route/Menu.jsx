@@ -30,19 +30,20 @@ const activeStyle = {
   color: "white"
 }
 
-const menuExpendStyle = {
-  position: "absolute",
-  transform: "translate(1200%, 100%)",
-}
-
 const menuStyle = {
   display: "flex",
   flexDirection: "column",
-  minHeight: "100vh",
-  width: "280px",
-  borderRight: "2px solid #EDEDED",
-  boxShadow: "2px 0px 3px #EDEDED",
-  backgroundColor: "#FBFBFA",
+  // minHeight: "100vh",
+  // width: "100px",
+  flex: "1 1 0",
+  // borderRight: "2px solid #EDEDED",
+  // boxShadow: "2px 0px 3px #EDEDED",
+  paddingTop: "100px",
+  height: "70%",
+  backgroundColor: "#bfbdbd",
+  borderRadius: "100px 0px 0px 0px",
+  boxShadow: "7px 7px 10px #737373 inset",
+  zIndex: 0,
 }
 
 const Menu = () => {
@@ -53,9 +54,14 @@ const Menu = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [toDoListName, setToDoListName] = useState("");
   const [toDoLists, setToDoLists] = useState([]);
-  const [menuExpended, setMenuExpended] = useState(true);
+  const [menuExpended, setMenuExpended] = useState(false);
 
   const controls = useAnimationControls();
+
+  const linkVariants = {
+    hidden:{opacity:0},
+    show:{opacity: menuExpended ? 1:0, transition:{delay: menuExpended ? 0.2:0}},
+  }
 
   const tempLogin = () => setCookie("accessToken", "temp");
   const tempLogout = () => {
@@ -132,26 +138,57 @@ const Menu = () => {
     }
   }
 
+  // const navHover = async() => {
+  //   if(menuExpended){
+  //     controls.start({opacity:1})
+  //   } else {
+  //     controls.start({opacity:0})
+  //   }
+  // }
+
   useEffect(()=>{
     expendTodoLists();
   }, [controls, expended])
+
+  // useEffect(()=>{
+  //   navHover();
+  //   console.log(menuExpended)
+  // }, [controls, menuExpended])
 
   return (
     <motion.div 
       className={styles.menu} 
       style={menuStyle}
-      animate={{x: menuExpended ? "0px":"-280px"}}
+      animate={{
+        width: menuExpended ? "280px": "0px", 
+        flexGrow: menuExpended ? 2:1,
+      }}
+      transition = {{delay: menuExpended ? 0:0.2}}
+      // whileHover={{flexGrow:2}}
+      onMouseEnter={expendMenu}
+      onMouseLeave={expendMenu}
     >
-      <motion.span
+      {/* <motion.span
         className={`material-symbols-outlined`}
         style={menuExpendStyle}
         onClick={expendMenu}
       >
         arrow_forward
-      </motion.span>
-      <NavLink style={({isActive}) => (isActive ? activeStyle:{})}  to={"/"}>메인</NavLink>
+      </motion.span> */}
+      <motion.div
+        variants={linkVariants}
+        initial="hidden"
+        animate="show"
+      >
+        <NavLink style={({isActive}) => (isActive ? activeStyle:{})}  to={"/"}>메인</NavLink>
+      </motion.div>
       {cookies.accessToken!=null && (
-        <div>
+        <motion.div 
+          className={styles.todoList}
+          variants={linkVariants}
+          initial="hidden"
+          animate="show"
+        >
           <div style={{marginBottom:"15px"}}>
             Todo 리스트
             <motion.span 
@@ -213,7 +250,7 @@ const Menu = () => {
           </div>
           {toDoLists&&(
             <motion.div
-              style={{backgroundColor:isEditing?"#a3a3a3":"#f2f2f0", overflow:"hidden"}}
+              style={{overflow:"hidden"}}
               animate={controls}
             >
               {toDoLists.map((toDoList, idx) => 
@@ -241,16 +278,43 @@ const Menu = () => {
             </motion.div>
             )
           }
-        </div>
+        </motion.div>
       )}
       {cookies.accessToken!=null && (
-        <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/mypage"}>내정보</NavLink>)}
+        <motion.div
+          variants={linkVariants}
+          initial="hidden"
+          animate="show"
+        >
+          <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/mypage"}>내정보</NavLink>
+        </motion.div>)}
+
       {cookies.accessToken!=null && (
-        <NavLink onClick={tempLogout}>로그아웃</NavLink>)}
+        <motion.div
+          variants={linkVariants}
+          initial="hidden"
+          animate="show"
+        >
+          <NavLink onClick={tempLogout}>로그아웃</NavLink>
+        </motion.div>)}
+        
       {cookies.accessToken==null && (
-        <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/login"}>로그인</NavLink>)}
+        <motion.div
+          variants={linkVariants}
+          initial="hidden"
+          animate="show"
+        >
+          <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/login"}>로그인</NavLink>
+        </motion.div>)}
+
       {cookies.accessToken==null && (
-        <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/join"}>회원가입</NavLink>)}
+        <motion.div
+          variants={linkVariants}
+          initial="hidden"
+          animate="show"
+        >
+          <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/join"}>회원가입</NavLink>
+        </motion.div>)}
       
       {cookies.accessToken==null && (
         <Button 

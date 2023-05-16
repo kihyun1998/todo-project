@@ -14,13 +14,16 @@ function App() {
     <BrowserRouter >
       <div className={styles.app}>
         <Menu />
-        <Routes>
-          <Route path="/todo/:toDoId" element={<TodoBase />}/>
-          <Route path="/" element={<Intro />}/>
-          <Route path="/user/login" element={<Login />}/>
-          <Route path="/user/join" element={<Register />}/>
-          <Route path="/mypage" element={<Mypage />} />
-        </Routes>
+        <div className={styles.main}>
+          <Routes>
+              <Route path="/todo/:toDoId" element={<TodoBase />}/>
+              <Route path="/" element={<Intro />}/>
+              <Route path="/user/login" element={<Login />}/>
+              <Route path="/user/join" element={<Register />}/>
+              <Route path="/mypage" element={<Mypage />} />
+          </Routes>
+        </div>
+        <div style={{flex: "1 1 0"}}>.</div>
       </div>
     </BrowserRouter>
   );

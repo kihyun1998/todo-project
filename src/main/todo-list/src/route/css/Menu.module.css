@@ -2,23 +2,28 @@
   color:#606060;
 }
 
-.menu a {
+.menu  a {
   color:#606060;
   text-decoration: none;
-  
-}
-
-.menu > a {
   font-size: 25px;
+  display: block;
   padding: 20px 0px 20px 20px;
+  overflow: hidden;
+  /* opacity: 0; */
 }
 
 .menu > div {
+  /* font-size: 25px;
+  padding: 20px 0px 20px 0px; */
+  width: 100%;
+}
+
+.todoList {
   font-size: 25px;
   padding: 20px 0px 20px 0px;
 }
 
-.menu > div > div:nth-child(1) {
+.todoList > div:nth-child(1) {
   padding: 0px 0px 0px 20px;
 }
 
