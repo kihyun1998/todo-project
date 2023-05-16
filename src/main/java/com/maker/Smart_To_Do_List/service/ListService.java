@@ -26,42 +26,47 @@ public class ListService {
 
     private final ListRepository listRepository;
     private final UserRepository userRepository;
+    private final VerificationService verificationService;
     private final String token = null;
 
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public String createList(String listName, String sortBy,String token){
-        if( token != null ){
-            String loginId = JwtUtil.getLoginId(token,secretKey);
-            User selectedUser = userRepository.findByLoginId(loginId)
-                    .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));
+    public String createList(String listName, String sortBy,Long userId){
 
-            listRepository.findByListName(listName)
-                    .ifPresent(list ->{
-                        if (list.getUser().getLoginId().equals(loginId)){
-                            throw new AppException(ErrorCode.DUPLICATED, listName + " is already exits");
-                        }
-                    });
+        User selectedUser = userRepository.findByUserId(userId)
+                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, "User is not found!!"));
 
-            ToDoList toDoList = ToDoList.builder()
-                    .listName(listName)
-                    .sortBy(sortBy)
-                    .build();
-//                  .user(selectedUser)
-            selectedUser.addToDoList(toDoList);
-            userRepository.save(selectedUser);
-//            listRepository.save(toDoList);
-            return loginId + "의 To Do List 등록 완료";
-        }
-        return "Token is wrong";
+        listRepository.findByListName(listName)
+                .ifPresent(list ->{
+                    if (list.getUser().getUserId().equals(userId)){
+                        throw new AppException(ErrorCode.DUPLICATED, listName + " is already exits");
+                    }
+                });
+
+        ToDoList toDoList = ToDoList.builder()
+                .listName(listName)
+                .sortBy(sortBy)
+                .build();
+
+        selectedUser.addToDoList(toDoList);
+        userRepository.save(selectedUser);
+
+        return null;
+
     }
 
     public List<ToDoList> getToDoLists(long userId){
         return listRepository.findByUser_UserId(userId);
     }
 
-    public ToDoListDto getToDoList(Long listId){
+    public ToDoListDto getToDoList(Long userId, Long listId){
+
+        verificationService.checkListUser(
+                userId,
+                listId
+        );
+
         Optional<ToDoList> toDoList = listRepository.findByListId(listId);
         if (toDoList.isEmpty()){
             throw new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!");
@@ -72,7 +77,13 @@ public class ListService {
 
     }
 
-    public ToDoListDto changeListName(Long listId, Long userId,ChangeListNameRequest changeListNameRequest){
+    public ToDoListDto changeListName(Long userId,Long listId,ChangeListNameRequest changeListNameRequest){
+
+        verificationService.checkListUser(
+                userId,
+                listId
+        );
+
         Optional<ToDoList> toDoList = listRepository.findByListId(listId);
         if (toDoList.isEmpty()){
             throw new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!");
@@ -91,7 +102,13 @@ public class ListService {
         return ToDoListMapper.convertToDto(saveList);
     }
 
-    public void deleteToDoList(Long listId) throws IOException{
+    public void deleteToDoList(Long userId, Long listId) throws IOException{
+
+        verificationService.checkListUser(
+                userId,
+                listId
+        );
+
         Optional<ToDoList> toDoList = listRepository.findByListId(listId);
         if (toDoList.isEmpty()){
             throw new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!");

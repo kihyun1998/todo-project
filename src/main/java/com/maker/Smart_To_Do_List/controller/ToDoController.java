@@ -33,12 +33,17 @@ public class ToDoController {
 
     @PostMapping("/{listId}/create")
     public ResponseEntity<String> createToDo(
+            HttpServletRequest request,
             @RequestBody CreateToDoRequest createToDoDto,
             @PathVariable("listId") final long listId){
 
+        Long userId = jwtService.getUserId(request);
+
             toDoService.createToDo(
-                    createToDoDto,
-                    listId
+                    userId,
+                    listId,
+                    createToDoDto
+
             );
 
         return ResponseEntity.ok().body("Create ToDo Success");
@@ -50,15 +55,12 @@ public class ToDoController {
             HttpServletRequest request){
 
         Long userId = jwtService.getUserId(request);
-        ToDoList toDoList = listRepository.findByListId(listId)
-                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND,listId + "is not found!!"));
 
-        if (userId.equals(toDoList.getUser().getUserId())){
-            List<ToDo> todos = toDoService.getToDos(listId);
-            List<ToDoDto> toDoDtoList = ToDoMapper.convertToDtoList(todos);
-            return new ResponseEntity<>(toDoDtoList, HttpStatus.OK);
-        }else{
-            return  new ResponseEntity<>("Invalid Access", HttpStatus.NON_AUTHORITATIVE_INFORMATION);
-        }
+        List<ToDo> todos = toDoService.getToDos(
+                userId,
+                listId
+        );
+        List<ToDoDto> toDoDtoList = ToDoMapper.convertToDtoList(todos);
+        return new ResponseEntity<>(toDoDtoList, HttpStatus.OK);
     }
 }

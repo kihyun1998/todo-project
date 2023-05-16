@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     DUPLICATED(HttpStatus.CONFLICT,""),
     NOT_FOUND(HttpStatus.NOT_FOUND,""),
-    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED,"");
+    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED,""),
+    ACCESS_DENIED(HttpStatus.FORBIDDEN,"");
 
 
     private HttpStatus httpStatus;

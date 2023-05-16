@@ -46,13 +46,11 @@ public class ListController {
     public ResponseEntity<String> createList(@RequestBody CreateListRequest createListDto,
                                              HttpServletRequest request){
 
-
-        String token = JwtUtil.getToken(request);
-        System.out.println(token);
+        Long userId = jwtService.getUserId(request);
         listService.createList(
                 createListDto.getListName(),
                 createListDto.getSortBy(),
-                token
+                userId
         );
 
         return ResponseEntity.ok().body("Create List Success!");
@@ -69,10 +67,13 @@ public class ListController {
 
     @GetMapping("/{listId}")
     public ResponseEntity<?> getToDoList(HttpServletRequest request,
-                                                @PathVariable("listId") final long listId){
+                                         @PathVariable("listId") final long listId){
         // 사용자 검증
         Long userId = jwtService.getUserId(request);
-        ToDoListDto toDoListDto = listService.getToDoList(listId);
+        ToDoListDto toDoListDto = listService.getToDoList(
+                userId,
+                listId
+        );
         return new ResponseEntity<>(toDoListDto, HttpStatus.OK);
 
     }
@@ -84,8 +85,8 @@ public class ListController {
         // 사용자 검증
         Long userId = jwtService.getUserId(request);
         ToDoListDto toDoListDto = listService.changeListName(
-                listId,
                 userId,
+                listId,
                 changeListNameRequest
         );
         return new ResponseEntity<>(toDoListDto, HttpStatus.OK);
@@ -93,8 +94,13 @@ public class ListController {
 
     @DeleteMapping("/{listId}")
     public ResponseEntity<Void> deleteToDoList(
+            HttpServletRequest request,
             @PathVariable("listId") final long listId) throws IOException{
-        listService.deleteToDoList(listId);
+        Long userId = jwtService.getUserId(request);
+        listService.deleteToDoList(
+                userId,
+                listId
+        );
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

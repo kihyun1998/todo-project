@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -20,11 +21,14 @@ import java.util.List;
 public class ToDoService {
     private final ListRepository listRepository;
     private final ToDoRepository toDoRepository;
+    private final VerificationService verificationService;
 
-    public String createToDo(CreateToDoRequest createToDoRequest, Long listId) {
+    public String createToDo(Long userId, Long listId, CreateToDoRequest createToDoRequest) {
 
-        ToDoList selectedList = listRepository.findByListId(listId)
-                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!"));
+        verificationService.checkListUser(
+                userId,
+                listId
+        );
 
         ToDo toDo = ToDo.builder()
                 .todoTitle(createToDoRequest.getTodoTitle())
@@ -34,15 +38,22 @@ public class ToDoService {
                 .importance(createToDoRequest.getImportance())
                 .status(createToDoRequest.getStatus())
                 .build();
-//              .toDoList(selectedList)
+
+        ToDoList selectedList = listRepository.findByListId(listId)
+                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!"));
 
         selectedList.addToDo(toDo);
         listRepository.save(selectedList);
-//        toDoRepository.save(toDo);
-        return listId + "에 저장 완료";
+
+        return null;
     }
 
-    public List<ToDo> getToDos(long listId){
+    public List<ToDo> getToDos(long userId,long listId){
+        verificationService.checkListUser(
+                userId,
+                listId
+        );
+
         return toDoRepository.findByToDoList_ListId(listId);
     }
 }
