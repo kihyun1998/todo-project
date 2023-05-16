@@ -28,6 +28,16 @@ public class VerificationService {
                 });
     }
 
+    public void checkListNameDuplicate(Long userId, String listName){
+        listRepository.findByListName(listName)
+                .ifPresent(list ->{
+                    if (list.getUser().getUserId().equals(userId)){
+                        throw new AppException(ErrorCode.DUPLICATED, listName + " is already exits");
+                    }
+                });
+    }
+
+
     public ToDoList foundList(Long listId){
         Optional<ToDoList> opToDoList = listRepository.findByListId(listId);
         if (opToDoList.isEmpty()){

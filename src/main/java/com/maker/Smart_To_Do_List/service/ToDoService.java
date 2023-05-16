@@ -1,12 +1,9 @@
 package com.maker.Smart_To_Do_List.service;
 
-import com.maker.Smart_To_Do_List.auth.JwtUtil;
 import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.dto.ChangeStatus;
 import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
-import com.maker.Smart_To_Do_List.exception.AppException;
-import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.mapper.ToDoMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.ToDoRepository;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -43,9 +39,7 @@ public class ToDoService {
                 .status(createToDoRequest.getStatus())
                 .build();
 
-        ToDoList selectedList = listRepository.findByListId(listId)
-                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!"));
-
+        ToDoList selectedList = verificationService.foundList(listId);
         selectedList.addToDo(toDo);
         listRepository.save(selectedList);
     }
@@ -68,12 +62,7 @@ public class ToDoService {
                 listId
         );
 
-        Optional<ToDo> todo = toDoRepository.findByToDoId(toDoId);
-        if (todo.isEmpty()) {
-            throw new AppException(ErrorCode.NOT_FOUND, "ToDo is not found!!");
-        }
-
-        ToDo updateToDo = todo.get();
+        ToDo updateToDo = verificationService.foundToDo(toDoId);
 
         if(!updateToDo.getTodoTitle().equals(createToDoRequest.getTodoTitle())){
             updateToDo.setTodoTitle(createToDoRequest.getTodoTitle());
@@ -103,13 +92,7 @@ public class ToDoService {
                 listId
         );
 
-        Optional<ToDo> todo = toDoRepository.findByToDoId(toDoId);
-        if (todo.isEmpty()) {
-            throw new AppException(ErrorCode.NOT_FOUND, "ToDo is not found!!");
-        }
-
-        ToDo updateToDo = todo.get();
-
+        ToDo updateToDo = verificationService.foundToDo(toDoId);
         updateToDo.setStatus(changeStatus.getStatus());
         toDoRepository.save(updateToDo);
     }

@@ -37,12 +37,10 @@ public class ListService {
         User selectedUser = userRepository.findByUserId(userId)
                 .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, "User is not found!!"));
 
-        listRepository.findByListName(listName)
-                .ifPresent(list ->{
-                    if (list.getUser().getUserId().equals(userId)){
-                        throw new AppException(ErrorCode.DUPLICATED, listName + " is already exits");
-                    }
-                });
+        verificationService.checkListNameDuplicate(
+                userId,
+                listName
+        );
 
         ToDoList toDoList = ToDoList.builder()
                 .listName(listName)
@@ -67,12 +65,8 @@ public class ListService {
                 listId
         );
 
-        Optional<ToDoList> toDoList = listRepository.findByListId(listId);
-        if (toDoList.isEmpty()){
-            throw new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!");
-        }
 
-        ToDoList selectList = toDoList.get();
+        ToDoList selectList = verificationService.foundList(listId);
         return ToDoListMapper.convertToDto(selectList);
 
     }
@@ -84,14 +78,10 @@ public class ListService {
                 listId
         );
 
-
-
-        listRepository.findByListName(changeListNameRequest.getChangeListName())
-                .ifPresent(list ->{
-                    if (list.getUser().getUserId().equals(userId)){
-                        throw new AppException(ErrorCode.DUPLICATED, changeListNameRequest.getChangeListName() + " is already exits");
-                    }
-                });
+        verificationService.checkListNameDuplicate(
+                userId,
+                changeListNameRequest.getChangeListName()
+        );
 
         ToDoList updateToDoList = verificationService.foundList(listId);
         updateToDoList.setListName(changeListNameRequest.getChangeListName());
