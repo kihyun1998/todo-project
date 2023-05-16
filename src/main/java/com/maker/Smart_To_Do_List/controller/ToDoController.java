@@ -2,6 +2,7 @@ package com.maker.Smart_To_Do_List.controller;
 
 import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
+import com.maker.Smart_To_Do_List.dto.ChangeStatus;
 import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
 import com.maker.Smart_To_Do_List.dto.ToDoDto;
 import com.maker.Smart_To_Do_List.exception.AppException;
@@ -64,13 +65,12 @@ public class ToDoController {
         return new ResponseEntity<>(toDoDtoList, HttpStatus.OK);
     }
 
-    // status는 업데이트 안됨 따로 관리함  
     @PutMapping("/{listId}/{todoId}")
     public ResponseEntity<?> updateToDoValue(
-            HttpServletRequest request,
-            @RequestBody CreateToDoRequest createToDoRequest,
-            @PathVariable("listId") final long listId,
-            @PathVariable("todoId") final long todoId){
+                HttpServletRequest request,
+                @RequestBody CreateToDoRequest createToDoRequest,
+                @PathVariable("listId") final long listId,
+                @PathVariable("todoId") final long todoId){
 
         Long userId = jwtService.getUserId(request);
 
@@ -82,5 +82,27 @@ public class ToDoController {
         );
         return new ResponseEntity<>(createToDoDto, HttpStatus.OK);
     }
+
+    @PutMapping("/{listId}/{todoId}/status")
+    public ResponseEntity<?> changeStatus(
+                HttpServletRequest request,
+                @RequestBody ChangeStatus changeStatus,
+                @PathVariable("listId") final long listId,
+                @PathVariable("todoId") final long todoId){
+
+        Long userId = jwtService.getUserId(request);
+
+        toDoService.changeStatus(
+                userId,
+                listId,
+                todoId,
+                changeStatus
+        );
+
+        return new ResponseEntity<>("Change Success", HttpStatus.OK);
+
+    }
+
+    
 
 }

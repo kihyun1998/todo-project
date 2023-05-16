@@ -3,6 +3,7 @@ package com.maker.Smart_To_Do_List.service;
 import com.maker.Smart_To_Do_List.auth.JwtUtil;
 import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
+import com.maker.Smart_To_Do_List.dto.ChangeStatus;
 import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
@@ -10,10 +11,8 @@ import com.maker.Smart_To_Do_List.mapper.ToDoMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +24,7 @@ public class ToDoService {
     private final ToDoRepository toDoRepository;
     private final VerificationService verificationService;
 
-    public String createToDo(Long userId, Long listId, CreateToDoRequest createToDoRequest) {
+    public void createToDo(Long userId, Long listId, CreateToDoRequest createToDoRequest) {
 
         verificationService.checkListUser(
                 userId,
@@ -46,8 +45,6 @@ public class ToDoService {
 
         selectedList.addToDo(toDo);
         listRepository.save(selectedList);
-
-        return null;
     }
 
     public List<ToDo> getToDos(long userId,long listId){
@@ -60,9 +57,13 @@ public class ToDoService {
     }
 
     public CreateToDoRequest updateToDoValue(long userId,
-                             long listId,
-                             long todoId,
-                             CreateToDoRequest createToDoRequest) {
+                                             long listId,
+                                             long todoId,
+                                             CreateToDoRequest createToDoRequest) {
+        verificationService.checkListUser(
+                userId,
+                listId
+        );
 
         Optional<ToDo> todo = toDoRepository.findByToDoId(todoId);
         if (todo.isEmpty()) {
@@ -88,5 +89,25 @@ public class ToDoService {
         }
         ToDo saveToDo = toDoRepository.save(updateToDo);
         return ToDoMapper.convertToToDoRequest(saveToDo);
+    }
+
+    public void changeStatus(long userId,
+                               long listId,
+                               long todoId,
+                               ChangeStatus changeStatus){
+        verificationService.checkListUser(
+                userId,
+                listId
+        );
+
+        Optional<ToDo> todo = toDoRepository.findByToDoId(todoId);
+        if (todo.isEmpty()) {
+            throw new AppException(ErrorCode.NOT_FOUND, "ToDo is not found!!");
+        }
+
+        ToDo updateToDo = todo.get();
+
+        updateToDo.setStatus(changeStatus.getStatus());
+        toDoRepository.save(updateToDo);
     }
 }
