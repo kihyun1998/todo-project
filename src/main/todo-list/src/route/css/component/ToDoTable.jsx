@@ -1,7 +1,6 @@
 import Todo from "./Todo"
 
-const ToDoTable = ({todos}) => {
-
+const TodoTable = ({todos}) => {
   return (
     <div>
       toDoId, todoTitle, estimatedTime, deadline, difficulty, importance, status
@@ -15,4 +14,4 @@ const ToDoTable = ({todos}) => {
   );
 }
 
-export default ToDoTable;
+export default TodoTable;

@@ -8,7 +8,7 @@ import Importance from "./css/component/Importance";
 import EstimatedTime from "./css/component/EstimatedTime";
 import Deadline from "./css/component/Deadline";
 import Difficulty from "./css/component/Difficulty";
-import TodoTable from "./css/component/TodoTable"
+import TodoTable from "./css/component/TodoTable";
 
 import axios from "axios";
 import { useCookies } from 'react-cookie';
