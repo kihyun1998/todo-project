@@ -13,6 +13,7 @@ import com.maker.Smart_To_Do_List.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,9 @@ public class ToDoService {
     private final ToDoRepository toDoRepository;
     private final VerificationService verificationService;
 
-    public void createToDo(Long userId, Long listId, CreateToDoRequest createToDoRequest) {
+    public void createToDo(Long userId,
+                           Long listId,
+                           CreateToDoRequest createToDoRequest) {
 
         verificationService.checkListUser(
                 userId,
@@ -58,14 +61,14 @@ public class ToDoService {
 
     public CreateToDoRequest updateToDoValue(long userId,
                                              long listId,
-                                             long todoId,
+                                             long toDoId,
                                              CreateToDoRequest createToDoRequest) {
         verificationService.checkListUser(
                 userId,
                 listId
         );
 
-        Optional<ToDo> todo = toDoRepository.findByToDoId(todoId);
+        Optional<ToDo> todo = toDoRepository.findByToDoId(toDoId);
         if (todo.isEmpty()) {
             throw new AppException(ErrorCode.NOT_FOUND, "ToDo is not found!!");
         }
@@ -92,15 +95,15 @@ public class ToDoService {
     }
 
     public void changeStatus(long userId,
-                               long listId,
-                               long todoId,
-                               ChangeStatus changeStatus){
+                             long listId,
+                             long toDoId,
+                             ChangeStatus changeStatus){
         verificationService.checkListUser(
                 userId,
                 listId
         );
 
-        Optional<ToDo> todo = toDoRepository.findByToDoId(todoId);
+        Optional<ToDo> todo = toDoRepository.findByToDoId(toDoId);
         if (todo.isEmpty()) {
             throw new AppException(ErrorCode.NOT_FOUND, "ToDo is not found!!");
         }
@@ -109,5 +112,16 @@ public class ToDoService {
 
         updateToDo.setStatus(changeStatus.getStatus());
         toDoRepository.save(updateToDo);
+    }
+
+    public void deleteToDo(long userId,
+                           long listId,
+                           long toDoId)throws IOException {
+
+        verificationService.checkListUser(
+                userId,
+                listId
+        );
+        toDoRepository.deleteById(toDoId);
     }
 }

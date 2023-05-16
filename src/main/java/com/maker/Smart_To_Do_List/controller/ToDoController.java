@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,14 +71,14 @@ public class ToDoController {
                 HttpServletRequest request,
                 @RequestBody CreateToDoRequest createToDoRequest,
                 @PathVariable("listId") final long listId,
-                @PathVariable("todoId") final long todoId){
+                @PathVariable("todoId") final long toDoId){
 
         Long userId = jwtService.getUserId(request);
 
         CreateToDoRequest createToDoDto = toDoService.updateToDoValue(
                 userId,
                 listId,
-                todoId,
+                toDoId,
                 createToDoRequest
         );
         return new ResponseEntity<>(createToDoDto, HttpStatus.OK);
@@ -88,14 +89,14 @@ public class ToDoController {
                 HttpServletRequest request,
                 @RequestBody ChangeStatus changeStatus,
                 @PathVariable("listId") final long listId,
-                @PathVariable("todoId") final long todoId){
+                @PathVariable("todoId") final long toDoId){
 
         Long userId = jwtService.getUserId(request);
 
         toDoService.changeStatus(
                 userId,
                 listId,
-                todoId,
+                toDoId,
                 changeStatus
         );
 
@@ -103,6 +104,19 @@ public class ToDoController {
 
     }
 
-    
+    @DeleteMapping("/{listId}/{todoId}")
+    public ResponseEntity<Void> deleteToDo(
+            HttpServletRequest request,
+            @PathVariable("listId") final long listId,
+            @PathVariable("todoId") final long toDoId) throws IOException {
+
+        Long userId = jwtService.getUserId(request);
+        toDoService.deleteToDo(
+                userId,
+                listId,
+                toDoId
+        );
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }

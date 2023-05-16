@@ -49,7 +49,7 @@ public class ToDo extends BaseTimeEntity{
     private int status;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "list_id")
     private ToDoList toDoList;
 

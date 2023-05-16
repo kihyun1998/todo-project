@@ -84,10 +84,7 @@ public class ListService {
                 listId
         );
 
-        Optional<ToDoList> toDoList = listRepository.findByListId(listId);
-        if (toDoList.isEmpty()){
-            throw new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!");
-        }
+
 
         listRepository.findByListName(changeListNameRequest.getChangeListName())
                 .ifPresent(list ->{
@@ -96,7 +93,7 @@ public class ListService {
                     }
                 });
 
-        ToDoList updateToDoList = toDoList.get();
+        ToDoList updateToDoList = verificationService.foundList(listId);
         updateToDoList.setListName(changeListNameRequest.getChangeListName());
         ToDoList saveList = listRepository.save(updateToDoList);
         return ToDoListMapper.convertToDto(saveList);
@@ -108,14 +105,6 @@ public class ListService {
                 userId,
                 listId
         );
-
-        Optional<ToDoList> toDoList = listRepository.findByListId(listId);
-        if (toDoList.isEmpty()){
-            throw new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!");
-        }
-
-        ToDoList deleteToDoList = toDoList.get();
         listRepository.deleteById(listId);
     }
-
 }
