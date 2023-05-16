@@ -89,14 +89,14 @@ public class ListService {
             throw new AppException(ErrorCode.NOT_FOUND, listId + "is not found!!");
         }
 
-        ToDoList updateToDoList = toDoList.get();
-
         listRepository.findByListName(changeListNameRequest.getChangeListName())
                 .ifPresent(list ->{
                     if (list.getUser().getUserId().equals(userId)){
                         throw new AppException(ErrorCode.DUPLICATED, changeListNameRequest.getChangeListName() + " is already exits");
                     }
                 });
+
+        ToDoList updateToDoList = toDoList.get();
         updateToDoList.setListName(changeListNameRequest.getChangeListName());
         ToDoList saveList = listRepository.save(updateToDoList);
         return ToDoListMapper.convertToDto(saveList);

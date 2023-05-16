@@ -39,12 +39,12 @@ public class ToDoController {
 
         Long userId = jwtService.getUserId(request);
 
-            toDoService.createToDo(
-                    userId,
-                    listId,
-                    createToDoDto
+        toDoService.createToDo(
+                userId,
+                listId,
+                createToDoDto
 
-            );
+        );
 
         return ResponseEntity.ok().body("Create ToDo Success");
     }
@@ -63,4 +63,24 @@ public class ToDoController {
         List<ToDoDto> toDoDtoList = ToDoMapper.convertToDtoList(todos);
         return new ResponseEntity<>(toDoDtoList, HttpStatus.OK);
     }
+
+    // status는 업데이트 안됨 따로 관리함  
+    @PutMapping("/{listId}/{todoId}")
+    public ResponseEntity<?> updateToDoValue(
+            HttpServletRequest request,
+            @RequestBody CreateToDoRequest createToDoRequest,
+            @PathVariable("listId") final long listId,
+            @PathVariable("todoId") final long todoId){
+
+        Long userId = jwtService.getUserId(request);
+
+        CreateToDoRequest createToDoDto = toDoService.updateToDoValue(
+                userId,
+                listId,
+                todoId,
+                createToDoRequest
+        );
+        return new ResponseEntity<>(createToDoDto, HttpStatus.OK);
+    }
+
 }

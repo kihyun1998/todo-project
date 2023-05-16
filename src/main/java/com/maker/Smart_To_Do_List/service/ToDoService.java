@@ -6,6 +6,7 @@ import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
+import com.maker.Smart_To_Do_List.mapper.ToDoMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.ToDoRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -55,5 +57,36 @@ public class ToDoService {
         );
 
         return toDoRepository.findByToDoList_ListId(listId);
+    }
+
+    public CreateToDoRequest updateToDoValue(long userId,
+                             long listId,
+                             long todoId,
+                             CreateToDoRequest createToDoRequest) {
+
+        Optional<ToDo> todo = toDoRepository.findByToDoId(todoId);
+        if (todo.isEmpty()) {
+            throw new AppException(ErrorCode.NOT_FOUND, "ToDo is not found!!");
+        }
+
+        ToDo updateToDo = todo.get();
+
+        if(!updateToDo.getTodoTitle().equals(createToDoRequest.getTodoTitle())){
+            updateToDo.setTodoTitle(createToDoRequest.getTodoTitle());
+        }
+        if(updateToDo.getEstimatedTime() != createToDoRequest.getEstimatedTime()){
+            updateToDo.setEstimatedTime(createToDoRequest.getEstimatedTime());
+        }
+        if(!updateToDo.getDeadline().isEqual(createToDoRequest.getDeadline()) ){
+            updateToDo.setDeadline(createToDoRequest.getDeadline());
+        }
+        if(updateToDo.getDifficulty() != createToDoRequest.getDifficulty()){
+            updateToDo.setDifficulty(createToDoRequest.getDifficulty());
+        }
+        if(updateToDo.getImportance() != createToDoRequest.getImportance()){
+            updateToDo.setImportance(createToDoRequest.getImportance());
+        }
+        ToDo saveToDo = toDoRepository.save(updateToDo);
+        return ToDoMapper.convertToToDoRequest(saveToDo);
     }
 }

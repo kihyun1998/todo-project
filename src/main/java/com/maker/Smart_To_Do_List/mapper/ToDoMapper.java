@@ -1,6 +1,7 @@
 package com.maker.Smart_To_Do_List.mapper;
 
 import com.maker.Smart_To_Do_List.domain.ToDo;
+import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
 import com.maker.Smart_To_Do_List.dto.ToDoDto;
 import com.maker.Smart_To_Do_List.dto.ToDoListDto;
 
@@ -22,5 +23,17 @@ public class ToDoMapper {
     }
     public static List<ToDoDto> convertToDtoList(List<ToDo> toDos){
         return toDos.stream().map(ToDoMapper::convertToDto).collect(Collectors.toList());
+    }
+
+    public static CreateToDoRequest convertToToDoRequest(ToDo toDo){
+        CreateToDoRequest toDoDto = new CreateToDoRequest();
+        toDoDto.setTodoTitle(toDo.getTodoTitle());
+        toDoDto.setEstimatedTime(toDo.getEstimatedTime());
+        toDoDto.setDeadline(toDo.getDeadline());
+        toDoDto.setDifficulty(toDo.getDifficulty());
+        toDoDto.setImportance(toDo.getImportance());
+        toDoDto.setStatus(toDo.getStatus());
+
+        return toDoDto;
     }
 }
