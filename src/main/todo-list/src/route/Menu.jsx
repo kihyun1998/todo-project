@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import styles from "./css/Menu.module.css";
 import axios from "axios";
 import styled from "styled-components";
-import { motion, useAnimationControls } from "framer-motion";
+import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 
 import Button from "./css/component/Button";
 import TodoList from "./css/component/TodoList";
@@ -30,6 +30,21 @@ const activeStyle = {
   color: "white"
 }
 
+const menuExpendStyle = {
+  position: "absolute",
+  transform: "translate(1200%, 100%)",
+}
+
+const menuStyle = {
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "100vh",
+  width: "280px",
+  borderRight: "2px solid #EDEDED",
+  boxShadow: "2px 0px 3px #EDEDED",
+  backgroundColor: "#FBFBFA",
+}
+
 const Menu = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "toDoLists"]);
   
@@ -38,6 +53,7 @@ const Menu = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [toDoListName, setToDoListName] = useState("");
   const [toDoLists, setToDoLists] = useState([]);
+  const [menuExpended, setMenuExpended] = useState(true);
 
   const controls = useAnimationControls();
 
@@ -99,6 +115,7 @@ const Menu = () => {
   const expendToDoList  = () => setExpended(pre=>!pre)
   const expendInput = () => setInputExpended(pre=>!pre)
   const edit = () => setIsEditing(pre=>!pre)
+  const expendMenu = () => setMenuExpended(pre=>!pre)
 
   const expendTodoLists = async() => {
     if(expended){
@@ -120,7 +137,18 @@ const Menu = () => {
   }, [controls, expended])
 
   return (
-    <div className={styles.menu}>
+    <motion.div 
+      className={styles.menu} 
+      style={menuStyle}
+      animate={{x: menuExpended ? "0px":"-280px"}}
+    >
+      <motion.span
+        className={`material-symbols-outlined`}
+        style={menuExpendStyle}
+        onClick={expendMenu}
+      >
+        arrow_forward
+      </motion.span>
       <NavLink style={({isActive}) => (isActive ? activeStyle:{})}  to={"/"}>메인</NavLink>
       {cookies.accessToken!=null && (
         <div>
@@ -140,38 +168,48 @@ const Menu = () => {
             >
               expand_more
             </motion.span>
+            <AnimatePresence>
             {expended && (
               <motion.span 
                 className={`material-symbols-outlined ${styles.plus}`}
                 onClick={expendInput}
                 animate={{
                   rotate: inputExpended ? 45:0,
-                  transformOrigin: "10px 10px"
+                  transformOrigin: "10px 10px",
+                  opacity:1,
                 }}
                 whileHover={{
                   cursor:"pointer",
                   scale:1.2,
                 }}
+                initial={{opacity:0}}
+                exit={{opacity:0}}
               >
                 add
               </motion.span>
             )}
+            </AnimatePresence>
+            <AnimatePresence>
             {expended && (
               <motion.span 
                 className={`material-symbols-outlined ${styles.edit}`}
                 onClick={edit}
                 animate={{
                   rotate: isEditing ? -45:0,
-                  transformOrigin: "10px 10px"
+                  transformOrigin: "10px 10px",
+                  opacity:1
                 }}
                 whileHover={{
                   cursor:"pointer",
                   scale:1.2,
                 }}
+                initial={{opacity:0}}
+                exit={{opacity:0}}
               >
                 edit
               </motion.span>
             )}
+            </AnimatePresence>
           </div>
           {toDoLists&&(
             <motion.div
@@ -185,6 +223,7 @@ const Menu = () => {
                   listId={toDoList.listId}
                   text={toDoList.listName}
                   isEditing={isEditing}
+                  getToDoListData = {getToDoListData}
                 />
               )}
               {inputExpended&&(
@@ -219,7 +258,7 @@ const Menu = () => {
           onClick={tempLogin}
         />
       )}
-    </div>
+    </motion.div>
   );
 }
 

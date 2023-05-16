@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import Input from "./Input"
 import styled from "styled-components";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const StyledDiv = styled.div`
   ${props=>props.isEditing&&"display: flex;"}
@@ -13,7 +15,8 @@ const StyledDiv = styled.div`
   justify-content: space-between;
 `
 
-const TodoList = ({ className, listId, text, isEditing }) => {
+const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
+  const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"])
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [ETitle, setETitle] = useState(text);
@@ -64,12 +67,39 @@ const TodoList = ({ className, listId, text, isEditing }) => {
     cursor:"pointer",
   }
 
-  const deleteTodoList = async(e) => {
-    console.log(`Try to delete listId:${e.target.parentNode.dataset.listid}`)
+  const deleteTodoList = async() => {
+    console.log(`Try to delete listId:${listId}`)
+    try{
+      const res = await axios.delete(`/api/v1/list/${listId}`, {
+        headers: {
+          Authorization: `Bearer ${cookies.accessToken}`
+        }
+      });
+      console.log(res.data)
+      getToDoListData();
+    } catch(e) {
+      console.log(e.response.data)
+    }
   }
 
-  const changeTodoListTitle = async(e) => {
-    console.log(`Try to change title ${text} to ${ETitle} listId:${e.target.parentNode.dataset.listid}`)
+  const changeTodoListTitle = async() => {
+    console.log(`Try to change title ${text} to ${ETitle} listId:${listId}`)
+    try{
+      const res = await axios.put(`/api/v1/list/${listId}`, 
+      {
+        changeListName:ETitle, //변경될 이름
+      }, 
+      {
+        headers: {
+          Authorization: `Bearer ${cookies.accessToken}`
+        }
+      });
+      console.log(res.data)
+      setIsEditingTitle(false);
+      getToDoListData();
+    } catch(e) {
+      console.log(e.response)
+    }
   }
 
   const onClickTitle = () => {
