@@ -2,14 +2,17 @@
   color:#606060;
 }
 
-.menu  a {
+.menu a {
   color:#606060;
   text-decoration: none;
-  font-size: 25px;
   display: block;
-  padding: 20px 0px 20px 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* opacity: 0; */
+}
+
+.menuLink {
+  font-size: 25px;
+  padding: 20px 0px 20px 20px;
 }
 
 .menu > div {

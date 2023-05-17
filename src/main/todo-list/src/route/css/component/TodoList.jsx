@@ -10,9 +10,9 @@ import { useCookies } from "react-cookie";
 const StyledDiv = styled.div`
   ${props=>props.isEditing&&"display: flex;"}
   // margin-top: 5px;
-  height: 33px;
-  font-size: 1.2rem;
+  height: 35px;
   justify-content: space-between;
+  background-color: ${props=>props.isEditing?"rgba(100, 0, 0, 0.1)":"rgba(0, 0, 0, 0.1)"};
 `
 
 const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
@@ -24,9 +24,19 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
   const linkStyle = {
     display: "inline-block",
     width: "90%",
-    height: "100%",
-    paddingLeft: "30px",
+    height: "30px",
+    fontSize: "1.1rem",
+    padding: "5px 0px 5px 30px",
     overflow: "hidden",
+    margin: "0"
+  }
+
+  const editStyle = {
+    paddingLeft: "40px",
+    width: "150px",
+    height: "30px",
+    fontSize: "1.1rem",
+    margin: "0"
   }
 
   const deleteStyle = {
@@ -39,18 +49,12 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
   const listNameStyle = {
     display: "inline-block",
     width: "90%",
-    paddingLeft: "30px",
+    padding: "5px 0px 5px 30px",
+    fontSize: "1.1rem",
     overflow: "hidden",
     borderBottom: "0px solid #d6d6d6",
     cursor:"pointer",
-  }
-
-  const editStyle = {
-    paddingLeft: "40px",
-    width: "150px",
     height: "30px",
-    fontSize: "1.1rem",
-    margin: "0"
   }
 
   const checkStyle = {

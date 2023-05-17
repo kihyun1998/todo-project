@@ -10,7 +10,8 @@ const Input = ({ type, label, value, id, name, onChange, onClick, style, DC=fals
     fontFamily: "Sunflower, sans-serif",
     fontWeight: "1000",
     color: "#949494",
-    fontSize: "100%"
+    fontSize: "100%",
+    backgroundColor:"rgba(0, 0, 0, 0)"
     // "backgroundColor": "#fafafa"
   }
 

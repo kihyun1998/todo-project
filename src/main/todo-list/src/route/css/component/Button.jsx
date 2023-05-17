@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const Button = ({ text, onClick }) => {
+const Button = ({ text, onClick, styles }) => {
   const style = {
     "minWidth":"80px",
     "minHeight": "30px",
@@ -16,7 +16,7 @@ const Button = ({ text, onClick }) => {
 
   return (
     <motion.button
-      style={style}
+      style={Object.assign({}, styles, style)}
       onClick={onClick}
       whileHover={{
         border: "3px solid #bf979c",

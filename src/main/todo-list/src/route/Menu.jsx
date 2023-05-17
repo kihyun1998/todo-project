@@ -14,17 +14,6 @@ const ToDoListInput = styled.input`
   width: 180px;
 `
 
-const ToDoListAddBtn = styled.button`
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0);
-  border: 0px solid grey;
-  height: 30px;
-  margin-left: 15px;
-  // font-family: 'Sunflower', sans-serif;
-  // font-weight: 1000
-  color: green;
-`
-
 const activeStyle = {
   backgroundColor : "#606060",
   color: "white"
@@ -121,18 +110,19 @@ const Menu = () => {
   const expendToDoList  = () => setExpended(pre=>!pre)
   const expendInput = () => setInputExpended(pre=>!pre)
   const edit = () => setIsEditing(pre=>!pre)
-  const expendMenu = () => setMenuExpended(pre=>!pre)
+  const expandMenu = () => setMenuExpended(true)
+  const closeMenu = () => setMenuExpended(false)
 
   const expendTodoLists = async() => {
     if(expended){
       await controls.set({display:"block"})
       controls.start({
-        height: "auto",
+        // height: `${toDoLists.length*100}px`,
+        height: "auto"
       })
     } else {
       await controls.start({
         height: "0px",
-        padding: "0px",
       })
       controls.set({display:"none"})
     }
@@ -165,8 +155,8 @@ const Menu = () => {
       }}
       transition = {{delay: menuExpended ? 0:0.2}}
       // whileHover={{flexGrow:2}}
-      onMouseEnter={expendMenu}
-      onMouseLeave={expendMenu}
+      onMouseEnter={expandMenu}
+      onMouseLeave={closeMenu}
     >
       {/* <motion.span
         className={`material-symbols-outlined`}
@@ -180,7 +170,7 @@ const Menu = () => {
         initial="hidden"
         animate="show"
       >
-        <NavLink style={({isActive}) => (isActive ? activeStyle:{})}  to={"/"}>메인</NavLink>
+        <NavLink className={styles.menuLink} style={({isActive}) => (isActive ? activeStyle:{})}  to={"/"}>메인</NavLink>
       </motion.div>
       {cookies.accessToken!=null && (
         <motion.div 
@@ -264,15 +254,22 @@ const Menu = () => {
                 />
               )}
               {inputExpended&&(
-                <div>
+                <div style={{backgroundColor: "rgba(0, 0, 0, 0.1)", paddingBottom: "5px"}}>
                   <ToDoListInput 
                     onChange={onChangeToDoListName}
                     value={toDoListName}/>
-                  <ToDoListAddBtn
+                  <motion.span
                     className={`material-symbols-outlined`}
-                    onClick={addToDoList}>
+                    onClick={addToDoList}
+                    initial={{
+                      color:"rgb(0, 0, 0)",
+                      pointer: "cursor",
+                      paddingLeft: "15px",
+                    }}
+                    whileHover={{color:"rgb(100, 250, 100)", scale: 1.3}}
+                  >
                     done
-                  </ToDoListAddBtn>
+                  </motion.span>
                 </div>)
                 }
             </motion.div>
@@ -286,7 +283,7 @@ const Menu = () => {
           initial="hidden"
           animate="show"
         >
-          <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/mypage"}>내정보</NavLink>
+          <NavLink className={styles.menuLink} style={({isActive}) => (isActive ? activeStyle:{})} to={"/mypage"}>내정보</NavLink>
         </motion.div>)}
 
       {cookies.accessToken!=null && (
@@ -295,7 +292,7 @@ const Menu = () => {
           initial="hidden"
           animate="show"
         >
-          <NavLink onClick={tempLogout}>로그아웃</NavLink>
+          <NavLink className={styles.menuLink} onClick={tempLogout}>로그아웃</NavLink>
         </motion.div>)}
         
       {cookies.accessToken==null && (
@@ -304,7 +301,7 @@ const Menu = () => {
           initial="hidden"
           animate="show"
         >
-          <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/login"}>로그인</NavLink>
+          <NavLink className={styles.menuLink} style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/login"}>로그인</NavLink>
         </motion.div>)}
 
       {cookies.accessToken==null && (
@@ -313,7 +310,7 @@ const Menu = () => {
           initial="hidden"
           animate="show"
         >
-          <NavLink style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/join"}>회원가입</NavLink>
+          <NavLink className={styles.menuLink} style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/join"}>회원가입</NavLink>
         </motion.div>)}
       
       {cookies.accessToken==null && (
