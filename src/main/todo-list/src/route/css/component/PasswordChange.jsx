@@ -20,6 +20,7 @@ const mainStyle = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
+  backgroundColor: "#e5e5e5",
 }
 
 const textStyle = {
