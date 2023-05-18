@@ -12,7 +12,9 @@ const TodoInput = ({iconName, description, Component}) => {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center"
+    textAlign: "center",
+    // margin: "0 auto",
+    fontVariationSettings: `'wght' 300`,
   }
 
   const descriptionStyle = {

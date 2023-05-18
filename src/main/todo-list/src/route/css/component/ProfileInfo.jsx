@@ -13,7 +13,7 @@ function ProfileInfo({ name, email,profileImg }) {
 
       <div
         style={{
-          width: "500%",
+          width: "90%",
           marginLeft : "70px",
           borderBottom: "4px solid #aaa",
           lineHeight: "0.5em",
