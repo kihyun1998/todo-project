@@ -27,15 +27,10 @@ public class ListService {
     private final ListRepository listRepository;
     private final UserRepository userRepository;
     private final VerificationService verificationService;
-    private final String token = null;
-
-    @Value("${jwt.secret}")
-    private String secretKey;
 
     public String createList(String listName, String sortBy,Long userId){
 
-        User selectedUser = userRepository.findByUserId(userId)
-                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, "User is not found!!"));
+        User selectedUser = verificationService.foundUser(userId);
 
         verificationService.checkListNameDuplicate(
                 userId,

@@ -2,12 +2,14 @@ package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
+import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.ToDoRepository;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,6 +20,7 @@ public class VerificationService {
     private final ListRepository listRepository;
     private final ToDoRepository toDoRepository;
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
 
     public void checkListUser(Long userId, Long listId){
         listRepository.findByListId(listId)
@@ -52,5 +55,27 @@ public class VerificationService {
             throw new AppException(ErrorCode.NOT_FOUND, "ToDo is not found!!");
         }
         return opToDo.get();
+    }
+
+    public User foundUser(Long userId){
+        Optional<User> user = userRepository.findByUserId(userId);
+        if (user.isEmpty()){
+            throw new AppException(ErrorCode.NOT_FOUND, "User is not found!!");
+        }
+        return user.get();
+    }
+
+    public User foundUserByLoginId(String loginId){
+        Optional<User> user = userRepository.findByLoginId(loginId);
+        if (user.isEmpty()){
+            throw new AppException(ErrorCode.NOT_FOUND, "User is not found!!");
+        }
+        return user.get();
+    }
+
+    public void checkPassword(String loginPw, User user){
+        if(!encoder.matches(loginPw,user.getLoginPw())){
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "The password is wrong.");
+        }
     }
 }

@@ -2,21 +2,16 @@ package com.maker.Smart_To_Do_List.controller;
 
 
 import com.maker.Smart_To_Do_List.domain.User;
-import com.maker.Smart_To_Do_List.dto.ChangePasswordRequest;
-import com.maker.Smart_To_Do_List.dto.JoinRequest;
-import com.maker.Smart_To_Do_List.dto.LoginRequest;
-import com.maker.Smart_To_Do_List.dto.UserDto;
+import com.maker.Smart_To_Do_List.dto.*;
 import com.maker.Smart_To_Do_List.mapper.UserMapper;
 import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,5 +61,16 @@ public class UserController {
         );
 
         return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/info")
+    public ResponseEntity<Void> deleteUser(HttpServletRequest request,
+                                           @RequestBody DeleteUserRequest deleteUserRequest){
+        Long userId = jwtService.getUserId(request);
+        userService.deleteUser(
+                userId,
+                deleteUserRequest
+        );
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

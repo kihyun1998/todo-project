@@ -2,17 +2,15 @@ package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.ChangePasswordRequest;
+import com.maker.Smart_To_Do_List.dto.DeleteUserRequest;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import com.maker.Smart_To_Do_List.auth.JwtUtil;
-
-import java.util.Optional;
 
 
 @Service
@@ -21,7 +19,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    private final JwtService jwtService;
+    private final VerificationService verificationService;
+
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -54,15 +53,11 @@ public class UserService {
     }
 
     public String login(String loginId, String loginPw){
-        // NO LOGIN ID
-        User selectedUser = userRepository.findByLoginId(loginId)
-                .orElseThrow(()->new AppException(ErrorCode.NOT_FOUND, loginId + "is not found!!"));
+        // LoginId Checking
+        User selectedUser = verificationService.foundUserByLoginId(loginId);
 
-        System.out.println(selectedUser.getLoginPw());
-        // INVALID PASSWORD
-        if(!encoder.matches(loginPw,selectedUser.getLoginPw())){
-            throw new AppException(ErrorCode.INVALID_PASSWORD, "The password is wrong.");
-        }
+        // Password Checking
+        verificationService.checkPassword(loginPw,selectedUser);
 
         // No Exception > token issuance
         return JwtUtil.createToken(selectedUser.getLoginId() ,secretKey ,expireTimeMs);
@@ -70,20 +65,23 @@ public class UserService {
 
     public User changePassword(Long userId, ChangePasswordRequest changePasswordRequest){
 
-        Optional<User> user = userRepository.findByUserId(userId);
-        if (user.isEmpty()){
-            throw new AppException(ErrorCode.NOT_FOUND, userId + "is not found!!");
-        }
+
+        User updateUser = verificationService.foundUser(userId);
 
         // INVALID PASSWORD
-        User updateUser = user.get();
         if(!encoder.matches(changePasswordRequest.getPassword(),updateUser.getLoginPw())){
             throw new AppException(ErrorCode.INVALID_PASSWORD, "The password is wrong.");
         }
 
         updateUser.setLoginPw(encoder.encode(changePasswordRequest.getChangePassword()));
         return userRepository.save(updateUser);
+    }
 
+    public void deleteUser(Long userId, DeleteUserRequest deleteUserRequest){
+        User selectedUser = verificationService.foundUser(userId);
 
+        // Password Checking
+        verificationService.checkPassword(deleteUserRequest.getLoginPw(),selectedUser);
+        userRepository.deleteById(userId);
     }
 }

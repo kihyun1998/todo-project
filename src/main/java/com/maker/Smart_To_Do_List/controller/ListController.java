@@ -93,9 +93,8 @@ public class ListController {
     }
 
     @DeleteMapping("/{listId}")
-    public ResponseEntity<Void> deleteToDoList(
-            HttpServletRequest request,
-            @PathVariable("listId") final long listId) throws IOException{
+    public ResponseEntity<Void> deleteToDoList(HttpServletRequest request,
+                                               @PathVariable("listId") final long listId) throws IOException{
         Long userId = jwtService.getUserId(request);
         listService.deleteToDoList(
                 userId,
