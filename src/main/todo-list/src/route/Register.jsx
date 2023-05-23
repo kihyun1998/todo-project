@@ -5,6 +5,7 @@ import styles from "./css/Register.module.css";
 
 import Input from "./css/component/Input"
 import Button from "./css/component/Button"
+import Loading from "./css/component/Loading";
 
 const Register = () => {
   const [id, setId] = useState("");
@@ -16,6 +17,8 @@ const Register = () => {
   const [pwStr, setStr] = useState("");
   const [pwCStr, setPwCStr] = useState("");
   const [isPwSame, setIsPwSame] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const handlers = {
     onChangeId:(e) => setId(e.target.value),
@@ -45,22 +48,35 @@ const Register = () => {
 
     async submit (e) {
       e.preventDefault();
-      try{
-        const res = await axios.post("/api/v1/user/join", {
-          loginId: id,
-          loginPw: pw,
-          loginPwCheck: pwC,
-          userName: name,
-          userEmail: email
-        });
+      setLoading(true)
+      if(isPwSame){
+        try{
+          const res = await axios.post("/api/v1/user/join", {
+            loginId: id,
+            loginPw: pw,
+            loginPwCheck: pwC,
+            userName: name,
+            userEmail: email
+          });
 
-        console.log(res.data)
-        window.location.href = "/user/login";
-      } catch (err) {
-        console.log(err.response.data)
+          console.log(res.data)
+          window.location.href = "/user/login";
+          setLoading(false)
+        } catch (err) {
+          switch (err.response.status){
+            case 409:
+              alert("아이디가 이미 존재합니다.");
+              break;
+            default:
+              alert("오?류");
+          }
+          setLoading(false)
+        }
+      } else {
+        alert("비밀번호가 바르지 않습니다.")
+        setLoading(false)
       }
     }
-
   }
 
   useEffect(()=>{
@@ -141,10 +157,23 @@ const Register = () => {
           text={"인증"}
         />*/}
         <br />
-        <Button
-          text={"가입"}
-          onClick={handlers.submit}
-        />
+        <span
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            width: "50%"
+          }}
+        >
+          {loading?
+            <Loading />:
+            <Button
+              text={"가입"}
+              onClick={handlers.submit}
+            />
+          }
+        </span>
+        
       </form>
     </div>
   );

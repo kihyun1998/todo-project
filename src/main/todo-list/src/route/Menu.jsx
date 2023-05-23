@@ -8,6 +8,7 @@ import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 
 import Button from "./css/component/Button";
 import TodoList from "./css/component/TodoList";
+import Loading from "./css/component/Loading";
 
 const ToDoListInput = styled.input`
   margin-left: 35px;
