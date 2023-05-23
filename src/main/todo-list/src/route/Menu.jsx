@@ -241,6 +241,7 @@ const Menu = () => {
           {toDoLists&&(
             <motion.div
               style={{overflow:"hidden"}}
+              initial={{display:"none", height:"0px"}}
               animate={controls}
             >
               {toDoLists.map((toDoList, idx) => 
