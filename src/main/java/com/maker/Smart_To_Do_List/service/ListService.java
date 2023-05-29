@@ -3,10 +3,13 @@ package com.maker.Smart_To_Do_List.service;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.ChangeListNameRequest;
+import com.maker.Smart_To_Do_List.dto.GetListDto;
+import com.maker.Smart_To_Do_List.dto.SortDto;
 import com.maker.Smart_To_Do_List.dto.ToDoListDto;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.mapper.ToDoListMapper;
+import com.maker.Smart_To_Do_List.mapper.UserMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +49,7 @@ public class ListService {
 
     }
 
-    public List<ToDoList> getToDoLists(long userId){
+    public GetListDto getToDoLists(long userId){
         User user = verificationService.foundUser(userId);
         List<ToDoList> toDoLists;
         if ((Objects.equals(user.getSortBy(),"Date")) && Objects.equals(user.getOrderBy(),"ASC")){
@@ -61,7 +64,11 @@ public class ListService {
             throw new AppException(ErrorCode.NOT_FOUND, "Sort or Order standard Not Found!");
         }
 
-        return toDoLists;
+        List<ToDoListDto> toDoListDtoList = ToDoListMapper.convertToDtoList(toDoLists);
+        SortDto sortDto = UserMapper.convertToSort(user);
+        GetListDto getListDto = ToDoListMapper.convertToGetListDto(toDoListDtoList,sortDto);
+
+        return getListDto;
     }
 
     public ToDoListDto getToDoList(Long userId, Long listId){

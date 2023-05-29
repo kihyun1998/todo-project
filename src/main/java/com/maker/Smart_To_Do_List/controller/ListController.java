@@ -6,6 +6,7 @@ import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.ChangeListNameRequest;
 import com.maker.Smart_To_Do_List.dto.CreateListRequest;
+import com.maker.Smart_To_Do_List.dto.GetListDto;
 import com.maker.Smart_To_Do_List.dto.ToDoListDto;
 import com.maker.Smart_To_Do_List.mapper.ToDoListMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
@@ -59,9 +60,8 @@ public class ListController {
     @GetMapping("/lists")
     public ResponseEntity<?> getToDoLists(HttpServletRequest request){
         Long userId = jwtService.getUserId(request);
-        List<ToDoList> toDoLists = listService.getToDoLists(userId);
-        List<ToDoListDto> toDoListDtoList = ToDoListMapper.convertToDtoList(toDoLists);
-        return new ResponseEntity<>(toDoListDtoList, HttpStatus.OK);
+        GetListDto getListDto = listService.getToDoLists(userId);
+        return new ResponseEntity<>(getListDto, HttpStatus.OK);
     }
 
     @GetMapping("/{listId}")
