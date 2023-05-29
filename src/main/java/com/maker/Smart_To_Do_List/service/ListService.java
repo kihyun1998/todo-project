@@ -4,6 +4,8 @@ import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.ChangeListNameRequest;
 import com.maker.Smart_To_Do_List.dto.ToDoListDto;
+import com.maker.Smart_To_Do_List.exception.AppException;
+import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.mapper.ToDoListMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -44,7 +47,21 @@ public class ListService {
     }
 
     public List<ToDoList> getToDoLists(long userId){
-        return listRepository.findByUser_UserId(userId);
+        User user = verificationService.foundUser(userId);
+        List<ToDoList> toDoLists;
+        if ((Objects.equals(user.getSortBy(),"Date")) && Objects.equals(user.getOrderBy(),"ASC")){
+            toDoLists = listRepository.findByUser_UserIdOrderByCreatedDateAsc(userId);
+        }else if((Objects.equals(user.getSortBy(),"Date")) && Objects.equals(user.getOrderBy(),"DESC")){
+            toDoLists = listRepository.findByUser_UserIdOrderByCreatedDateDesc(userId);
+        }else if((Objects.equals(user.getSortBy(),"Name")) && Objects.equals(user.getOrderBy(),"ASC")){
+            toDoLists = listRepository.findByUser_UserIdOrderByListNameAsc(userId);
+        }else if((Objects.equals(user.getSortBy(),"Name")) && Objects.equals(user.getOrderBy(),"DESC")){
+            toDoLists = listRepository.findByUser_UserIdOrderByListNameDesc(userId);
+        }else{
+            throw new AppException(ErrorCode.NOT_FOUND, "Sort or Order standard Not Found!");
+        }
+
+        return toDoLists;
     }
 
     public ToDoListDto getToDoList(Long userId, Long listId){
