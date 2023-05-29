@@ -59,7 +59,6 @@ const Register = () => {
             userEmail: email
           });
 
-          console.log(res.data)
           window.location.href = "/user/login";
           setLoading(false)
         } catch (err) {

@@ -11,7 +11,7 @@ import java.util.Locale;
 
 @EnableJpaAuditing
 @SpringBootApplication
-public class SmartToDoListApplication {
+public class                        SmartToDoListApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SmartToDoListApplication.class, args);

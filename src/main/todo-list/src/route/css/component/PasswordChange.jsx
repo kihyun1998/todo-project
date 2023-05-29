@@ -1,10 +1,13 @@
 import { useCookies } from "react-cookie";
-import Input from "./Input";
-import Button from "./Button";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
+
+import Input from "./Input";
+import Button from "./Button";
+import Loading from "./Loading";
 
 const mainStyle = {
   position: "absolute",
@@ -37,10 +40,12 @@ const PasswordChange = ({setChangingPW}) => {
   const [isPwSame, setIsPwSame] = useState(false);
   const [str, setStr] = useState("");
   const [cPwCStr, setCPwCStr] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const changePassword = async() => {
     if(isPwSame) {
       try {
+        setLoading(true)
         const res = await axios.put("/api/v1/user/info", 
         {
           changePassword:cPw,
@@ -52,9 +57,18 @@ const PasswordChange = ({setChangingPW}) => {
         })
         await removeCookie("accessToken")
         await removeCookie("toDoLists")
+        alert("비밀번호가 변경되었습니다.")
         window.location.href="/user/login"
+        setLoading(false)
       } catch(e) {
-        console.log(e.response.data)
+        switch(e.response.status){
+          case 401:
+            alert("비밀번호가 다릅니다.")
+            break;
+          default:
+            alert("오?류")
+        }
+        setLoading(false)
       }
     }
   }
@@ -137,13 +151,19 @@ const PasswordChange = ({setChangingPW}) => {
         onChange={onChangeCPwC}
       /><br /><div style={textStyle}>{cPwCStr}</div>
       </div>
-
-      <Button 
-        disabled = {isPwSame}
-        onClick={changePassword}
-        styles={{width: "50px"}}
-        text="변경"
-      />
+      
+      <span>
+        {loading?
+          <Loading />:
+          <Button 
+            disabled = {!isPwSame}
+            onClick={changePassword}
+            styles={{width: "50px"}}
+            text="변경"
+          />
+        }
+      </span>
+      
     </div>
   );
 }

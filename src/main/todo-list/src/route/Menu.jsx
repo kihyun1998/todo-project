@@ -45,6 +45,7 @@ const Menu = () => {
   const [toDoListName, setToDoListName] = useState("");
   const [toDoLists, setToDoLists] = useState([]);
   const [menuExpended, setMenuExpended] = useState(false);
+  const [addListLoading, setAddListLoading] = useState(false);
 
   const controls = useAnimationControls();
 
@@ -64,6 +65,7 @@ const Menu = () => {
   const addToDoList = async() => {
     let res;
     try {
+      setAddListLoading(true);
       res = await axios.post("/api/v1/list/create", 
       {
         listName: toDoListName,
@@ -76,9 +78,17 @@ const Menu = () => {
       })
       getToDoListData();
       expendInput();
-      
+      setAddListLoading(false);
     } catch(err) {
-      console.log(err.response.data)
+      switch(err.response.status){
+        case 409:
+          alert("이미 존재하는 리스트 이름입니다.")
+          break;
+        default:
+          alert("오?류");
+          break;
+      }
+      setAddListLoading(false);
     }
   }
 
@@ -256,22 +266,32 @@ const Menu = () => {
                 />
               )}
               {inputExpended&&(
-                <div style={{backgroundColor: "rgba(0, 0, 0, 0.1)", paddingBottom: "5px"}}>
+                <div style={{
+                    backgroundColor: "rgba(0, 0, 0, 0.1)", 
+                    paddingBottom: "5px",
+                  }}>
                   <ToDoListInput 
                     onChange={onChangeToDoListName}
-                    value={toDoListName}/>
-                  <motion.span
-                    className={`material-symbols-outlined`}
-                    onClick={addToDoList}
-                    initial={{
-                      color:"rgb(0, 0, 0)",
-                      pointer: "cursor",
-                      paddingLeft: "15px",
-                    }}
-                    whileHover={{color:"rgb(100, 250, 100)", scale: 1.3}}
-                  >
-                    done
-                  </motion.span>
+                    value={toDoListName}
+                  />
+                  <span style={{textAlign:"center"}}>
+                    {addListLoading?
+                      <Loading styles={{fontSize:"24px", x:"80%"}}/>:
+                      <motion.span
+                        className={`material-symbols-outlined`}
+                        onClick={addToDoList}
+                        initial={{
+                          color:"rgb(0, 0, 0)",
+                          pointer: "cursor",
+                          paddingLeft: "15px",
+                        }}
+                        whileHover={{color:"rgb(100, 250, 100)", scale: 1.3}}
+                      >
+                        done
+                      </motion.span>
+                    }
+                  </span>
+                  
                 </div>)
                 }
             </motion.div>
@@ -315,12 +335,12 @@ const Menu = () => {
           <NavLink className={styles.menuLink} style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/join"}>회원가입</NavLink>
         </motion.div>)}
       
-      {cookies.accessToken==null && (
+      {/* {cookies.accessToken==null && (
         <Button 
           text={"로그인 상태 만들기 (메뉴상에서만)"}
           onClick={tempLogin}
         />
-      )}
+      )} */}
     </motion.div>
   );
 }

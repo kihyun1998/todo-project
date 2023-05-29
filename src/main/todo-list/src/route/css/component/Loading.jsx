@@ -10,7 +10,7 @@ const Loading = ({styles}) => {
       className="material-symbols-outlined"
       animate={{rotate: 180}}
       transition={{repeat:Infinity, duration:1}}
-      style={Object.assign({}, styles, loadingStyle)}
+      style={Object.assign({}, loadingStyle, styles)}
     >
       cached
     </motion.span>
