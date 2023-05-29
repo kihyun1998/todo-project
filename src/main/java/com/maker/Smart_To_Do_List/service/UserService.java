@@ -1,6 +1,7 @@
 package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.User;
+import com.maker.Smart_To_Do_List.dto.ChangeListSortOrder;
 import com.maker.Smart_To_Do_List.dto.ChangePasswordRequest;
 import com.maker.Smart_To_Do_List.dto.DeleteUserRequest;
 import com.maker.Smart_To_Do_List.exception.AppException;
@@ -45,6 +46,8 @@ public class UserService {
                 .loginPw(encoder.encode(loginPw))
                 .userName(userName)
                 .userEmail(userEmail)
+                .sortBy("Date")
+                .orderBy("ASC")
                 .build();
 
         userRepository.save(user);
@@ -65,7 +68,6 @@ public class UserService {
 
     public User changePassword(Long userId, ChangePasswordRequest changePasswordRequest){
 
-
         User updateUser = verificationService.foundUser(userId);
 
         // INVALID PASSWORD
@@ -74,6 +76,14 @@ public class UserService {
         }
 
         updateUser.setLoginPw(encoder.encode(changePasswordRequest.getChangePassword()));
+        return userRepository.save(updateUser);
+    }
+
+    public User changeListSortOrder(Long userId, ChangeListSortOrder changeListSortOrder){
+
+        User updateUser = verificationService.foundUser(userId);
+        updateUser.setSortBy(changeListSortOrder.getSortBy());
+        updateUser.setOrderBy(changeListSortOrder.getOrderBy());
         return userRepository.save(updateUser);
     }
 

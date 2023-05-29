@@ -26,15 +26,6 @@ public class ToDoList extends BaseTimeEntity{
     @Column(name = "list_name")
     private String listName;
 
-    /***
-     ASC_DATE : 생성 날짜 오름차순
-     DESC_DATE : 생성 날자 내림차순
-     ASC_NAME : 이름 오름차순
-     DESC_NAME : 이름 내림차순
-     ***/
-    @Column(name = "sort_by")
-    private String sortBy = "ASC_Date";
-
     @OneToMany(mappedBy = "toDoList",fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,orphanRemoval=true)
     private List<ToDo> toDos = new ArrayList<>();

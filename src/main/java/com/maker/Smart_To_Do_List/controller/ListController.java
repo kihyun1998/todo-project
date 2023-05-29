@@ -49,7 +49,6 @@ public class ListController {
         Long userId = jwtService.getUserId(request);
         listService.createList(
                 createListDto.getListName(),
-                createListDto.getSortBy(),
                 userId
         );
 

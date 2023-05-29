@@ -73,4 +73,16 @@ public class UserController {
         );
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("/lists")
+    public ResponseEntity<?> changeListSortOrder(HttpServletRequest request,
+                                                 @RequestBody ChangeListSortOrder changeListSortOrder){
+        Long userId = jwtService.getUserId(request);
+        User updateUser = userService.changeListSortOrder(
+                userId,
+                changeListSortOrder
+        );
+
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
 }

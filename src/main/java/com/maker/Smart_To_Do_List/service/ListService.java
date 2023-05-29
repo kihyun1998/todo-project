@@ -4,21 +4,16 @@ import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.ChangeListNameRequest;
 import com.maker.Smart_To_Do_List.dto.ToDoListDto;
-import com.maker.Smart_To_Do_List.exception.AppException;
-import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.mapper.ToDoListMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
-import com.maker.Smart_To_Do_List.auth.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Time;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +23,7 @@ public class ListService {
     private final UserRepository userRepository;
     private final VerificationService verificationService;
 
-    public String createList(String listName, String sortBy,Long userId){
+    public String createList(String listName, Long userId){
 
         User selectedUser = verificationService.foundUser(userId);
 
@@ -39,7 +34,6 @@ public class ListService {
 
         ToDoList toDoList = ToDoList.builder()
                 .listName(listName)
-                .sortBy(sortBy)
                 .build();
 
         selectedUser.addToDoList(toDoList);

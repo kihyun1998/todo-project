@@ -40,6 +40,17 @@ public class User extends BaseTimeEntity{
     @Column(name = "user_email",unique = true)
     private String userEmail;
 
+    /***
+     sortBy = [Date, Name]
+     orderBy = [ASC, DESC]
+     ***/
+    @Column(name = "sort_by")
+    private String sortBy;
+
+    @Column(name = "order_by")
+    private String orderBy;
+
+
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,orphanRemoval=true)
     private List<ToDoList> toDoLists = new ArrayList<>();
