@@ -32,5 +32,3 @@ build
 
 application-sec.properties
 application.properties
-src/main/package-lock.json
-src/main/todo-list/package-lock.json
