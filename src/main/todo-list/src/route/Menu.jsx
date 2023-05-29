@@ -46,6 +46,8 @@ const Menu = () => {
   const [toDoLists, setToDoLists] = useState([]);
   const [menuExpended, setMenuExpended] = useState(false);
   const [addListLoading, setAddListLoading] = useState(false);
+  const [sortBy, setSortBy] = useState("Date");
+  const [orderBy, setOrderBy] = useState("ASC");
 
   const controls = useAnimationControls();
 
@@ -155,6 +157,28 @@ const Menu = () => {
   //   navHover();
   //   console.log(menuExpended)
   // }, [controls, menuExpended])
+
+
+  const onChangeSort = (e) => setSortBy(e.target.value)
+  const onChangeOrder = (e) => setOrderBy(e.target.value)
+
+  const submitSortOrder = async() => {
+    try {
+      const res = await axios.put("/api/v1/user/lists", {
+        sortBy: sortBy,
+        orderBy: orderBy
+      }, {
+        headers: {
+          Authorization: `Bearer ${cookies.accessToken}`
+        }
+      })
+      console.log(res)
+      getToDoListData()
+    } catch (e) {
+      console.log(e.response.data)
+    }
+  }
+
 
   return (
     <motion.div 
@@ -341,6 +365,19 @@ const Menu = () => {
           onClick={tempLogin}
         />
       )} */}
+      {isEditing&&
+        <div>
+          <label htmlFor="Date">Date</label>
+          <input name="sort" type="radio" value="Date" id="Date" onChange={onChangeSort} defaultChecked/><br />
+          <label htmlFor="Date">Name</label>
+          <input name="sort" type="radio" value="Name" id="Name" onChange={onChangeSort}/><br />
+          <label htmlFor="Date">ASC</label>
+          <input name="order" type="radio" value="ASC" id="ASC" onChange={onChangeOrder} defaultChecked/><br />
+          <label htmlFor="Date">DESC</label>
+          <input name="order" type="radio" value="DESC" id="DESC" onChange={onChangeOrder} /><br />
+          <Button text={"변경"} onClick={submitSortOrder}/>
+        </div>
+      }
     </motion.div>
   );
 }
