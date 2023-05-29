@@ -23,7 +23,7 @@ function App() {
               <Route path="/mypage" element={<Mypage />} />
           </Routes>
         </div>
-        <div style={{flex: "1 1 0"}}>.</div>
+        <div style={{flex: "1 1 0"}}></div>
       </div>
     </BrowserRouter>
   );

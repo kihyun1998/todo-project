@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const Button = ({ text, onClick, styles, desabled }) => {
+const Button = ({ text, onClick, styles, disabled }) => {
   const style = {
     "minWidth":"80px",
     "minHeight": "30px",
@@ -22,7 +22,7 @@ const Button = ({ text, onClick, styles, desabled }) => {
         border: "3px solid #bf979c",
         scale: 1.1,
       }}
-      desabled={desabled}
+      disabled={disabled}
     >
       {text}
     </motion.button>

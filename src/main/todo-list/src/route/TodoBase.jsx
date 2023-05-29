@@ -9,6 +9,7 @@ import EstimatedTime from "./css/component/EstimatedTime";
 import Deadline from "./css/component/Deadline";
 import Difficulty from "./css/component/Difficulty";
 import TodoTable from "./css/component/TodoTable";
+import Loading from "./css/component/Loading";
 
 import axios from "axios";
 import { useCookies } from 'react-cookie';
@@ -25,6 +26,8 @@ const TodoBase = () => {
     const [deadline, setDeadline] = useState("0000-00-00");
     const [estimatedTime, setEstimatedTime] = useState(0);
     const [difficulty, setDifficulty] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [backClicked, setBackClicked] = useState(false);
 
     
 
@@ -54,6 +57,7 @@ const TodoBase = () => {
         e.preventDefault();
         let res;
         try {
+            setLoading(true);
             res = await axios.post(`/api/v1/list/${toDoId}/create`, {
                 todoTitle: content,
                 importance: importance,
@@ -71,8 +75,16 @@ const TodoBase = () => {
             setDeadline("0000-00-00");
             setEstimatedTime(0);
             setDifficulty(0);
+            setLoading(false);
         } catch(err) {
-            console.log(err.response.data)
+            switch(err.response.status){
+                case 409:
+                    alert("날짜를 선택해주세요.");
+                    break;
+                default:
+                    alert("오?류");
+            }
+            setLoading(false);
         }
     }
 
@@ -91,14 +103,17 @@ const TodoBase = () => {
             });
             setTodos([...res.data])
         } catch(err) {
-            console.log(err.response.data)
+            console.log(err.response)
         }
         
         // setTodos(res.data);
     }
 
     return (
-        <div className={styles.test}>
+        <div 
+            className={styles.test}
+            onClick={()=>setBackClicked(true)}
+        >
             <div>
                 <TodoTable 
                     todos={todos}
@@ -118,6 +133,8 @@ const TodoBase = () => {
                         Component={<Importance 
                             returnParam={getParam}
                         />}
+                        backClicked = {backClicked}
+                        setBackClicked={setBackClicked}
                     />
                     
                     <TodoInput 
@@ -126,6 +143,8 @@ const TodoBase = () => {
                         Component = {<Deadline
                             returnParam={getParam}
                         />}
+                        backClicked = {backClicked}
+                        setBackClicked={setBackClicked}
                     />
 
                     <TodoInput 
@@ -134,6 +153,8 @@ const TodoBase = () => {
                         Component={<EstimatedTime 
                             returnParam={getParam}
                         />}
+                        backClicked = {backClicked}
+                        setBackClicked={setBackClicked}
                     />
                     
                     <TodoInput 
@@ -142,11 +163,18 @@ const TodoBase = () => {
                         Component={<Difficulty 
                             returnParam={getParam}
                         />}
+                        backClicked = {backClicked}
+                        setBackClicked={setBackClicked}
                     />
-                    <Button 
-                        text="추가"
-                        onClick={submit}
-                    />
+                    <span style={{textAlign:"center", width:"80px"}}>
+                        {loading?
+                            <Loading styles={{fontSize:"36px"}}/>:
+                            <Button 
+                                text="추가"
+                                onClick={submit}
+                            />
+                        }
+                    </span>
                 </div>
             </div>
         </div>

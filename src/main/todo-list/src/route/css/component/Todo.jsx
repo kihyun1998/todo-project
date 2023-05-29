@@ -1,5 +1,5 @@
 const Todo = ({todo}) => {
-  console.log(todo)
+  // console.log(todo)
   return (
     <div>
       {todo.todoTitle}

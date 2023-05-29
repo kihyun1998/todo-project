@@ -5,6 +5,7 @@ import Input from "./css/component/Input";
 import Button from "./css/component/Button";
 import { useCookies } from 'react-cookie';
 import { motion } from "framer-motion";
+import Loading from "./css/component/Loading"
 
 import styles from "./css/Login.module.css"
 
@@ -34,6 +35,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handlers = {
     onChangeId:(e) => setId(e.target.value),
@@ -43,13 +45,24 @@ const Login = () => {
       e.preventDefault();
       let res;
       try{
+        setLoading(true);
         res = await axios.post("/api/v1/user/login", {loginId:id, loginPw:pw});
-        console.log(res)
         setCookie("accessToken", res.data);
         navigate("/");
+        setLoading(false);
         
       } catch(err) {
-        console.log(err.response.data)
+        setLoading(false);
+        switch(err.response.status) {
+          case 404:
+            alert("아이디가 존재하지 않습니다.")
+            break;
+          case 401:
+            alert("비밀번호가 옳바르지 않습니다.");
+            break;
+          default:
+            alert("오류!");
+        }
       }
     }
   }
@@ -80,11 +93,26 @@ const Login = () => {
             label={"비밀번호"}
             style={{marginBottom:"100px"}}
           /><br />
-          <Button
-            text={"로그인"}
-            onClick={handlers.onClickLogin}
-            styles={{x:"400%"}}
-          />
+          <span
+            style={{
+              width: "30%",
+              marginLeft:"270px",
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+            
+          >
+            {loading?
+              <Loading />:
+              <Button
+                text={"로그인"}
+                onClick={handlers.onClickLogin}
+              />
+            }
+          </span>
+          
+          
         </form>
       </div>
     </motion.div>

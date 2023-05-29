@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 
-const TodoInput = ({iconName, description, Component}) => {
+const TodoInput = ({iconName, description, Component, backClicked, setBackClicked}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isComponentHovered, setIsComponentHovered] = useState(false);
+  
+
   const controls = useAnimationControls();
 
   const rootStyle = {
@@ -51,9 +53,12 @@ const TodoInput = ({iconName, description, Component}) => {
   }
 
   // document.body.addEventListener("click", (e)=> {
-  //   console.log(isComponentHovered, isClicked)
-  //   if (!isComponentHovered && isClicked && !isHovered) {
-  //     setIsClicked(false);
+  //   console.log(isComponentHovered, isClicked, isHovered)
+  //   if (!isComponentHovered) {
+  //     if (isClicked)
+  //       setIsClicked(false);
+  //     else if (!isClicked && isHovered)
+  //       setIsClicked(true);
   //   }
   // })
 
@@ -65,15 +70,28 @@ const TodoInput = ({iconName, description, Component}) => {
       await controls.start({opacity:0, y: -100,transition:{duration: 0.2}})
       controls.start({display:"none"})
     }
-    
   }
+
+  useEffect(()=>{
+    console.log(backClicked)
+    if(backClicked){
+      if(!isHovered&&!isComponentHovered){
+        setIsClicked(false)
+        setBackClicked(false)
+      } else {
+        setBackClicked(false)
+      }
+    }
+  }, [backClicked])
 
   useEffect(()=> {
     clickAnimation();
   }, [controls, isClicked])
 
   return (
-    <div style={rootStyle}>
+    <div 
+      style={rootStyle}
+    >
       <motion.div 
           style={Object.assign({}, componentStyle, !isClicked&&disabled)}
           onMouseEnter={()=>setIsComponentHovered(true)}

@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 import Input from "./Input"
 import styled from "styled-components";
 import axios from "axios";
-import { useCookies } from "react-cookie";
+import Loading from "./Loading";
 
 const StyledDiv = styled.div`
   ${props=>props.isEditing&&"display: flex;"}
@@ -20,6 +21,7 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [ETitle, setETitle] = useState(text);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const linkStyle = {
     display: "inline-block",
@@ -74,15 +76,24 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
   const deleteTodoList = async() => {
     console.log(`Try to delete listId:${listId}`)
     try{
+      setDeleteLoading(true)
       const res = await axios.delete(`/api/v1/list/${listId}`, {
         headers: {
           Authorization: `Bearer ${cookies.accessToken}`
         }
       });
       console.log(res.data)
-      getToDoListData();
+      // getToDoListData();
+      setDeleteLoading(false)
     } catch(e) {
-      console.log(e.response.data)
+      switch(e.response.status){
+        case 404:
+          getToDoListData();
+          break;
+        default:
+          alert("오?류")
+      }
+      setDeleteLoading(false)
     }
   }
 
@@ -142,17 +153,23 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
           />
       }
       {isEditing && !isEditingTitle && (
-        <motion.span 
-          className="material-symbols-outlined" 
-          style={deleteStyle} 
-          onClick={deleteTodoList}
-          whileHover={{
-            color:"rgb(250, 0, 0)", 
-            scale: 1.3
-          }}
-        >
-          delete
-        </motion.span>
+        <span> 
+          {deleteLoading?
+            <Loading />:
+            <motion.span 
+              className="material-symbols-outlined" 
+              style={deleteStyle} 
+              onClick={deleteTodoList}
+              whileHover={{
+                color:"rgb(250, 0, 0)", 
+                scale: 1.3
+              }}
+            >
+              delete
+            </motion.span>
+          }
+        </span>
+        
       )}
 
       {isEditingTitle && isEditing && (
