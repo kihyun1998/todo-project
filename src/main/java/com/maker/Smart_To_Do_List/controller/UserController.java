@@ -87,9 +87,7 @@ public class UserController {
                 userId,
                 changeListSortOrder
         );
-        List<ToDoList> toDoLists = listService.getToDoLists(userId);
-        List<ToDoListDto> toDoListDtoList = ToDoListMapper.convertToDtoList(toDoLists);
 
-        return new ResponseEntity<>(toDoListDtoList, HttpStatus.OK);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 }
