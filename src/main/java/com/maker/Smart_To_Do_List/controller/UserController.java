@@ -1,10 +1,13 @@
 package com.maker.Smart_To_Do_List.controller;
 
 
+import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.*;
+import com.maker.Smart_To_Do_List.mapper.ToDoListMapper;
 import com.maker.Smart_To_Do_List.mapper.UserMapper;
 import com.maker.Smart_To_Do_List.service.JwtService;
+import com.maker.Smart_To_Do_List.service.ListService;
 import com.maker.Smart_To_Do_List.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class UserController {
 
     private final UserService userService;
     private final JwtService jwtService;
+    private final ListService listService;
 
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody JoinRequest joinDto){
@@ -82,7 +87,9 @@ public class UserController {
                 userId,
                 changeListSortOrder
         );
+        List<ToDoList> toDoLists = listService.getToDoLists(userId);
+        List<ToDoListDto> toDoListDtoList = ToDoListMapper.convertToDtoList(toDoLists);
 
-        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+        return new ResponseEntity<>(toDoListDtoList, HttpStatus.OK);
     }
 }
