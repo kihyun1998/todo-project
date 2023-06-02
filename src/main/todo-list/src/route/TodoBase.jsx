@@ -112,7 +112,9 @@ const TodoBase = () => {
     return (
         <div 
             className={styles.test}
-            onClick={()=>setBackClicked(true)}
+            onClick={()=>{
+                setBackClicked(pre=>!pre)
+            }}
         >
             <div>
                 <TodoTable 
