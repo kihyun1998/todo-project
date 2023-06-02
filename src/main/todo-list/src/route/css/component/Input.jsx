@@ -29,7 +29,7 @@ const Input = ({ type, label, value, id, name, onChange, onClick, style, DC=fals
   }
 
   if (type === "radio") {
-    styleInput["width"] = "100px"
+    styleInput["width"] = "20px"
     styleLabel["width"] = "fit-content"
   }
 

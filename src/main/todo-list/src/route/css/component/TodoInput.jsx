@@ -73,14 +73,8 @@ const TodoInput = ({iconName, description, Component, backClicked, setBackClicke
   }
 
   useEffect(()=>{
-    console.log(backClicked)
-    if(backClicked){
-      if(!isHovered&&!isComponentHovered){
-        setIsClicked(false)
-        setBackClicked(false)
-      } else {
-        setBackClicked(false)
-      }
+    if(!isHovered&&!isComponentHovered){
+      setIsClicked(false)
     }
   }, [backClicked])
 

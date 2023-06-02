@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 
 import Button from "./css/component/Button";
+import Input from "./css/component/Input";
 import TodoList from "./css/component/TodoList";
 import Loading from "./css/component/Loading";
 
@@ -36,6 +37,10 @@ const menuStyle = {
   zIndex: 0,
 }
 
+const sortStyle = {
+  cursor:"pointer"
+}
+
 const Menu = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "toDoLists"]);
   
@@ -48,6 +53,7 @@ const Menu = () => {
   const [addListLoading, setAddListLoading] = useState(false);
   const [sortBy, setSortBy] = useState("Date");
   const [orderBy, setOrderBy] = useState("ASC");
+  const [changeSortLoading, setChangeSortLoading] = useState(false);
 
   const controls = useAnimationControls();
 
@@ -124,7 +130,7 @@ const Menu = () => {
   const expendInput = () => setInputExpended(pre=>!pre)
   const edit = () => setIsEditing(pre=>!pre)
   const expandMenu = () => setMenuExpended(true)
-  const closeMenu = () => setMenuExpended(false)
+  const closeMenu = () => {setMenuExpended(isEditing)}
 
   const expendTodoLists = async() => {
     if(expended){
@@ -153,16 +159,9 @@ const Menu = () => {
     expendTodoLists();
   }, [controls, expended])
 
-  // useEffect(()=>{
-  //   navHover();
-  //   console.log(menuExpended)
-  // }, [controls, menuExpended])
-
-
-  const onChangeSort = (e) => setSortBy(e.target.value)
-  const onChangeOrder = (e) => setOrderBy(e.target.value)
 
   const submitSortOrder = async() => {
+    setChangeSortLoading(true);
     try {
       const res = await axios.put("/api/v1/user/lists", {
         sortBy: sortBy,
@@ -177,6 +176,7 @@ const Menu = () => {
     } catch (e) {
       console.log(e.response.data)
     }
+    setChangeSortLoading(false);
   }
 
 
@@ -273,6 +273,115 @@ const Menu = () => {
             )}
             </AnimatePresence>
           </div>
+          <AnimatePresence>
+            {isEditing&&
+              <motion.div
+                initial={{opacity:0, y:"-20px", height:"0px"}}
+                animate={{opacity:1, y:"0px", height:"30px"}}
+                exit={{
+                  opacity:0,
+                  transition:{delay:"0.3"},
+                  y:"-20px",
+                  height:"0px"
+                }}
+                style={{
+                  backgroundColor: "rgba(70, 70, 70, 0.3)",
+                }}
+              >
+              <motion.div
+                initial={{opacity:0}}
+                animate={{
+                  opacity:1,
+                  transition:{delay:"0.3"}
+                }}
+                exit={{opacity:0}}
+                style={{
+                  display:"flex",
+                  justifyContent: "space-between",
+                  paddingLeft: "25px",
+                  paddingRight: "10px"
+                }}  
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    //flex: "1 1 0",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "min-content"
+                    }}
+                  >
+                    <motion.div className="material-symbols-outlined"
+                    style={sortStyle}
+                    onClick={()=>setSortBy("Name")}
+                    initial={{
+                      width: sortBy==="Date"?"0%":"100%",
+                      scale: sortBy==="Date"?0:1,
+                      rotate:sortBy==="Date"?360:0,
+                    }}
+                    animate={{
+                      width: sortBy==="Date"?"100%":"0%",
+                      scale: sortBy==="Date"?1:0,
+                      rotate:sortBy==="Date"?0:360,
+                    }}
+                    >calendar_month</motion.div>
+
+                    <motion.div className="material-symbols-outlined"
+                      style={sortStyle}
+                      onClick={()=>setSortBy("Date")}
+                      initial={{
+                        width: sortBy==="Date"?"100%":"0%",
+                        scale: sortBy==="Date"?1:0,
+                        rotate:sortBy==="Date"?0:360,
+                      }}
+                      animate={{
+                        width: sortBy==="Date"?"0%":"100%",
+                        scale: sortBy==="Date"?0:1,
+                        rotate:sortBy==="Date"?360:0,
+                      }}
+                    >sort_by_alpha</motion.div>
+                  </div>
+
+                  <motion.div className="material-symbols-outlined"
+                    style={sortStyle}
+                    onClick={()=>{setOrderBy(orderBy==="ASC"?"DESC":"ASC")}}
+                    initial={{
+                      rotate:orderBy==="ASC"?180:0,
+                      translateY: orderBy==="ASC"?"-20%":"0%"
+                    }}
+                    animate={{
+                      rotate:orderBy==="ASC"?0:180,
+                      translateY: orderBy==="ASC"?"0":"-20%"
+                    }}
+                  >Sort</motion.div>
+                </div>
+                
+                {!changeSortLoading?
+                <motion.div 
+                  className="material-symbols-outlined"
+                  style={{
+                    color: "rgb(0, 0, 0)",
+                    cursor:"pointer",
+                    //flex: "1 1 0",
+                    textAlign: "center"
+                  }}
+                  whileHover={{
+                    color:"rgb(50, 150, 50)",
+                    scale: 1.3
+                  }}
+                  onClick={submitSortOrder}
+                >
+                  check
+                </motion.div>:
+                <Loading />
+                }
+              </motion.div>
+              </motion.div>
+            }
+            </AnimatePresence>
           {toDoLists&&(
             <motion.div
               style={{overflow:"hidden"}}
@@ -365,19 +474,6 @@ const Menu = () => {
           onClick={tempLogin}
         />
       )} */}
-      {isEditing&&
-        <div>
-          <label htmlFor="Date">Date</label>
-          <input name="sort" type="radio" value="Date" id="Date" onChange={onChangeSort} defaultChecked/><br />
-          <label htmlFor="Date">Name</label>
-          <input name="sort" type="radio" value="Name" id="Name" onChange={onChangeSort}/><br />
-          <label htmlFor="Date">ASC</label>
-          <input name="order" type="radio" value="ASC" id="ASC" onChange={onChangeOrder} defaultChecked/><br />
-          <label htmlFor="Date">DESC</label>
-          <input name="order" type="radio" value="DESC" id="DESC" onChange={onChangeOrder} /><br />
-          <Button text={"변경"} onClick={submitSortOrder}/>
-        </div>
-      }
     </motion.div>
   );
 }
