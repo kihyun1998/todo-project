@@ -40,6 +40,7 @@ const TodoInput = ({iconName, description, Component, backClicked, setBackClicke
   const componentStyle = {
     backgroundColor: "rgba(130, 130, 130, 1)",
     borderRadius: "20px",
+    boxShadow: "0px 0px 7px grey",
     position: "absolute",
     // transition: ".3s all",
     height: "150px",
@@ -48,7 +49,6 @@ const TodoInput = ({iconName, description, Component, backClicked, setBackClicke
     padding: "5px",
     overflow: "hidden",
     opacity: "1",
-    boxShadow: "0px 0px 7px grey",
     color: "white"
   }
 

@@ -109,7 +109,11 @@ const Menu = () => {
             Authorization: `Bearer ${cookies.accessToken}`
           }
         });
-        await setCookie("toDoLists", res.data);
+        console.log(res)
+        setSortBy(res.data.sortDto.sortBy);
+        setOrderBy(res.data.sortDto.orderBy);
+        
+        await setCookie("toDoLists", res.data.ToDoListDto);
       } catch(err) {
         console.log(err.response.data);
       }
