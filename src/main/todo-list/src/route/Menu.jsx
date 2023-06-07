@@ -62,8 +62,7 @@ const Menu = () => {
     show:{opacity: menuExpended ? 1:0, transition:{delay: menuExpended ? 0.2:0}},
   }
 
-  const tempLogin = () => setCookie("accessToken", "temp");
-  const tempLogout = () => {
+  const logout = () => {
     removeCookie("accessToken");
     removeCookie("toDoLists");
     window.location.href = "/";
@@ -109,7 +108,10 @@ const Menu = () => {
             Authorization: `Bearer ${cookies.accessToken}`
           }
         });
-        await setCookie("toDoLists", res.data);
+        setSortBy(res.data.sortDto.sortBy);
+        setOrderBy(res.data.sortDto.orderBy);
+        
+        await setCookie("toDoLists", res.data.toDoListDto);
       } catch(err) {
         console.log(err.response.data);
       }
@@ -447,7 +449,7 @@ const Menu = () => {
           initial="hidden"
           animate="show"
         >
-          <NavLink className={styles.menuLink} onClick={tempLogout}>로그아웃</NavLink>
+          <NavLink className={styles.menuLink} onClick={logout}>로그아웃</NavLink>
         </motion.div>)}
         
       {cookies.accessToken==null && (
