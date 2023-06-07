@@ -8,3 +8,8 @@
   text-align: center;
   /* border: 1px solid black; */
 }
+
+.scroll::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgb(114, 114, 114);
+}

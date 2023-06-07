@@ -17,12 +17,15 @@ const Intro = () => {
   const [logined, setLogined] = useState(false);
   const [setting, setSetting] = useState(false);
   const [mainList, setMainList] = useState(0);
+  const [tempMainList, setTempMainList] = useState(0);
 
-  const getUserName = async() => {
+  const getMainInfo = async() => {
     if(cookies.accessToken != null) {
       try{
-        const res = await axios.get("/api/v1/user/info", {headers:{Authorization: `Bearer ${cookies.accessToken}`}})
+        const res = await axios.get("/api/v1/user/info", 
+          {headers:{Authorization: `Bearer ${cookies.accessToken}`}})
         setUserName(res.data.userName)
+        setMainList(res.data.mainList)
         setLogined(true);
       } catch(e) {
         console.log(e)
@@ -30,8 +33,21 @@ const Intro = () => {
     }
   }
 
+  const changeMainList = async() => {
+    try{
+      const res = await axios.put("/api/v1/user/info",
+        {changeMainList:tempMainList},
+        {headers:{Authorization: `Bearer ${cookies.accessToken}`}}
+      )
+      setMainList(res.data.mainList)
+      getMainInfo();
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
   useEffect(() => {
-    getUserName()
+    getMainInfo()
   }, [])
 
   return (
@@ -96,7 +112,7 @@ const Intro = () => {
                     backgroundColor: "rgba(240, 240, 240, 0.9)",
                     borderRadius: "20px",
                     boxShadow: "0px 0px 7px grey",
-                    display: "flex",
+                    // display: "flex",
                     padding: "20px",
                   }}
                   initial={{
@@ -107,6 +123,7 @@ const Intro = () => {
                   }}
                 >
                   <div
+                    className={styles.scroll}
                     style={{
                       display: "flex",
                       margin: "0 auto",
@@ -129,10 +146,15 @@ const Intro = () => {
                             height: "40px"
                           }}
                           initial={{
-                            backgroundColor: "rgba(0, 0, 0, 0)",
+                            backgroundColor: mainList===todoList.id ?
+                              "rgba(0, 0, 0, 0.2)":tempMainList ?
+                                "rgba(0, 0, 0, 0.1)":"rgba(0, 0, 0, 0)",
                           }}
                           whileHover={{
-                            backgroundColor: "rgba(0, 0, 0, 0.2)",
+                            backgroundColor: "rgba(0, 0, 0, 0.1)",
+                          }}
+                          onClick={()=>{
+                            setTempMainList(todoList.id)
                           }}
                         >
                           {todoList.listName}
@@ -140,11 +162,22 @@ const Intro = () => {
                       );
                     })}
                   </div>
-                  <span
+                  <motion.div
                     className="material-symbols-outlined"
+                    style={{
+                      color: "rgb(0, 0, 0)",
+                      cursor:"pointer",
+                      //flex: "1 1 0",
+                      textAlign: "center"
+                    }}
+                    whileHover={{
+                      color:"rgb(50, 150, 50)",
+                      scale: 1.3
+                    }}
+                    onClick={changeMainList}
                   >
                     check
-                  </span>
+                  </motion.div>
                   
                 </motion.div>
               }
