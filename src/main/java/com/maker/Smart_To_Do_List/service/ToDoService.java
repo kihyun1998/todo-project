@@ -36,6 +36,7 @@ public class ToDoService {
                 .deadline(createToDoRequest.getDeadline())
                 .difficulty(createToDoRequest.getDifficulty())
                 .importance(createToDoRequest.getImportance())
+                .need(createToDoRequest.getNeed())
                 .status(createToDoRequest.getStatus())
                 .build();
 
@@ -78,6 +79,9 @@ public class ToDoService {
         }
         if(updateToDo.getImportance() != createToDoRequest.getImportance()){
             updateToDo.setImportance(createToDoRequest.getImportance());
+        }
+        if(updateToDo.getNeed() != createToDoRequest.getNeed()){
+            updateToDo.setNeed(createToDoRequest.getNeed());
         }
         ToDo saveToDo = toDoRepository.save(updateToDo);
         return ToDoMapper.convertToToDoRequest(saveToDo);

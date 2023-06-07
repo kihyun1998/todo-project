@@ -3,7 +3,6 @@ package com.maker.Smart_To_Do_List.mapper;
 import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
 import com.maker.Smart_To_Do_List.dto.ToDoDto;
-import com.maker.Smart_To_Do_List.dto.ToDoListDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +16,7 @@ public class ToDoMapper {
         toDoDto.setDeadline(toDo.getDeadline());
         toDoDto.setDifficulty(toDo.getDifficulty());
         toDoDto.setImportance(toDo.getImportance());
+        toDoDto.setNeed(toDo.getNeed());
         toDoDto.setStatus(toDo.getStatus());
 
         return toDoDto;
@@ -32,6 +32,7 @@ public class ToDoMapper {
         toDoDto.setDeadline(toDo.getDeadline());
         toDoDto.setDifficulty(toDo.getDifficulty());
         toDoDto.setImportance(toDo.getImportance());
+        toDoDto.setNeed(toDo.getNeed());
         toDoDto.setStatus(toDo.getStatus());
 
         return toDoDto;
