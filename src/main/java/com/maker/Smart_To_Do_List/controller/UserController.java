@@ -4,7 +4,6 @@ package com.maker.Smart_To_Do_List.controller;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.*;
-import com.maker.Smart_To_Do_List.mapper.ToDoListMapper;
 import com.maker.Smart_To_Do_List.mapper.UserMapper;
 import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.ListService;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,7 +50,7 @@ public class UserController {
     @GetMapping("/info")
     public ResponseEntity<?> getInfo(HttpServletRequest request){
         User user = jwtService.getUser(request);
-        UserDto userDto = UserMapper.convertToDto(user);
+        UserDto userDto = userService.getInfo(user);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
@@ -89,5 +87,25 @@ public class UserController {
         );
 
         return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+
+    @GetMapping("/main")
+    public ResponseEntity<?> getMainToDoList(HttpServletRequest request){
+        Long userId = jwtService.getUserId(request);
+        ShowMainDto showMainDto = userService.getMainToDoListId(userId);
+
+        return new ResponseEntity<>(showMainDto, HttpStatus.OK);
+    }
+
+
+    @PutMapping("/main")
+    public ResponseEntity<?> updateMainToDoList (HttpServletRequest request,
+                                                 @RequestBody ChangeMainListId changeMainListId){
+        Long userId = jwtService.getUserId(request);
+        User updateUser = userService.updateMainToDoListId(
+                userId,
+                changeMainListId);
+        return new ResponseEntity<>(updateUser.getMainToDoListId(), HttpStatus.OK);
     }
 }

@@ -1,11 +1,11 @@
 package com.maker.Smart_To_Do_List.service;
 
+import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
-import com.maker.Smart_To_Do_List.dto.ChangeListSortOrder;
-import com.maker.Smart_To_Do_List.dto.ChangePasswordRequest;
-import com.maker.Smart_To_Do_List.dto.DeleteUserRequest;
+import com.maker.Smart_To_Do_List.dto.*;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
+import com.maker.Smart_To_Do_List.mapper.UserMapper;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -66,6 +66,10 @@ public class UserService {
         return JwtUtil.createToken(selectedUser.getLoginId() ,secretKey ,expireTimeMs);
     }
 
+    public UserDto getInfo(User user){
+        return UserMapper.convertToDto(user);
+    }
+
     public User changePassword(Long userId, ChangePasswordRequest changePasswordRequest){
 
         User updateUser = verificationService.foundUser(userId);
@@ -93,5 +97,16 @@ public class UserService {
         // Password Checking
         verificationService.checkPassword(deleteUserRequest.getLoginPw(),selectedUser);
         userRepository.deleteById(userId);
+    }
+
+    public ShowMainDto getMainToDoListId(Long userId){
+        User selectedUser = verificationService.foundUser(userId);
+        return UserMapper.convertToMain(selectedUser);
+    }
+
+    public User updateMainToDoListId(Long userId, ChangeMainListId changeMainListId){
+        User updateUser = verificationService.foundUser(userId);
+        updateUser.setMainToDoListId(changeMainListId.getMainToDoListId());
+        return userRepository.save(updateUser);
     }
 }

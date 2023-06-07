@@ -78,4 +78,12 @@ public class VerificationService {
             throw new AppException(ErrorCode.INVALID_PASSWORD, "The password is wrong.");
         }
     }
+
+    public ToDoList foundMainList(Long listId){
+        Optional<ToDoList> opToDoList = listRepository.findByListId(listId);
+        if (opToDoList.isEmpty()){
+            return null;
+        }
+        return opToDoList.get();
+    }
 }

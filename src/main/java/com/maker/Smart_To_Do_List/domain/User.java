@@ -50,6 +50,9 @@ public class User extends BaseTimeEntity{
     @Column(name = "order_by")
     private String orderBy;
 
+    @Column(name = "main_list")
+    private Long mainToDoListId;
+
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,orphanRemoval=true)
