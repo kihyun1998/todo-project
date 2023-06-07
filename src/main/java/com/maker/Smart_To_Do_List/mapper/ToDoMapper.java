@@ -16,7 +16,6 @@ public class ToDoMapper {
         toDoDto.setDeadline(toDo.getDeadline());
         toDoDto.setDifficulty(toDo.getDifficulty());
         toDoDto.setImportance(toDo.getImportance());
-        toDoDto.setNeed(toDo.getNeed());
         toDoDto.setStatus(toDo.getStatus());
 
         return toDoDto;
@@ -32,7 +31,6 @@ public class ToDoMapper {
         toDoDto.setDeadline(toDo.getDeadline());
         toDoDto.setDifficulty(toDo.getDifficulty());
         toDoDto.setImportance(toDo.getImportance());
-        toDoDto.setNeed(toDo.getNeed());
         toDoDto.setStatus(toDo.getStatus());
 
         return toDoDto;

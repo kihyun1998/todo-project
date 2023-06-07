@@ -45,10 +45,6 @@ public class ToDo extends BaseTimeEntity{
     private int importance;
 
     @NotNull
-    @Column(name = "need")
-    private int need;
-
-    @NotNull
     @Column(name = "status")
     private int status;
 

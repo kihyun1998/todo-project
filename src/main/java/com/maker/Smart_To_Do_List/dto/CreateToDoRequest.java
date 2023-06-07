@@ -17,6 +17,5 @@ public class CreateToDoRequest {
     private LocalDateTime deadline;
     private int difficulty;
     private int importance;
-    private int need;
     private int status;
 }
