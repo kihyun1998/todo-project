@@ -25,7 +25,7 @@ public class UserService {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private Long expireTimeMs = 1000 * 60 * 60l;
+    private Long expireTimeMs = 1000 * 60 * 24 * 60l;
 
     public String join(String loginId, String loginPw,String loginPwCheck, String userName, String userEmail){
 

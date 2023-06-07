@@ -1,11 +1,8 @@
 package com.maker.Smart_To_Do_List.auth;
 
-import com.maker.Smart_To_Do_List.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
