@@ -5,11 +5,14 @@ import { useCookies } from "react-cookie";
 
 import TodoTable from "./css/component/TodoTable";
 import { AnimatePresence, motion } from "framer-motion";
+import Loading from "./css/component/Loading";
+import styled from "styled-components";
 
 const userNameStyle = {
   fontSize: "3rem",
   color: "darkblue",
 }
+
 
 const Intro = () => {
   const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"]);
@@ -18,14 +21,15 @@ const Intro = () => {
   const [setting, setSetting] = useState(false);
   const [mainList, setMainList] = useState(0);
   const [tempMainList, setTempMainList] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const getMainInfo = async() => {
     if(cookies.accessToken != null) {
       try{
-        const res = await axios.get("/api/v1/user/info", 
+        const res = await axios.get("/api/v1/user/main", 
           {headers:{Authorization: `Bearer ${cookies.accessToken}`}})
         setUserName(res.data.userName)
-        setMainList(res.data.mainList)
+        setMainList(res.data.mainToDoListId)
         setLogined(true);
       } catch(e) {
         console.log(e)
@@ -35,12 +39,15 @@ const Intro = () => {
 
   const changeMainList = async() => {
     try{
-      const res = await axios.put("/api/v1/user/info",
-        {changeMainList:tempMainList},
+      setLoading(true)
+      const res = await axios.put("/api/v1/user/main",
+        {mainToDoListId:tempMainList},
         {headers:{Authorization: `Bearer ${cookies.accessToken}`}}
       )
-      setMainList(res.data.mainList)
+      await setMainList(tempMainList)
       getMainInfo();
+      setLoading(false)
+      setSetting(false)
     } catch(e) {
       console.log(e)
     }
@@ -143,18 +150,14 @@ const Intro = () => {
                             fontSize: "1.2rem",
                             width: "100%",
                             cursor: "pointer",
-                            height: "40px"
+                            height: "40px",
+                            backgroundColor:tempMainList===todoList.listId ?
+                              "rgba(0, 0, 0, 0.3)":"rgba(0, 0, 0, 0)",
                           }}
-                          initial={{
-                            backgroundColor: mainList===todoList.id ?
-                              "rgba(0, 0, 0, 0.2)":tempMainList ?
-                                "rgba(0, 0, 0, 0.1)":"rgba(0, 0, 0, 0)",
-                          }}
-                          whileHover={{
-                            backgroundColor: "rgba(0, 0, 0, 0.1)",
-                          }}
+
+
                           onClick={()=>{
-                            setTempMainList(todoList.id)
+                            setTempMainList(todoList.listId)
                           }}
                         >
                           {todoList.listName}
@@ -162,6 +165,7 @@ const Intro = () => {
                       );
                     })}
                   </div>
+                  {!loading?
                   <motion.div
                     className="material-symbols-outlined"
                     style={{
@@ -177,14 +181,16 @@ const Intro = () => {
                     onClick={changeMainList}
                   >
                     check
-                  </motion.div>
+                  </motion.div>:
+                  <Loading />
+                  }
                   
                 </motion.div>
               }
             </div>
           </div>
           {<TodoTable 
-            todos={[]}
+            todoId={mainList}
           />}
         </motion.div>:
         <div>
