@@ -25,6 +25,7 @@ const TimeCaseStyle = styled.div`
 const TimeStyle = styled.div`
   height: 30px;
   background-color: ${params=>params.current?"darkgrey":"black"};
+  cursor: pointer;
 `;
 
 const EstimatedTime = ({returnParam}) => {
@@ -57,12 +58,11 @@ const EstimatedTime = ({returnParam}) => {
             <TimeStyle 
               key={i}
               onClick={e=>{
-                if (e.target.innerText !== "　") {
+                if (e.target.innerText !== "　"&&hoursClicked) {
                   setHours(Number(e.target.innerText))
                   e.target.parentNode.scrollTop = e.target.offsetTop-5
-                  
-                  setHoursClicked(pre=>!pre);
                 }
+                setHoursClicked(pre=>!pre);
               }}
               current={hours===i}>
               {i>-1&&i<100?String(i).padStart(2, '0'):"　"}
@@ -81,12 +81,11 @@ const EstimatedTime = ({returnParam}) => {
               current={minutes===i}
               key={0-i}
               onClick={e=>{
-                if (e.target.innerText !== "　") {
+                if (e.target.innerText !== "　"&& minutesClicked) {
                   setMinutes(Number(e.target.innerText))
                   e.target.parentNode.scrollTop = e.target.offsetTop-5
-                  
-                  setMinutesClicked(pre=>!pre);
                 }
+                setMinutesClicked(pre=>!pre);
             }}>
               {i>-1&&i<60?String(i).padStart(2, '0'):"　"}
             </TimeStyle>

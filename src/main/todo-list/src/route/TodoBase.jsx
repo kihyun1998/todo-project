@@ -21,7 +21,7 @@ const TodoBase = () => {
     const {todoId} = useParams();
 
     const [content, setContent] = useState("")
-    const [importance, setImportance] = useState(-1);
+    const [importance, setImportance] = useState(0);
     const [deadline, setDeadline] = useState("0000-00-00");
     const [estimatedTime, setEstimatedTime] = useState(0);
     const [difficulty, setDifficulty] = useState(0);

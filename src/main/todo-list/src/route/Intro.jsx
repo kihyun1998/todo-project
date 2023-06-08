@@ -30,6 +30,7 @@ const Intro = () => {
           {headers:{Authorization: `Bearer ${cookies.accessToken}`}})
         setUserName(res.data.userName)
         setMainList(res.data.mainToDoListId)
+        setTempMainList(res.data.mainToDoListId)
         setLogined(true);
       } catch(e) {
         console.log(e)
@@ -189,9 +190,13 @@ const Intro = () => {
               }
             </div>
           </div>
-          {<TodoTable 
-            todoId={mainList}
-          />}
+          {mainList!==null?
+            <TodoTable 
+              todoId={mainList}/>:
+            <div
+              style={{marginTop: "20%"}}
+            >메인 화면에 띄울 Todo List를 선택 해 주세요.↗️</div>
+          }
         </motion.div>:
         <div>
           <h3>사용자 맞춤형 할 일 관리 서비스입니다.</h3>

@@ -1,62 +1,93 @@
+import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
 const Importance = ({returnParam}) => {
 
   const divStyle = {
-    textAlign: "left",
-    paddingLeft: "25px",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignContent: "center",
   }
 
-  const inputStyle = {
-    display: "none",
-  }
+  // const inputStyle = {
+  //   display: "none",
+  // }
 
-  const labelStyle = {
-    fontFamily: "'Sunflower', sans-serif",
-    fontWeight: 1000,
-    fontSize: "1.2rem",
-    cursor: "pointer"
-  }
+  // const labelStyle = {
+  //   fontFamily: "'Sunflower', sans-serif",
+  //   fontWeight: 1000,
+  //   fontSize: "1.2rem",
+  //   cursor: "pointer"
+  // }
 
-  const starStyle = {
-    fontSize: "2rem",
-    cursor: "pointer"
-  }
+  // const starStyle = {
+  //   fontSize: "2rem",
+  //   cursor: "pointer"
+  // }
 
-  const fullStar = {
-    fontVariationSettings: `'FILL' 1`,
-  }
+  // const fullStar = {
+  //   fontVariationSettings: `'FILL' 1`,
+  // }
 
-  const selected = {
-    color:"yellow"
-  }
+  // const selected = {
+  //   color:"yellow"
+  // }
 
   
-  const [importance, setImportance] = useState(-1);
+  const [importance, setImportance] = useState(0);
+  const [star, setStar] = useState("");
 
-  const onClickImportance = (e) => {
-    switch(e.target.value) {
-      case "emptyStar": 
-        setImportance(0);
-        break;
-      case "halfStar":
-        setImportance(1);
-        break;
-      case "fullStar":
-        setImportance(2);
-        break;
-      default:
-        setImportance(-1);
+  // const onClickImportance = (e) => {
+  //   switch(e.target.value) {
+  //     case "emptyStar": 
+  //       setImportance(0);
+  //       break;
+  //     case "halfStar":
+  //       setImportance(1);
+  //       break;
+  //     case "fullStar":
+  //       setImportance(2);
+  //       break;
+  //     default:
+  //       setImportance(-1);
+  //   }
+  //   // console.log(importance)
+  // }
+
+  useEffect(()=>{
+    if(importance<33){
+      setStar("Star")
+    } else if (importance < 66){
+      setStar("Star Star")
+    } else {
+      setStar("Star Star Star")
     }
-    // console.log(importance)
-  }
-
-  useEffect(()=>returnParam("importance", importance), [importance])
+    returnParam("importance", importance)
+  }, [importance])
   
   return (
     <div style={divStyle}>
-      <input 
+      <motion.div 
+        className="material-symbols-outlined"
+        style={{
+          color: "yellow",
+          wordSpacing: "-20px",
+          fontSize: "2rem",
+        }}
+      >
+        {star}
+      </motion.div>
+      <input type="range" min="0" value={importance} max="100" onChange={(e)=>{
+        setImportance(e.target.value)
+      }}/>
+      <div>
+        {importance}
+      </div>
+
+      {/* <input 
         type="radio" 
         id="emptyStar" 
         name="importance" 
@@ -112,7 +143,7 @@ const Importance = ({returnParam}) => {
         htmlFor="fullStar" 
         style={labelStyle}>
         안하면 죽음 뿐
-      </label> <br />
+      </label> <br /> */}
     </div>
   );
 }
