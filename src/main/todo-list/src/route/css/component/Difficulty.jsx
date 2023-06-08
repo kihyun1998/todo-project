@@ -30,7 +30,7 @@ const Difficulty = ({returnParam}) => {
   }
   
     
-  const [difficulty, setDifficulty] = useState(-1);
+  const [difficulty, setDifficulty] = useState(0);
 
   const onClickDifficulty = (e) => {
     switch(e.target.value) {
