@@ -30,7 +30,7 @@ public class SecurityConfig {
                     .cors()
                 .and() // cors 허용
                     .authorizeRequests()
-                        .antMatchers("/api/v1/user/join","/api/v1/user/login").permitAll() // 토큰 없이 허용
+                        .antMatchers("/api/v1/user/join","/api/v1/user/join/id","/api/v1/user/join/username","/api/v1/user/login").permitAll() // 토큰 없이 허용
                         .antMatchers(HttpMethod.POST,"/api/v1/**").authenticated() // 토큰 받아야 허용
                 .and()
                     .sessionManagement()

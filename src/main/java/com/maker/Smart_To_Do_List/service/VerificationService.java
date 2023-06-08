@@ -22,6 +22,23 @@ public class VerificationService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
+    public boolean checkLoginIdDup(String loginId){
+        Optional<User> user = userRepository.findByLoginId(loginId);
+        if (user.isPresent()){
+            return true;
+        };
+        return false;
+    }
+
+    public boolean checkUserNameDup(String userName){
+        Optional<User> user = userRepository.findByUserName(userName);
+        if (user.isPresent()){
+            return true;
+        };
+        return false;
+    }
+
+
     public void checkListUser(Long userId, Long listId){
         listRepository.findByListId(listId)
                 .ifPresent(list->{

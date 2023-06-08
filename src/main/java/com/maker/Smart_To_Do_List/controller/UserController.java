@@ -6,6 +6,7 @@ import com.maker.Smart_To_Do_List.dto.*;
 import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.ListService;
 import com.maker.Smart_To_Do_List.service.UserService;
+import com.maker.Smart_To_Do_List.service.VerificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController {
 
     private final UserService userService;
     private final JwtService jwtService;
-    private final ListService listService;
+    private final VerificationService verificationService;
 
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody JoinRequest joinDto){
@@ -35,6 +36,18 @@ public class UserController {
 
         return ResponseEntity.ok().body("Join is SUCCESS!!!");
     }
+    @PostMapping("/join/id")
+    public ResponseEntity<?> checkLoginId(@RequestBody CheckLoginIdDto checkLoginIdDto){
+        boolean check = verificationService.checkLoginIdDup(checkLoginIdDto.getLoginId());
+        return new ResponseEntity<>(check, HttpStatus.OK);
+    }
+
+    @PostMapping("/join/username")
+    public ResponseEntity<?> checkUserName(@RequestBody CheckUserNameDto checkUserNameDto){
+        boolean check = verificationService.checkLoginIdDup(checkUserNameDto.getUserName());
+        return new ResponseEntity<>(check, HttpStatus.OK);
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginDto){
