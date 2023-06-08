@@ -58,7 +58,6 @@ const Register = () => {
       e.preventDefault();
       try{
         const res = await axios.post("/api/v1/user/join/id", {loginId:id})
-        console.log(res)
         if(res.data){
           alert("아이디가 이미 존재합니다.")
         } else {
@@ -73,7 +72,6 @@ const Register = () => {
       e.preventDefault();
       try{
         const res = await axios.post("/api/v1/user/join/username", {userName:name})
-        console.log(res)
         if(res.data){
           alert("해당 닉네임이 이미 존재합니다.")
         } else {
