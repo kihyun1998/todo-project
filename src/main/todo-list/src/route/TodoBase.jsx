@@ -18,9 +18,8 @@ import { useParams } from "react-router-dom";
 
 const TodoBase = () => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
-    const {toDoId} = useParams();
+    const {todoId} = useParams();
 
-    const [todos, setTodos] = useState([]);
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(-1);
     const [deadline, setDeadline] = useState("0000-00-00");
@@ -58,7 +57,7 @@ const TodoBase = () => {
         let res;
         try {
             setLoading(true);
-            res = await axios.post(`/api/v1/list/${toDoId}/create`, {
+            res = await axios.post(`/api/v1/list/${todoId}/create`, {
                 todoTitle: content,
                 importance: importance,
                 estimatedTime: estimatedTime,
@@ -69,7 +68,6 @@ const TodoBase = () => {
                     Authorization: `Bearer ${cookies.accessToken}`
                 }
             })
-            getTodos()
             setContent("")
             setImportance(-1);
             setDeadline("0000-00-00");
@@ -87,27 +85,7 @@ const TodoBase = () => {
             setLoading(false);
         }
     }
-
-    useEffect(()=> {
-        setTodos([]);
-        getTodos();
-    }, [toDoId])
-
-    const getTodos = async() => {
-        let res;
-        try{
-            res = await axios.get(`/api/v1/list/${toDoId}/todos`, {
-                headers: {
-                    Authorization: `Bearer ${cookies.accessToken}`
-                }
-            });
-            setTodos([...res.data])
-        } catch(err) {
-            console.log(err.response)
-        }
-        
-        // setTodos(res.data);
-    }
+    
 
     return (
         <div 
@@ -118,7 +96,7 @@ const TodoBase = () => {
         >
             <div>
                 <TodoTable 
-                    todos={todos}
+                    todoId={todoId}
                 />
             </div>
             <div className={styles.inputs}>
