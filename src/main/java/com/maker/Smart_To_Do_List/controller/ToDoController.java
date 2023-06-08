@@ -2,20 +2,20 @@ package com.maker.Smart_To_Do_List.controller;
 
 import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
-import com.maker.Smart_To_Do_List.dto.ChangeStatus;
-import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
-import com.maker.Smart_To_Do_List.dto.ToDoDto;
+import com.maker.Smart_To_Do_List.dto.*;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.mapper.ToDoMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.ToDoService;
+import com.maker.Smart_To_Do_List.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +31,7 @@ public class ToDoController {
 
     private final ToDoService toDoService;
     private final JwtService jwtService;
+    private final UserService userService;
     private final ListRepository listRepository;
 
     @PostMapping("/{listId}/create")
@@ -61,7 +62,10 @@ public class ToDoController {
                 listId
         );
         List<ToDoDto> toDoDtoList = ToDoMapper.convertToDtoList(todos);
-        return new ResponseEntity<>(toDoDtoList, HttpStatus.OK);
+        double weight  = userService.getWeight(userId);
+        GetToDosDto getToDosDto = ToDoMapper.convertToGetToDosDto(toDoDtoList,weight);
+
+        return new ResponseEntity<>(getToDosDto, HttpStatus.OK);
     }
 
     @PutMapping("/{listId}/{todoId}")

@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserDto {
-    private String loginId;
-    private String userName;
-    private String userEmail;
+public class GetToDosDto {
+    List<ToDoDto> toDoDtoList;
+    double weight;
 }

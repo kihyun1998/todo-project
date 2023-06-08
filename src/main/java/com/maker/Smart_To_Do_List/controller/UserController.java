@@ -1,10 +1,8 @@
 package com.maker.Smart_To_Do_List.controller;
 
 
-import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.*;
-import com.maker.Smart_To_Do_List.mapper.UserMapper;
 import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.ListService;
 import com.maker.Smart_To_Do_List.service.UserService;
@@ -50,7 +48,7 @@ public class UserController {
     @GetMapping("/info")
     public ResponseEntity<?> getInfo(HttpServletRequest request){
         User user = jwtService.getUser(request);
-        UserDto userDto = userService.getInfo(user);
+        UserInfoDto userDto = userService.getInfo(user);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
@@ -63,7 +61,7 @@ public class UserController {
                 changePasswordRequest
         );
 
-        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
     @DeleteMapping("/info")

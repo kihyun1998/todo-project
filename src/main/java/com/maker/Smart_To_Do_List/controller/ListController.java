@@ -1,34 +1,22 @@
 package com.maker.Smart_To_Do_List.controller;
 
 
-import com.maker.Smart_To_Do_List.auth.JwtUtil;
-import com.maker.Smart_To_Do_List.domain.ToDoList;
-import com.maker.Smart_To_Do_List.domain.User;
+
 import com.maker.Smart_To_Do_List.dto.ChangeListNameRequest;
 import com.maker.Smart_To_Do_List.dto.CreateListRequest;
 import com.maker.Smart_To_Do_List.dto.GetListDto;
 import com.maker.Smart_To_Do_List.dto.ToDoListDto;
-import com.maker.Smart_To_Do_List.mapper.ToDoListMapper;
-import com.maker.Smart_To_Do_List.repository.ListRepository;
-import com.maker.Smart_To_Do_List.repository.UserRepository;
 import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.ListService;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,9 +24,7 @@ import java.util.Optional;
 public class ListController {
 
     private final ListService listService;
-    private final UserRepository userRepository;
     private final JwtService jwtService;
-    private final ListRepository listRepository;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -74,7 +60,6 @@ public class ListController {
                 listId
         );
         return new ResponseEntity<>(toDoListDto, HttpStatus.OK);
-
     }
 
     @PutMapping("/{listId}")

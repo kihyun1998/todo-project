@@ -1,6 +1,5 @@
 package com.maker.Smart_To_Do_List.service;
 
-import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.*;
 import com.maker.Smart_To_Do_List.exception.AppException;
@@ -48,6 +47,7 @@ public class UserService {
                 .userEmail(userEmail)
                 .sortBy("Date")
                 .orderBy("ASC")
+                .weight(0.1)
                 .build();
 
         userRepository.save(user);
@@ -66,7 +66,7 @@ public class UserService {
         return JwtUtil.createToken(selectedUser.getLoginId() ,secretKey ,expireTimeMs);
     }
 
-    public UserDto getInfo(User user){
+    public UserInfoDto getInfo(User user){
         return UserMapper.convertToDto(user);
     }
 
@@ -108,5 +108,10 @@ public class UserService {
         User updateUser = verificationService.foundUser(userId);
         updateUser.setMainToDoListId(changeMainListId.getMainToDoListId());
         return userRepository.save(updateUser);
+    }
+
+    public double getWeight(Long userId){
+        User selectedUser = verificationService.foundUser(userId);
+        return selectedUser.getWeight();
     }
 }

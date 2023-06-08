@@ -2,6 +2,7 @@ package com.maker.Smart_To_Do_List.mapper;
 
 import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
+import com.maker.Smart_To_Do_List.dto.GetToDosDto;
 import com.maker.Smart_To_Do_List.dto.ToDoDto;
 
 import java.util.List;
@@ -34,5 +35,12 @@ public class ToDoMapper {
         toDoDto.setStatus(toDo.getStatus());
 
         return toDoDto;
+    }
+
+    public static GetToDosDto convertToGetToDosDto(List<ToDoDto> toDoDtoList,double weight){
+        GetToDosDto getToDosDto = new GetToDosDto();
+        getToDosDto.setToDoDtoList(toDoDtoList);
+        getToDosDto.setWeight(weight);
+        return getToDosDto;
     }
 }

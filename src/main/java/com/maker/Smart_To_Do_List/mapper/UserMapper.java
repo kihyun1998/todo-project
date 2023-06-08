@@ -1,22 +1,20 @@
 package com.maker.Smart_To_Do_List.mapper;
 
-import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.ShowMainDto;
 import com.maker.Smart_To_Do_List.dto.SortDto;
-import com.maker.Smart_To_Do_List.dto.UserDto;
-import com.maker.Smart_To_Do_List.repository.ListRepository;
-import com.maker.Smart_To_Do_List.service.VerificationService;
+import com.maker.Smart_To_Do_List.dto.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class UserMapper {
 
-    public static UserDto convertToDto(User user){
-        UserDto userDto = new UserDto();
+    public static UserInfoDto convertToDto(User user){
+        UserInfoDto userDto = new UserInfoDto();
         userDto.setLoginId(user.getLoginId());
         userDto.setUserName(user.getUserName());
         userDto.setUserEmail(user.getUserEmail());
+        userDto.setWeight(user.getWeight());
 
         return userDto;
     }

@@ -53,6 +53,8 @@ public class User extends BaseTimeEntity{
     @Column(name = "main_list")
     private Long mainToDoListId;
 
+    @Column(name = "weight")
+    private double weight;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,orphanRemoval=true)
