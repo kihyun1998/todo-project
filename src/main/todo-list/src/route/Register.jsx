@@ -9,7 +9,9 @@ import Loading from "./css/component/Loading";
 
 const Register = () => {
   const [id, setId] = useState("");
+  const [idChecked, setIdChecked] = useState(false);
   const [name, setName] = useState("");
+  const [nameChecked, setNameChecked] = useState(false);
   const [pw, setPw] = useState("");
   const [pwC, setPwC] = useState("");
   const [email, setEmail] = useState("");
@@ -21,8 +23,14 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const handlers = {
-    onChangeId:(e) => setId(e.target.value),
-    onChangeName:(e) => setName(e.target.value),
+    onChangeId:(e) => {
+      setId(e.target.value)
+      setIdChecked(false)
+    },
+    onChangeName:(e) => {
+      setName(e.target.value)
+      setNameChecked(false)
+    },
     onChangePwC:(e) => setPwC(e.target.value),
     onChangeEmail:(e) => setEmail(e.target.value),
 
@@ -41,15 +49,49 @@ const Register = () => {
       }
     },
 
-    checkIdDup(e) {
+    async checkIdDup(e) {
       e.preventDefault();
-      console.log("아직 구현X")
+      try{
+        const res = await axios.post("/api/v1/user/id", {userId:id})
+        console.log(res)
+        if(res.data){
+          alert("아이디가 이미 존재합니다.")
+        } else {
+          setIdChecked(true);
+        }
+      } catch (err) {
+        console.log(err.response.data)
+      }
+    },
+
+    async checkNameDup(e) {
+      e.preventDefault();
+      try{
+        const res = await axios.post("/api/v1/user/id", {userId:id})
+        console.log(res)
+        if(res.data){
+          alert("해당 닉네임이 이미 존재합니다.")
+        } else {
+          setNameChecked(true);
+        }
+      } catch (err) {
+        console.log(err.response.data)
+      }
     },
 
     async submit (e) {
       e.preventDefault();
       setLoading(true)
-      if(isPwSame){
+      if(!isPwSame){
+        alert("비밀번호가 바르지 않습니다.")
+        setLoading(false)
+      } else if(!idChecked){
+        alert("아이디 중복확인을 해주세요.")
+        setLoading(false)
+      } else if(!nameChecked){
+        alert("닉네임 중복확인을 해주세요.")
+        setLoading(false)
+      } else {
         try{
           const res = await axios.post("/api/v1/user/join", {
             loginId: id,
@@ -71,9 +113,6 @@ const Register = () => {
           }
           setLoading(false)
         }
-      } else {
-        alert("비밀번호가 바르지 않습니다.")
-        setLoading(false)
       }
     }
   }
@@ -96,32 +135,32 @@ const Register = () => {
   return (
     <div className={styles.register}>
       <form action="">
-        {/* <label htmlFor="id">아이디</label>
-        <input type="text" id="id" onChange={handlers.onChangeId} value={id} /> */}
         <Input
           id="id"
           label="아이디"
           onChange={handlers.onChangeId}
           value={id}
         />
+        {!idChecked&&
         <Button
           text={"중복확인"}
           onClick={handlers.checkIdDup}
-        />
+        />}
         <br />
 
-        {/* <label htmlFor="name">이름</label>
-        <input type="text" id="name" onChange={handlers.onChangeName} value={name} /> */}
         <Input
           id="name"
-          label="이름"
+          label="닉네임"
           onChange={handlers.onChangeName}
           value={name}
         />
+        {!nameChecked&&
+        <Button
+          text={"중복확인"}
+          onClick={handlers.checkNameDup}
+        />}
         <br />
 
-        {/* <label htmlFor="pw">비밀번호</label>
-        <input type="password" id="pw" onChange={handlers.onChangePw} value={pw} /> */}
         <Input
           id="pw"
           type="password"
@@ -132,8 +171,6 @@ const Register = () => {
         {pwStr}
         <br />
 
-        {/* <label htmlFor="pwC">비밀번호 확인</label>
-        <input type="password" id="pwC" onChange={handlers.onChangePwC} value={pwC} /> */}
         <Input
           id="pwC"
           type="password"
@@ -144,17 +181,12 @@ const Register = () => {
         {pwCStr}
         <br />
 
-        {/* <label htmlFor="email">이메일</label>
-        <input type="text" id="email" onChange={handlers.onChangeEmail} value={email} /> */}
         <Input
           id="email"
           label="이메일"
           onChange={handlers.onChangeEmail}
           value={email}
         />
-        {/* <Button
-          text={"인증"}
-        />*/}
         <br />
         <span
           style={{

@@ -4,6 +4,7 @@ const Button = ({ text, onClick, styles, disabled }) => {
   const style = {
     "minWidth":"80px",
     "minHeight": "30px",
+    "cursor": "pointer",
 
     "color": "#606060",
     "border": "3px solid #d4d4d4",

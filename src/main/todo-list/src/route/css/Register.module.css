@@ -1,4 +1,4 @@
 .register form {
-  margin-top: 100px;
-  margin-left: 50px;
+  margin: 10% auto;
+  width: fit-content;
 }
