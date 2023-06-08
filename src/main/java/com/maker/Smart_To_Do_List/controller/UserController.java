@@ -44,7 +44,7 @@ public class UserController {
 
     @PostMapping("/join/username")
     public ResponseEntity<?> checkUserName(@RequestBody CheckUserNameDto checkUserNameDto){
-        boolean check = verificationService.checkLoginIdDup(checkUserNameDto.getUserName());
+        boolean check = verificationService.checkUserNameDup(checkUserNameDto.getUserName());
         return new ResponseEntity<>(check, HttpStatus.OK);
     }
 
