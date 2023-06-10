@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 
-const TodoInput = ({iconName, description, Component, backClicked, setBackClicked}) => {
+const TodoInput = ({iconName, description, Component, backClicked}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isComponentHovered, setIsComponentHovered] = useState(false);

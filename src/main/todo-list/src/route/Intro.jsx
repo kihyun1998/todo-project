@@ -191,6 +191,12 @@ const Intro = () => {
               }
             </div>
           </div>
+          <div
+            style={{
+              textAlign: "left",
+              transform:"translateY(-30%)",
+            }}
+          >
           {mainList!==null?
             <TodoTable 
               todoId={mainList}/>:
@@ -198,6 +204,7 @@ const Intro = () => {
               style={{marginTop: "20%"}}
             >메인 화면에 띄울 Todo List를 선택 해 주세요.↗️</div>
           }
+          </div>
         </motion.div>:
         <div>
           <h3>사용자 맞춤형 할 일 관리 서비스입니다.</h3>

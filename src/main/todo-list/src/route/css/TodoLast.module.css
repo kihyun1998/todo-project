@@ -30,7 +30,10 @@ margin-left: 50px;
 
 .todoapp__item-deadline{
   color: rgba(236, 99, 110, 0.715);
+  width: 30%;
   float: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .todoapp__item-edit-btn,
@@ -62,3 +65,12 @@ margin-left: 50px;
   color: grey;
   text-decoration-line: line-through;
 }
+
+.icon div span {
+  font-size: 2rem;
+}
+
+/* .todoapp__item a:visited {
+  color: #606060;
+  text-decoration: none;
+} */

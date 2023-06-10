@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
-const Difficulty = ({returnParam}) => {
+const Difficulty = ({returnParam, defaultValue}) => {
 
   const divStyle = {
     textAlign: "left",
@@ -30,7 +30,7 @@ const Difficulty = ({returnParam}) => {
   }
   
     
-  const [difficulty, setDifficulty] = useState(0);
+  const [difficulty, setDifficulty] = useState(defaultValue);
 
   const onClickDifficulty = (e) => {
     switch(e.target.value) {
