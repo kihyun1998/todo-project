@@ -2,7 +2,7 @@ import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
-const Importance = ({returnParam}) => {
+const Importance = ({returnParam, defaultValue}) => {
 
   const divStyle = {
     height: "100%",
@@ -12,50 +12,8 @@ const Importance = ({returnParam}) => {
     alignContent: "center",
   }
 
-  // const inputStyle = {
-  //   display: "none",
-  // }
-
-  // const labelStyle = {
-  //   fontFamily: "'Sunflower', sans-serif",
-  //   fontWeight: 1000,
-  //   fontSize: "1.2rem",
-  //   cursor: "pointer"
-  // }
-
-  // const starStyle = {
-  //   fontSize: "2rem",
-  //   cursor: "pointer"
-  // }
-
-  // const fullStar = {
-  //   fontVariationSettings: `'FILL' 1`,
-  // }
-
-  // const selected = {
-  //   color:"yellow"
-  // }
-
-  
-  const [importance, setImportance] = useState(0);
+  const [importance, setImportance] = useState(defaultValue);
   const [star, setStar] = useState("");
-
-  // const onClickImportance = (e) => {
-  //   switch(e.target.value) {
-  //     case "emptyStar": 
-  //       setImportance(0);
-  //       break;
-  //     case "halfStar":
-  //       setImportance(1);
-  //       break;
-  //     case "fullStar":
-  //       setImportance(2);
-  //       break;
-  //     default:
-  //       setImportance(-1);
-  //   }
-  //   // console.log(importance)
-  // }
 
   useEffect(()=>{
     if(importance<33){

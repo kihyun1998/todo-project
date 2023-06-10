@@ -18,15 +18,17 @@ import { useParams } from "react-router-dom";
 
 const TodoBase = () => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
-    const {todoId} = useParams();
+    const {listId} = useParams();
 
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(0);
-    const [deadline, setDeadline] = useState("0000-00-00");
+    const [deadline, setDeadline] = useState(new Date("1900-01-01T00:00"));
     const [estimatedTime, setEstimatedTime] = useState(0);
     const [difficulty, setDifficulty] = useState(0);
     const [loading, setLoading] = useState(false);
     const [backClicked, setBackClicked] = useState(false);
+
+    const [reload, setReload] = useState(false);
 
     
 
@@ -57,25 +59,27 @@ const TodoBase = () => {
         let res;
         try {
             setLoading(true);
-            res = await axios.post(`/api/v1/list/${todoId}/create`, {
+            res = await axios.post(`/api/v1/list/${listId}/create`, {
                 todoTitle: content,
                 importance: importance,
                 estimatedTime: estimatedTime,
                 difficulty: difficulty,
-                deadline: deadline,
+                deadline: deadline.toISOString().slice(0, 16),
             }, {
                 headers : {
                     Authorization: `Bearer ${cookies.accessToken}`
                 }
             })
             setContent("")
-            setImportance(-1);
-            setDeadline("0000-00-00");
+            setImportance(0);
+            setDeadline(new Date("1900-01-01T00:00"));
             setEstimatedTime(0);
             setDifficulty(0);
             setLoading(false);
+            setReload(pre=>!pre)
         } catch(err) {
-            switch(err.response.status){
+            console.log(err)
+            switch(err.status){
                 case 409:
                     alert("날짜를 선택해주세요.");
                     break;
@@ -96,7 +100,7 @@ const TodoBase = () => {
         >
             <div>
                 <TodoTable 
-                    todoId={todoId}
+                    listId={parseInt(listId)}
                 />
             </div>
             <div className={styles.inputs}>
@@ -112,6 +116,7 @@ const TodoBase = () => {
                         description="중요도"
                         Component={<Importance 
                             returnParam={getParam}
+                            defaultValue={importance}
                         />}
                         backClicked = {backClicked}
                         setBackClicked={setBackClicked}
@@ -122,6 +127,7 @@ const TodoBase = () => {
                         description="기한"
                         Component = {<Deadline
                             returnParam={getParam}
+                            defaultValue={deadline}
                         />}
                         backClicked = {backClicked}
                         setBackClicked={setBackClicked}
@@ -132,6 +138,7 @@ const TodoBase = () => {
                         description="예상 소요 시간"
                         Component={<EstimatedTime 
                             returnParam={getParam}
+                            defaultValue={estimatedTime}
                         />}
                         backClicked = {backClicked}
                         setBackClicked={setBackClicked}
@@ -142,6 +149,7 @@ const TodoBase = () => {
                         description="난이도"
                         Component={<Difficulty 
                             returnParam={getParam}
+                            defaultValue={difficulty}
                         />}
                         backClicked = {backClicked}
                         setBackClicked={setBackClicked}
@@ -152,6 +160,7 @@ const TodoBase = () => {
                             <Button 
                                 text="추가"
                                 onClick={submit}
+                                reload={reload}
                             />
                         }
                     </span>

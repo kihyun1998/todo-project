@@ -7,6 +7,11 @@ import Input from "./css/component/Input"
 import Button from "./css/component/Button"
 import Loading from "./css/component/Loading";
 
+const dupButtonStyle = {
+  position: "absolute",
+  translateY: "50%"
+}
+
 const Register = () => {
   const [id, setId] = useState("");
   const [idChecked, setIdChecked] = useState(false);
@@ -52,8 +57,7 @@ const Register = () => {
     async checkIdDup(e) {
       e.preventDefault();
       try{
-        const res = await axios.post("/api/v1/user/id", {userId:id})
-        console.log(res)
+        const res = await axios.post("/api/v1/user/join/id", {loginId:id})
         if(res.data){
           alert("아이디가 이미 존재합니다.")
         } else {
@@ -67,8 +71,7 @@ const Register = () => {
     async checkNameDup(e) {
       e.preventDefault();
       try{
-        const res = await axios.post("/api/v1/user/id", {userId:id})
-        console.log(res)
+        const res = await axios.post("/api/v1/user/join/username", {userName:name})
         if(res.data){
           alert("해당 닉네임이 이미 존재합니다.")
         } else {
@@ -145,6 +148,7 @@ const Register = () => {
         <Button
           text={"중복확인"}
           onClick={handlers.checkIdDup}
+          styles={dupButtonStyle}
         />}
         <br />
 
@@ -158,6 +162,7 @@ const Register = () => {
         <Button
           text={"중복확인"}
           onClick={handlers.checkNameDup}
+          styles={dupButtonStyle}
         />}
         <br />
 

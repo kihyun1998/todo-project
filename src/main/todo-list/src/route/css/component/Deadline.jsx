@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Deadline = ({returnParam}) => {
+const Deadline = ({returnParam, defaultValue}) => {
   const inputStyle = {
     height: "100px",
     // borderRadius: "20px",
@@ -14,14 +14,14 @@ const Deadline = ({returnParam}) => {
     fontWeight: "1000",
   }
 
-  const [deadline, setDeadline] = useState("0000-00-00T00:00");
+  const [deadline, setDeadline] = useState(defaultValue);
 
   useEffect(()=>{
     returnParam("deadline", deadline);
   }, [deadline])
 
   const onChangeDealine = (e) => {
-    setDeadline(e.target.value);
+    setDeadline(new Date(e.target.value));
   }
 
   return (
