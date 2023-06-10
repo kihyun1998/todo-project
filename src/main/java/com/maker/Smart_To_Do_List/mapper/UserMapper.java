@@ -4,6 +4,7 @@ import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.ShowMainDto;
 import com.maker.Smart_To_Do_List.dto.SortDto;
 import com.maker.Smart_To_Do_List.dto.UserInfoDto;
+import com.maker.Smart_To_Do_List.dto.WeightDto;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -31,5 +32,12 @@ public class UserMapper {
         showMainDto.setUserName(user.getUserName());
         showMainDto.setMainToDoListId(user.getMainToDoListId());
         return showMainDto;
+    }
+
+    public static WeightDto convertToWeight(User user) {
+        WeightDto weightDto = new WeightDto();
+        weightDto.setUsername(user.getUserName());
+        weightDto.setWeight(user.getWeight());
+        return weightDto;
     }
 }

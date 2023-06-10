@@ -119,4 +119,12 @@ public class UserController {
                 changeMainListId);
         return new ResponseEntity<>(updateUser.getMainToDoListId(), HttpStatus.OK);
     }
+
+    @PutMapping("/weight")
+    public ResponseEntity<?> updateWeight(HttpServletRequest request,
+                                          @RequestBody UpdateWeight updateWeight){
+        Long userId = jwtService.getUserId(request);
+        WeightDto weightDto = userService.updateWeight(userId,updateWeight);
+        return new ResponseEntity<>(weightDto,HttpStatus.OK);
+    }
 }

@@ -114,4 +114,11 @@ public class UserService {
         User selectedUser = verificationService.foundUser(userId);
         return selectedUser.getWeight();
     }
+
+    public WeightDto updateWeight(Long userId, UpdateWeight updateWeight){
+        User updateUser = verificationService.foundUser(userId);
+        updateUser.setWeight(updateWeight.getWeight());
+        User updatedUser = userRepository.save(updateUser);
+        return UserMapper.convertToWeight(updatedUser);
+    }
 }
