@@ -19,4 +19,5 @@ public class ToDoDto {
     private int difficulty;
     private int importance;
     private int status;
+    private LocalDateTime createdDate;
 }

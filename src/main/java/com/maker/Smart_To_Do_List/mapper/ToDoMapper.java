@@ -18,6 +18,7 @@ public class ToDoMapper {
         toDoDto.setDifficulty(toDo.getDifficulty());
         toDoDto.setImportance(toDo.getImportance());
         toDoDto.setStatus(toDo.getStatus());
+        toDoDto.setCreatedDate(toDo.getCreatedDate());
 
         return toDoDto;
     }
