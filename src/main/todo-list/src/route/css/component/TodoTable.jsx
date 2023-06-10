@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../TodoTable.module.css"
 
-const TodoTable = ({todoId, reload}) => {
+const TodoTable = ({listId, reload}) => {
   const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"]);
   const [todos, setTodos] = useState([]);
   const [weight, setWeight] = useState(0);
@@ -37,7 +37,7 @@ const TodoTable = ({todoId, reload}) => {
     setLoading(false)
     let res;
     try{
-        res = await axios.get(`/api/v1/list/${todoId}/todos`, {
+        res = await axios.get(`/api/v1/list/${listId}/todos`, {
             headers: {
                 Authorization: `Bearer ${cookies.accessToken}`
             }
@@ -58,12 +58,12 @@ const TodoTable = ({todoId, reload}) => {
   useEffect(()=>{
     if (cookies.toDoLists!==undefined){
       cookies.toDoLists.forEach((todo, idx)=>{
-        if(todo.listId === todoId){
+        if(todo.listId === listId){
           setListName(todo.listName)
         }
       })
     }
-  }, [cookies.todoLists, todoId])
+  }, [cookies.todoLists, listId])
 
   useEffect(()=>{
     
@@ -87,7 +87,7 @@ const TodoTable = ({todoId, reload}) => {
     
     <div>    
       <h1 className={styles.a} style={{marginLeft : "40px" , marginTop:"50px"}}>
-          <Link to={`/todo/${todoId}`}>
+          <Link to={`/todo/${listId}`}>
           
           {listName}</Link>
       </h1>
@@ -107,7 +107,7 @@ const TodoTable = ({todoId, reload}) => {
       {loading&&todos.map((todo, idx)=>
         <Todo
           key={idx}
-          listId={todoId}
+          listId={listId}
           todo={todo}
           getTodos={getTodos}
         />

@@ -18,7 +18,7 @@ import { useParams } from "react-router-dom";
 
 const TodoBase = () => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
-    const {todoId} = useParams();
+    const {listId} = useParams();
 
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(0);
@@ -59,7 +59,7 @@ const TodoBase = () => {
         let res;
         try {
             setLoading(true);
-            res = await axios.post(`/api/v1/list/${todoId}/create`, {
+            res = await axios.post(`/api/v1/list/${listId}/create`, {
                 todoTitle: content,
                 importance: importance,
                 estimatedTime: estimatedTime,
@@ -100,7 +100,7 @@ const TodoBase = () => {
         >
             <div>
                 <TodoTable 
-                    todoId={parseInt(todoId)}
+                    listId={parseInt(listId)}
                 />
             </div>
             <div className={styles.inputs}>

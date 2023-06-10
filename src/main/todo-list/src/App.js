@@ -16,7 +16,7 @@ function App() {
         <Menu />
         <div className={styles.main}>
           <Routes>
-              <Route path="/todo/:todoId" element={<TodoBase />}/>
+              <Route path="/todo/:listId" element={<TodoBase />}/>
               <Route path="/" element={<Intro />}/>
               <Route path="/user/login" element={<Login />}/>
               <Route path="/user/join" element={<Register />}/>

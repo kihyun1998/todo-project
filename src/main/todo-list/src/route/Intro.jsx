@@ -199,7 +199,7 @@ const Intro = () => {
           >
           {mainList!==null?
             <TodoTable 
-              todoId={mainList}/>:
+              listId={mainList}/>:
             <div
               style={{marginTop: "20%"}}
             >메인 화면에 띄울 Todo List를 선택 해 주세요.↗️</div>
