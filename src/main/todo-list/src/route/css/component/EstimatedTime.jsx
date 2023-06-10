@@ -28,7 +28,7 @@ const TimeStyle = styled.div`
   cursor: pointer;
 `;
 
-const EstimatedTime = ({returnParam}) => {
+const EstimatedTime = ({returnParam, defaultValue}) => {
   const estimatedTimeStyle = {
     display: "flex",
     alignItems: "center",
@@ -41,8 +41,8 @@ const EstimatedTime = ({returnParam}) => {
   const [hoursClicked, setHoursClicked] = useState(true);
   const [minutesClicked, setMinutesClicked] = useState(true);
   
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(parseInt(defaultValue/60));
+  const [minutes, setMinutes] = useState(defaultValue%60);
 
   useEffect(()=> {
     returnParam("estimatedTime", hours*60 + minutes)

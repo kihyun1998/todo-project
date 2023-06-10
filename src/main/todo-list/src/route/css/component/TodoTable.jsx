@@ -2,13 +2,18 @@ import { useCookies } from "react-cookie";
 import Todo from "./Todo"
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import styles from "../TodoTable.module.css"
 
-const TodoTable = ({todoId}) => {
-  const [cookies, setCookie] = useCookies(["accessToken"]);
+const TodoTable = ({listId, reload}) => {
+  const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"]);
   const [todos, setTodos] = useState([]);
   const [weight, setWeight] = useState(0);
   const [emergencyW, setEmergencyW] = useState(1);
   const [importanceW, setImportanceW] = useState(1);
+  const [listName, setListName] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const calc = (todo) => {
     const date = new Date(todo.deadline) - new Date();
@@ -29,15 +34,17 @@ const TodoTable = ({todoId}) => {
   }
 
   const getTodos = async() => {
+    setLoading(false)
     let res;
     try{
-        res = await axios.get(`/api/v1/list/${todoId}/todos`, {
+        res = await axios.get(`/api/v1/list/${listId}/todos`, {
             headers: {
                 Authorization: `Bearer ${cookies.accessToken}`
             }
         });
         setTodos([...res.data.toDoDtoList])
         setWeight(res.data.weight)
+        console.log(todos)
     } catch(err) {
         console.log(err.response)
     }
@@ -46,30 +53,63 @@ const TodoTable = ({todoId}) => {
 }
   useEffect(()=>{
     getTodos()
-  }, [todoId])
+  }, [reload])
+
+  useEffect(()=>{
+    if (cookies.toDoLists!==undefined){
+      cookies.toDoLists.forEach((todo, idx)=>{
+        if(todo.listId === listId){
+          setListName(todo.listName)
+        }
+      })
+    }
+  }, [cookies.todoLists, listId])
 
   useEffect(()=>{
     
-    if(todos.length!==0){
+    if(todos.length!==0&&!loading){
       setEmergencyW(1-weight);
       setImportanceW(1+weight);
       todos.forEach((todo, idx) => {
         todos[idx].score = calc(todo)
       });
       todos.sort((todo1, todo2)=>{
-        if(todo1.score>todo2.score) return 1
-        else if(todo1.score<todo2.score) return -1
+        if(todo1.score>todo2.score) return -1
+        else if(todo1.score<todo2.score) return 1
         else return 0
       })
+      setTodos(pre=>[...pre])
+      setLoading(true)
     }
-  }, [weight])
+  }, [weight, loading])
 
   return (
-    <div>
-      {todos.map((todo, idx)=>
+    
+    <div>    
+      <h1 className={styles.a} style={{marginLeft : "40px" , marginTop:"50px"}}>
+          <Link to={`/todo/${listId}`}>
+          
+          {listName}</Link>
+      </h1>
+
+      <div
+          style={{
+            width: "93%",
+            marginLeft : "18px",
+            borderBottom: "4px solid #aaa",
+            lineHeight: "0.5em",}}
+      />
+
+      <div style = {{
+        maxHeight : "500px",
+        marginTop : "15px",
+        overflow : todos.length > 6 ? "auto" : "none" }}></div>
+      {loading&&todos.map((todo, idx)=>
         <Todo
           key={idx}
+          listId={listId}
           todo={todo}
+          getTodos={getTodos}
         />
       )}
     </div>

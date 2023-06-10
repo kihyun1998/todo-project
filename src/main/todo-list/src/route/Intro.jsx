@@ -116,7 +116,8 @@ const Intro = () => {
                     position: "absolute",
                     height: "200px",
                     width: "300px",
-                    translateY: "-130%",
+                    translateY: "-60%",
+                    translateX: "20%",
                     backgroundColor: "rgba(240, 240, 240, 0.9)",
                     borderRadius: "20px",
                     boxShadow: "0px 0px 7px grey",
@@ -190,13 +191,20 @@ const Intro = () => {
               }
             </div>
           </div>
+          <div
+            style={{
+              textAlign: "left",
+              transform:"translateY(-30%)",
+            }}
+          >
           {mainList!==null?
             <TodoTable 
-              todoId={mainList}/>:
+              listId={mainList}/>:
             <div
               style={{marginTop: "20%"}}
             >메인 화면에 띄울 Todo List를 선택 해 주세요.↗️</div>
           }
+          </div>
         </motion.div>:
         <div>
           <h3>사용자 맞춤형 할 일 관리 서비스입니다.</h3>
