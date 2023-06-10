@@ -9,7 +9,8 @@ import Loading from "./css/component/Loading";
 
 const dupButtonStyle = {
   position: "absolute",
-  translateY: "50%"
+  translateY: "-150%",
+  translateX: "450%",
 }
 
 const Register = () => {

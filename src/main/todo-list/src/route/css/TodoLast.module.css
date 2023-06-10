@@ -1,19 +1,25 @@
 .star{
-margin-top: 0px;
-margin-left: 50px;
+  /* margin-top: 0px;
+  margin-left: 50px; */
+  display: flex;
+  justify-content: space-between;
+  
 }
 
 .todoapp__item {
   display: flex;
   width: 90%;
-  height: 20px;
+  height: 65px;
+  padding: 10px 20px 0px 20px;
+  /* height: 20px; */
   margin-top: 4px;
-  margin-bottom: 63px;
+  margin-bottom: 30px;
   margin-left: 29px;
   font-size : 22px;
-}
-.todoapp__item:last-child {
-  margin-bottom: 0;
+  box-shadow: 3px 3px 5px grey;
+  /* border: 2px solid lightgrey; */
+  border-radius: 20px;
+  background-color: rgba(137, 182, 187, 0.656);
 }
 .todoapp__item-checkbox {
   margin-left: 0px;
@@ -29,18 +35,18 @@ margin-left: 50px;
 }
 
 .todoapp__item-deadline{
-  color: rgba(236, 99, 110, 0.715);
-  width: 30%;
-  float: right;
+  color: rgba(199, 59, 71, 0.715);
+  width: 50%;
+  /* float: right;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; */
 }
 
 .todoapp__item-edit-btn,
 .todoapp__item-delete-btn {
   /* border: none;
   border-radius: 0; */
-  color: darkgrey;
+  color: rgb(100, 100, 100);
   margin-left: 10px;
   height: 30px;
   width: 30x;
