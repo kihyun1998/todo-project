@@ -202,13 +202,60 @@ const Intro = () => {
             <TodoTable 
               listId={mainList}/>:
             <div
-              style={{marginTop: "20%"}}
+              style={{
+                marginTop: "20%",
+                textAlign: "center"
+              }}
             >메인 화면에 띄울 Todo List를 선택 해 주세요.↗️</div>
           }
           </div>
         </motion.div>:
-        <div>
-          <h3>사용자 맞춤형 할 일 관리 서비스입니다.</h3>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            height: "50%",
+          }}
+        >
+          <div
+            style={{
+              borderRight: "3px solid grey",
+              textAlign: "left",
+              width: "55%",
+              marginTop: "100px",
+              height: "100%",
+            }}
+          >
+          <img 
+            src="/img/1.png" 
+            alt="" 
+            style={{
+              borderRadius: "10px",
+              border: "2px solid lightgrey",
+              boxShadow: "5px 5px 5px grey",
+              width: "90%",
+            }}
+          />
+          </div>
+          <div
+            style={{
+              marginLeft: "50px",
+              fontSize: "1.5rem",
+            }}
+          >
+            <br /><br /><br />
+            <span>
+              사용자 맞춤형 
+              할 일 관리 서비스입니다.
+            </span><br /><br /><br /><br /><br /><br />
+            <span>
+              당신이 등록한 많은 할 일 중에   
+            </span><br />
+            <span>
+            <span style={{color: "darkblue", fontSize: "2rem"}}>AI</span>가 추천해주는 일을 먼저 해보세요!
+            </span>
+          </div>
         </div>
       }
       </AnimatePresence>

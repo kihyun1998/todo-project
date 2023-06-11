@@ -5,8 +5,7 @@ import Intro from "./route/Intro";
 import TodoBase from "./route/TodoBase";
 import Login from "./route/Login";
 import Register from "./route/Register";
-import Mypage from "./route/Mypage"
-
+import Mypage from "./route/Mypage";
 
 function App() {
 

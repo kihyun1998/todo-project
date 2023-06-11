@@ -15,7 +15,7 @@ import { useNavigate } from "react-router";
 
 
 
-const Todo = ({listId, todo, getTodos, chengeWeight}) => {
+const Todo = ({listId, todo, getTodos}) => {
 
   const [cookies, setCookie] = useCookies(["accessToken"])
   const [toDo, setTodo] = useState(todo);
@@ -116,9 +116,9 @@ const Todo = ({listId, todo, getTodos, chengeWeight}) => {
       {
         headers:{Authorization: `Bearer ${cookies.accessToken}`}
       })
-      if(status===0) {
-        await chengeWeight(toDo);
-      }
+      // if(status===0) {
+      //   await chengeWeight(toDo);
+      // }
       setStatus(pre=>pre===1?0:1)
       getTodos()
     } catch(err) {
@@ -220,7 +220,7 @@ const Todo = ({listId, todo, getTodos, chengeWeight}) => {
                   marginRight: "20px"
                 }}
               >
-                {`${toDo.leftDate>0?leftDay>0?leftDay+"일 전":leftHours>0?leftHours+"시간 전":leftMinutes>0?"분 전":"시간초과":""}`}
+                {`${toDo.leftDate>0?leftDay>0?leftDay+"일 전":leftHours>0?leftHours+"시간 전":leftMinutes>0?leftMinutes+"분 전":"시간초과":""}`}
               </div>
             
               {/* 수정 버튼 */}

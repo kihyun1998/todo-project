@@ -63,10 +63,9 @@ const Menu = () => {
     show:{opacity: menuExpended ? 1:0, transition:{delay: menuExpended ? 0.2:0}},
   }
 
-  const logout = async () => {
-    await removeCookie("accessToken");
-    await removeCookie("toDoLists");
-    window.location.href = "/";
+  const logout = () => {
+    removeCookie("accessToken");
+    removeCookie("toDoLists");
   }
   const onChangeToDoListName = (e) => setToDoListName(e.target.value);
 
@@ -450,7 +449,13 @@ const Menu = () => {
           initial="hidden"
           animate="show"
         >
-          <NavLink className={styles.menuLink} onClick={logout}>로그아웃</NavLink>
+          <NavLink 
+            className={styles.menuLink} 
+            onClick={()=>{
+              logout()
+              window.location.href="/"
+            }}
+          >로그아웃</NavLink>
         </motion.div>)}
         
       {cookies.accessToken==null && (

@@ -26,11 +26,19 @@ function ProfileInfo({ name, email,profileImg }) {
       
       <div style={{margin : "20px"}} className={styles.profileDetails}>
         {/* <img src= {userimg} /> */}
-        
-        <p> 이름 </p>
-        <p>{name}</p>
+        <div>
+          <p> 이름 </p>
+          <p style={{fontSize: "1.3rem", color: "darkblue"}}>{name}</p>
+        </div>
+        <div
+          style={{
+            marginTop: "30px",
+            marginBottom: "30px",
+          }}
+        >
         <p> 이메일 </p>
-        <p>{email}</p>
+        <p style={{fontSize: "1.3rem", color: "darkblue"}}>{email}</p>
+        </div>
       </div>
     </div>
   );
