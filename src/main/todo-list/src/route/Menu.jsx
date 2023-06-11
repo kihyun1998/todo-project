@@ -30,7 +30,8 @@ const menuStyle = {
   // borderRight: "2px solid #EDEDED",
   // boxShadow: "2px 0px 3px #EDEDED",
   paddingTop: "100px",
-  height: "70%",
+  height: "70vh",
+  position: "sticky",
   backgroundColor: "#bfbdbd",
   borderRadius: "100px 0px 0px 0px",
   boxShadow: "7px 7px 10px #737373 inset",
@@ -62,9 +63,9 @@ const Menu = () => {
     show:{opacity: menuExpended ? 1:0, transition:{delay: menuExpended ? 0.2:0}},
   }
 
-  const logout = () => {
-    removeCookie("accessToken");
-    removeCookie("toDoLists");
+  const logout = async () => {
+    await removeCookie("accessToken");
+    await removeCookie("toDoLists");
     window.location.href = "/";
   }
   const onChangeToDoListName = (e) => setToDoListName(e.target.value);

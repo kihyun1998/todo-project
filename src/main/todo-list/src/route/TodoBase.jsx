@@ -13,7 +13,7 @@ import Loading from "./css/component/Loading";
 
 import axios from "axios";
 import { useCookies } from 'react-cookie';
-import { useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 
 const TodoBase = () => {
@@ -23,14 +23,16 @@ const TodoBase = () => {
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(0);
     const [deadline, setDeadline] = useState(new Date("1900-01-01T00:00"));
-    const [estimatedTime, setEstimatedTime] = useState(0);
+    const [estimatedTime, setEstimatedTime] = useState(60);
     const [difficulty, setDifficulty] = useState(0);
     const [loading, setLoading] = useState(false);
     const [backClicked, setBackClicked] = useState(false);
 
     const [reload, setReload] = useState(false);
 
-    
+    const navigate = useNavigate();
+
+    useEffect(()=>setReload(pre=>!pre), [listId])
 
     const getParam = (todoType, param) => {
         switch (todoType) {
@@ -59,12 +61,16 @@ const TodoBase = () => {
         let res;
         try {
             setLoading(true);
+            let timezoneOffset = deadline.getTimezoneOffset() * 60000; // 분을 밀리초로 변환
+            let convertedDate = new Date(deadline.getTime() - timezoneOffset);
+
+            let formattedDate = convertedDate.toISOString().slice(0, 16);
             res = await axios.post(`/api/v1/list/${listId}/create`, {
                 todoTitle: content,
                 importance: importance,
                 estimatedTime: estimatedTime,
                 difficulty: difficulty,
-                deadline: deadline.toISOString().slice(0, 16),
+                deadline: formattedDate,
             }, {
                 headers : {
                     Authorization: `Bearer ${cookies.accessToken}`
@@ -76,7 +82,9 @@ const TodoBase = () => {
             setEstimatedTime(0);
             setDifficulty(0);
             setLoading(false);
+            
             setReload(pre=>!pre)
+            navigate(".")
         } catch(err) {
             console.log(err)
             switch(err.status){
@@ -101,6 +109,7 @@ const TodoBase = () => {
             <div>
                 <TodoTable 
                     listId={parseInt(listId)}
+                    reload={reload}
                 />
             </div>
             <div className={styles.inputs}>
@@ -108,6 +117,12 @@ const TodoBase = () => {
                     value={content}
                     id="content"
                     onChange={onChangeContent}
+                    style={{
+                        width: "90%",
+                        margin: "0 auto 30px auto",
+                        marginBottom: "30px"
+                    }}
+                    placeholder={"할 일을 입력해 주세요"}
                 />
                 
                 <div>
@@ -160,7 +175,6 @@ const TodoBase = () => {
                             <Button 
                                 text="추가"
                                 onClick={submit}
-                                reload={reload}
                             />
                         }
                     </span>

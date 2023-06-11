@@ -1,4 +1,4 @@
-const Input = ({ type, label, value, id, name, onChange, onClick, style, DC=false }) => {
+const Input = ({ type, label, value, id, name, onChange, onClick, style, placeholder, DC=false }) => {
 
   let styleInput = {
     borderTop: "0",
@@ -22,10 +22,10 @@ const Input = ({ type, label, value, id, name, onChange, onClick, style, DC=fals
   }
 
   let styleSpan = {
-    display:"inline-block",
+    // display:"inline-block",
     height: "50px",
-    margin:"10px",
-    marginBottom: "30px",
+    // margin:"0 auto",
+    width: "fit-content",
   }
 
   if (type === "radio") {
@@ -34,7 +34,7 @@ const Input = ({ type, label, value, id, name, onChange, onClick, style, DC=fals
   }
 
   return (
-    <span style={Object.assign({}, styleSpan, style)}>
+    <div style={Object.assign({}, styleSpan, style)}>
       {label&&<label style={styleLabel} htmlFor={id}>{label}</label>}
       <input
         id={id}
@@ -45,8 +45,9 @@ const Input = ({ type, label, value, id, name, onChange, onClick, style, DC=fals
         onClick={onClick}
         name = {name}
         defaultChecked = {DC}
+        placeholder = {placeholder}
       ></input>
-    </span>
+    </div>
 
   );
 }

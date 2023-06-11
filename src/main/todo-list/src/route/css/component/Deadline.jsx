@@ -14,9 +14,10 @@ const Deadline = ({returnParam, defaultValue}) => {
     fontWeight: "1000",
   }
 
-  const [deadline, setDeadline] = useState(defaultValue);
+  const [deadline, setDeadline] = useState(new Date(defaultValue));
 
   useEffect(()=>{
+    
     returnParam("deadline", deadline);
   }, [deadline])
 

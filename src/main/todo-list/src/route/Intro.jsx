@@ -68,7 +68,7 @@ const Intro = () => {
             backgroundColor: "rgb(245, 245, 245)",
             borderRadius: "30px",
             boxShadow: "7px 7px 10px #737373 inset",
-            minHeight: "60vh",
+            height: "60vh",
             minWidth: "60vw",
             border: "2px solid rgba(0, 0, 0, 0.2)",
             paddingTop: "10px",
@@ -194,7 +194,8 @@ const Intro = () => {
           <div
             style={{
               textAlign: "left",
-              transform:"translateY(-30%)",
+              transform:"translateY(-10%)",
+              height: "90%"
             }}
           >
           {mainList!==null?

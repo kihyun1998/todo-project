@@ -47,7 +47,7 @@ const Login = () => {
       try{
         setLoading(true);
         res = await axios.post("/api/v1/user/login", {loginId:id, loginPw:pw});
-        setCookie("accessToken", res.data);
+        await setCookie("accessToken", res.data);
         navigate("/");
         setLoading(false);
         

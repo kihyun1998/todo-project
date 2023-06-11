@@ -2,3 +2,7 @@
   margin: 10% auto;
   width: fit-content;
 }
+
+.register form div {
+  margin-bottom: 50px;
+}
