@@ -40,7 +40,7 @@ const TodoTable = ({listId, reload}) => {
   // let flags = [false, false, false, false, false]
 
   const chatGPT = async (messages, parameters = {}) => {
-    const apikey = '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';
+    const apikey = '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';
     if (messages[0].constructor === String) return await chatGPT([['user', messages[0]]]);
     messages = messages.map(line => ({ role: line[0], content: line[1].trim() }))
     console.log(1)
