@@ -92,7 +92,7 @@ const TodoBase = () => {
                     alert("날짜를 선택해주세요.");
                     break;
                 default:
-                    alert("오?류");
+                    alert("잘못된 접근입니다.");
             }
             setLoading(false);
         }
