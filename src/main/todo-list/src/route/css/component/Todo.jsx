@@ -15,7 +15,7 @@ import { useNavigate } from "react-router";
 
 
 
-const Todo = ({listId, todo, getTodos}) => {
+const Todo = ({listId, todo, getTodos, chengeWeight}) => {
 
   const [cookies, setCookie] = useCookies(["accessToken"])
   const [toDo, setTodo] = useState(todo);
@@ -116,8 +116,10 @@ const Todo = ({listId, todo, getTodos}) => {
       {
         headers:{Authorization: `Bearer ${cookies.accessToken}`}
       })
+      if(status===0) {
+        await chengeWeight(toDo);
+      }
       setStatus(pre=>pre===1?0:1)
-      console.log(res)
       getTodos()
     } catch(err) {
       console.log(err)
@@ -163,7 +165,7 @@ const Todo = ({listId, todo, getTodos}) => {
                   htmlFor="emptyStar"
                   className="material-symbols-outlined"
                   style={starStyle}>
-                  { importance < 33 ? "Star ": importance < 66 ? "Star Star" : "Star Star Star" }
+                  { importance < 20 ? "Star ": importance < 40 ? "Star Star" : "Star Star Star" }
             </div>
             {dateHovered&&
               <motion.div

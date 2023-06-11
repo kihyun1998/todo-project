@@ -64,6 +64,7 @@ const TodoTable = ({listId, reload}) => {
         });
         let temp = [...res.data.toDoDtoList];
         // await setWeight(res.data.weight)
+        console.log(res.data)
         setTodos([...temp])
         setTodosLoaded(true)
     } catch(err) {
@@ -79,7 +80,6 @@ const TodoTable = ({listId, reload}) => {
 
   useEffect(()=>{
     setLoading(false)
-    console.log("aa")
     getTodos()
   }, [listId, reload])
 
@@ -140,7 +140,6 @@ const TodoTable = ({listId, reload}) => {
       setTodos([...tds])
       setTodosLoaded(false)
       setLoading(true)
-      console.log(importanceW)
       // console.log("긴급도 가중치 : " + String(emergencyW))
       // console.log("중요도 가중치 : " + String(importanceW))
       // tds.map((todo)=>{
@@ -152,20 +151,22 @@ const TodoTable = ({listId, reload}) => {
     
   }
 
-  const chengeWeight = async(todo) => {
-    let idx = todos.forEach((todo, idx)=>{
-      if(todo.listId === listId){
-        return idx
+  const chengeWeight = async(td) => {
+    let index;
+    todos.forEach((todo, idx)=>{
+      if(todo.todoId === td.todoId){
+        index = idx
       }
     })
     let flag=false;
-    todos.slice(idx).forEach((todo)=> {
+    todos.slice(index).forEach((todo)=> {
       if(weight > 0){
-        if (todos[idx].leftDate < todo.leftDate) {
+        if (todos[index].leftDate < todo.leftDate) {
           flag = true
         }
       } else {
-        if (todos[idx].importance > todo.importance) {
+        
+        if (todos[index].importance > todo.importance) {
           flag = true
         }
       }
@@ -178,8 +179,8 @@ const TodoTable = ({listId, reload}) => {
         setWeight(pre=>pre+0.2)
       }
       try{
-        const res = await axios.put("", {
-          weight
+        const res = await axios.put("/api/v1/user/weight", {
+          UpdateWeight: weight
         }, {
           headers:{
             Authorization: `Bearer ${cookies.accessToken}`
@@ -244,6 +245,7 @@ const TodoTable = ({listId, reload}) => {
                 listId={listId}
                 todo={todo}
                 getTodos={getTodos}
+                chengeWeight = {chengeWeight}
               />
             </div>
             )
@@ -257,6 +259,7 @@ const TodoTable = ({listId, reload}) => {
                 listId={listId}
                 todo={todo}
                 getTodos={getTodos}
+                chengeWeight = {chengeWeight}
               />
             </div>
             )
@@ -270,6 +273,7 @@ const TodoTable = ({listId, reload}) => {
                 listId={listId}
                 todo={todo}
                 getTodos={getTodos}
+                chengeWeight = {chengeWeight}
               />
             </div>
             )
@@ -283,6 +287,7 @@ const TodoTable = ({listId, reload}) => {
                 listId={listId}
                 todo={todo}
                 getTodos={getTodos}
+                chengeWeight = {chengeWeight}
               />
             </div>
             )
@@ -292,6 +297,7 @@ const TodoTable = ({listId, reload}) => {
             listId={listId}
             todo={todo}
             getTodos={getTodos}
+            chengeWeight = {chengeWeight}
         />}
       )}
       </div>}

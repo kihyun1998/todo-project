@@ -16,9 +16,9 @@ const Importance = ({returnParam, defaultValue}) => {
   const [star, setStar] = useState("");
 
   useEffect(()=>{
-    if(importance<33){
+    if(importance<20){
       setStar("Star")
-    } else if (importance < 66){
+    } else if (importance < 40){
       setStar("Star Star")
     } else {
       setStar("Star Star Star")
@@ -38,12 +38,12 @@ const Importance = ({returnParam, defaultValue}) => {
       >
         {star}
       </motion.div>
-      <input type="range" min="0" value={importance} max="100" onChange={(e)=>{
+      <input type="range" min="0" value={importance} max="60" onChange={(e)=>{
         setImportance(e.target.value)
       }}/>
-      <div>
+      {/* <div>
         {importance}
-      </div>
+      </div> */}
     </div>
   );
 }
