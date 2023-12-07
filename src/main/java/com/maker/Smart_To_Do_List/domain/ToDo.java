@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "todo", schema = "mydatabase", uniqueConstraints = {@UniqueConstraint(columnNames = "todo_id")})
+@Table(name = "todo", schema = "smart_todo_list", uniqueConstraints = {@UniqueConstraint(columnNames = "todo_id")})
 public class ToDo extends BaseTimeEntity{
 
     @Id
