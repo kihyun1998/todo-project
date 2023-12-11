@@ -22,6 +22,7 @@ public class VerificationService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
+    // 회원가입 시, 아이디 중복 검증
     public boolean checkLoginIdDup(String loginId){
         Optional<User> user = userRepository.findByLoginId(loginId);
         if (user.isPresent()){
@@ -30,6 +31,7 @@ public class VerificationService {
         return false;
     }
 
+    // 회원가입 시, 유저이름 중복 검증
     public boolean checkUserNameDup(String userName){
         Optional<User> user = userRepository.findByUserName(userName);
         if (user.isPresent()){
@@ -38,7 +40,7 @@ public class VerificationService {
         return false;
     }
 
-
+    // 접근한 ToDoList에 대해 접근자와 소유자가 동일한지 검증
     public void checkListUser(Long userId, Long listId){
         listRepository.findByListId(listId)
                 .ifPresent(list->{
@@ -48,6 +50,7 @@ public class VerificationService {
                 });
     }
 
+    // ToDoList 이름 중복 검증(동일 유저에 한해서)
     public void checkListNameDuplicate(Long userId, String listName){
         listRepository.findByListName(listName)
                 .ifPresent(list ->{
@@ -58,6 +61,7 @@ public class VerificationService {
     }
 
 
+    // ToDoList 조회 및 검증
     public ToDoList foundList(Long listId){
         Optional<ToDoList> opToDoList = listRepository.findByListId(listId);
         if (opToDoList.isEmpty()){
@@ -66,6 +70,7 @@ public class VerificationService {
         return opToDoList.get();
     }
 
+    // ToDo 조회 및 검증
     public ToDo foundToDo(Long toDoId){
         Optional<ToDo> opToDo = toDoRepository.findByToDoId(toDoId);
         if (opToDo.isEmpty()){
@@ -74,6 +79,7 @@ public class VerificationService {
         return opToDo.get();
     }
 
+    // 고유번호를 통해 유저 조회 및 검증
     public User foundUser(Long userId){
         Optional<User> user = userRepository.findByUserId(userId);
         if (user.isEmpty()){
@@ -82,6 +88,7 @@ public class VerificationService {
         return user.get();
     }
 
+    // 로그인Id를 통해 유저 조회 및 검증
     public User foundUserByLoginId(String loginId){
         Optional<User> user = userRepository.findByLoginId(loginId);
         if (user.isEmpty()){
@@ -90,11 +97,13 @@ public class VerificationService {
         return user.get();
     }
 
+    // 패스워드 검증
     public void checkPassword(String loginPw, User user){
         if(!encoder.matches(loginPw,user.getLoginPw())){
             throw new AppException(ErrorCode.INVALID_PASSWORD, "The password is wrong.");
         }
     }
+
 
     public ToDoList foundMainList(Long listId){
         Optional<ToDoList> opToDoList = listRepository.findByListId(listId);

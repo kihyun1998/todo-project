@@ -159,9 +159,11 @@ const TodoTable = ({listId, reload}) => {
   }, [todos])
 
   const aiSort = async() => {
-    let temp = await showOutput(JSON.stringify(uncheckedTodos));
-    setUncheckedTodos([...temp])
-    setAiSorting(false)
+    setLoading(false)
+    alert("서비스 중지")
+    // let temp = await showOutput(JSON.stringify(uncheckedTodos));
+    // setUncheckedTodos([...temp])
+    // setAiSorting(false)
   }
 
   useEffect(()=>{
@@ -355,8 +357,9 @@ const TodoTable = ({listId, reload}) => {
                   color: "rgba(0, 0, 200, 1)"
                 }}
                 onClick={()=>{
-                  getTodos()
-                  setAiSorting(true)
+                  alert("서비스 중지")
+                  // getTodos()
+                  // setAiSorting(true)
                 }}
                 onMouseEnter={()=>setAiHovered(true)}
                 onMouseLeave={()=>setAiHovered(false)}
