@@ -103,6 +103,12 @@ public class ToDoService {
         return ToDoMapper.convertToToDoRequest(saveToDo);
     }
 
+    /**
+     [changeStatus]: todo 상태 변경
+     userId: 검증을 위한 유저 아이디
+     listId: 검증을 위한 리스트 아이디
+     toDoId: 상태를 변경할 todo아이디
+     **/
     public void changeStatus(long userId,
                              long listId,
                              long toDoId,
@@ -118,6 +124,12 @@ public class ToDoService {
         toDoRepository.save(updateToDo);
     }
 
+    /**
+     [deleteToDo]: todo 제거
+     userId: 검증을 위한 유저 아이디
+     listId: 검증을 위한 리스트 아이디
+     toDoId: 삭제할 todo아이디
+     **/
     public void deleteToDo(long userId,
                            long listId,
                            long toDoId)throws IOException {
