@@ -34,13 +34,20 @@ public class ToDoController {
     private final UserService userService;
     private final ListRepository listRepository;
 
+    /**
+     * POST
+     [createToDo]:  todo 생성 API
+     **/
     @PostMapping("/{listId}/create")
     public ResponseEntity<String> createToDo(HttpServletRequest request,
                                              @RequestBody CreateToDoRequest createToDoDto,
                                              @PathVariable("listId") final long listId){
 
+        // 로그인한 jwt 토큰을 통해 userId 추출
         Long userId = jwtService.getUserId(request);
 
+        // todo 생성함수 호출
+        // 실질적인 생성은 todoService의 creatToDo가 한다.
         toDoService.createToDo(
                 userId,
                 listId,
@@ -48,26 +55,43 @@ public class ToDoController {
 
         );
 
+        // 200과 생성 성공을 반환
+        // [수정할 사항] 이 때 생성 성공말고 만들어진 ToDo를 반환하는게 좋다.
         return ResponseEntity.ok().body("Create ToDo Success");
     }
 
+    /**
+     * GET
+     [getToDos]: 특정 list의 todo를 전부 반환
+     **/
     @GetMapping("/{listId}/todos")
     public ResponseEntity<?> getToDos(@PathVariable("listId") final long listId,
                                       HttpServletRequest request){
-
+        
+        // 로그인한 jwt 토큰을 통해 userId 추출
         Long userId = jwtService.getUserId(request);
 
+        // 반환한 todo들을 todos 리스트에 저장
         List<ToDo> todos = toDoService.getToDos(
                 userId,
                 listId
         );
+        // 원할한 JSON 반호나을 위해 todo객체를 dto로 변환
         List<ToDoDto> toDoDtoList = ToDoMapper.convertToDtoList(todos);
+
+        // [삭제 예정]가중치 값인데 추후 삭제 예정
         double weight  = userService.getWeight(userId);
         GetToDosDto getToDosDto = ToDoMapper.convertToGetToDosDto(toDoDtoList,weight);
 
         return new ResponseEntity<>(getToDosDto, HttpStatus.OK);
     }
 
+    /**
+     * PUT
+     [updateToDoValue]: todo updateAPI
+     [필요 수정 사항]: 영역별로 API를 나눌 필요성이 있음 ex) status 나누고 .. 등등 1버튼 1API
+     ex) 타이틀 수정, 마감시간 수정 등..
+     **/
     @PutMapping("/{listId}/{todoId}")
     public ResponseEntity<?> updateToDoValue(HttpServletRequest request,
                                              @RequestBody CreateToDoRequest createToDoRequest,
@@ -76,6 +100,7 @@ public class ToDoController {
 
         Long userId = jwtService.getUserId(request);
 
+        // updateToDoValue() 안에 리스트-투두 검증 로직있음
         CreateToDoRequest createToDoDto = toDoService.updateToDoValue(
                 userId,
                 listId,
@@ -85,6 +110,10 @@ public class ToDoController {
         return new ResponseEntity<>(createToDoDto, HttpStatus.OK);
     }
 
+    /**
+     * PUT
+     [changeStatus]: todo의 상태를 업데이트
+     **/
     @PutMapping("/{listId}/{todoId}/status")
     public ResponseEntity<?> changeStatus(HttpServletRequest request,
                                           @RequestBody ChangeStatus changeStatus,
@@ -104,6 +133,10 @@ public class ToDoController {
 
     }
 
+    /**
+     * Delete
+     [deleteToDo]: todo 제거
+     **/
     @DeleteMapping("/{listId}/{todoId}")
     public ResponseEntity<Void> deleteToDo(HttpServletRequest request,
                                            @PathVariable("listId") final long listId,
@@ -115,7 +148,10 @@ public class ToDoController {
                 listId,
                 toDoId
         );
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        
+        // Not found를 내보내면 안되지
+        //
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
