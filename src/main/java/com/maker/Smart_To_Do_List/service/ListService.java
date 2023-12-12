@@ -47,13 +47,19 @@ public class ListService {
 
         ToDoList toDoList = ToDoList.builder()
                 .listName(listName)
+                .user(selectedUser)
                 .build();
 
+        ToDoList savedToDoList = listRepository.save(toDoList);
+
         // 유저가 소유한 ToDoList 항목에, 생성한 ToDoList 추가
-        selectedUser.addToDoList(toDoList);
-        userRepository.save(selectedUser);
+//        selectedUser.addToDoList(toDoList);
+//        userRepository.save(selectedUser);
+
+
         
-        return ToDoListMapper.convertToDto(toDoList);
+//        return ToDoListMapper.convertToDto(toDoList);
+        return ToDoListMapper.convertToDto(savedToDoList);
     }
 
     /**
