@@ -45,20 +45,16 @@ public class ListService {
                 listName
         );
 
+        // ToDoList 도메인에 리스트 이름, 소유자 저장
         ToDoList toDoList = ToDoList.builder()
                 .listName(listName)
                 .user(selectedUser)
                 .build();
 
+        // DB에 저장
         ToDoList savedToDoList = listRepository.save(toDoList);
 
-        // 유저가 소유한 ToDoList 항목에, 생성한 ToDoList 추가
-//        selectedUser.addToDoList(toDoList);
-//        userRepository.save(selectedUser);
-
-
-        
-//        return ToDoListMapper.convertToDto(toDoList);
+        // ToDoList 도메인 -> ToDoList 아이디, 이름이 담긴 Dto
         return ToDoListMapper.convertToDto(savedToDoList);
     }
 
