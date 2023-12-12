@@ -68,6 +68,10 @@ public class ListController {
         return new ResponseEntity<>(toDoListDto, HttpStatus.OK);
     }
 
+    /**
+     * PUT
+     * [changeToDoListName]: 투두리스트 이름 변경 API
+     * **/
     @PutMapping("/{listId}")
     public ResponseEntity<?> changeToDoListName(HttpServletRequest request,
                                                 @RequestBody ChangeListNameRequest changeListNameRequest,
@@ -82,6 +86,10 @@ public class ListController {
         return new ResponseEntity<>(toDoListDto, HttpStatus.OK);
     }
 
+    /**
+     * Delete
+     * [deleteToDoList]: 리스트 삭제
+     * **/
     @DeleteMapping("/{listId}")
     public ResponseEntity<Void> deleteToDoList(HttpServletRequest request,
                                                @PathVariable("listId") final long listId) throws IOException{
