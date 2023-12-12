@@ -34,7 +34,7 @@ public class ListService {
      listName: 리스트 이름
      userId: 생성한 유저의 아이디
      **/
-    public String createList(String listName, Long userId){
+    public ToDoListDto createList(String listName, Long userId){
 
         // 유저 조회 및 검증
         User selectedUser = verificationService.foundUser(userId);
@@ -51,11 +51,9 @@ public class ListService {
 
         // 유저가 소유한 ToDoList 항목에, 생성한 ToDoList 추가
         selectedUser.addToDoList(toDoList);
-
-
         userRepository.save(selectedUser);
-
-        return null;
+        
+        return ToDoListMapper.convertToDto(toDoList);
     }
 
     /**

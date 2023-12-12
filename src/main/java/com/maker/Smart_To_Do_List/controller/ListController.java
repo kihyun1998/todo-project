@@ -26,23 +26,29 @@ public class ListController {
     private final ListService listService;
     private final JwtService jwtService;
 
-    @Value("${jwt.secret}")
-    private String secretKey;
-
+    
+    /**
+     * POST
+     [createList]: 리스트 생성
+     **/
     @PostMapping("/create")
-    public ResponseEntity<String> createList(@RequestBody CreateListRequest createListDto,
+    public ResponseEntity<ToDoListDto> createList(@RequestBody CreateListRequest createListDto,
                                              HttpServletRequest request){
 
         Long userId = jwtService.getUserId(request);
-        listService.createList(
+        ToDoListDto createTodoList = listService.createList(
                 createListDto.getListName(),
                 userId
         );
 
-        return ResponseEntity.ok().body("Create List Success!");
+        return new ResponseEntity<>(createTodoList, HttpStatus.OK);
     }
 
 
+    /**
+     * GET
+     * [getToDoLists]: 모든 리스트 조회
+     * **/
     @GetMapping("/lists")
     public ResponseEntity<?> getToDoLists(HttpServletRequest request){
         Long userId = jwtService.getUserId(request);
@@ -84,6 +90,6 @@ public class ListController {
                 userId,
                 listId
         );
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
