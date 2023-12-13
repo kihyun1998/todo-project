@@ -40,21 +40,23 @@ public class User extends BaseTimeEntity{
     @Column(name = "user_email",unique = true)
     private String userEmail;
 
-    /***
-     sortBy = [Date, Name]
-     orderBy = [ASC, DESC]
-     ***/
-    @Column(name = "sort_by")
-    private String sortBy;
-
-    @Column(name = "order_by")
-    private String orderBy;
+    //[삭제 예정] sortBy,orderBy
+//    /***
+//     sortBy = [Date, Name]
+//     orderBy = [ASC, DESC]
+//     ***/
+//    @Column(name = "sort_by")
+//    private String sortBy;
+//
+//    @Column(name = "order_by")
+//    private String orderBy;
 
     @Column(name = "main_list")
     private Long mainToDoListId;
 
-    @Column(name = "weight")
-    private double weight;
+    //[삭제 예정] weight
+//    @Column(name = "weight")
+//    private double weight;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,orphanRemoval=true)

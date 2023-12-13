@@ -21,11 +21,12 @@ public class ToDoListMapper {
         return toDoLists.stream().map(ToDoListMapper::convertToDto).collect(Collectors.toList());
     }
 
-    public static GetListDto convertToGetListDto(List<ToDoListDto> toDoListDtoList,
-                                                 SortDto sortDto){
-        GetListDto getListDto = new GetListDto();
-        getListDto.setToDoListDto(toDoListDtoList);
-        getListDto.setSortDto(sortDto);
-        return getListDto;
-    }
+    // 삭제 예정
+//    public static GetListDto convertToGetListDto(List<ToDoListDto> toDoListDtoList,
+//                                                 SortDto sortDto){
+//        GetListDto getListDto = new GetListDto();
+//        getListDto.setToDoListDto(toDoListDtoList);
+//        getListDto.setSortDto(sortDto);
+//        return getListDto;
+//    }
 }

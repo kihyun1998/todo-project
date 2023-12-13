@@ -185,6 +185,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    // [삭제 예정]
     /**
      * PUT
      [changeListSortOrder]: 정렬 기준 및 방식 변경 API
@@ -198,20 +199,20 @@ public class UserController {
      HTTP Status:           200 (OK)
      ?:                     변경 성공 Text ([수정할 사항]  <?>로 돼있지만, <String>으로 바꿔도 될 듯?)
      **/
-    @PutMapping("/lists")
-    public ResponseEntity<?> changeListSortOrder(HttpServletRequest request,
-                                                 @RequestBody ChangeListSortOrder changeListSortOrder){
-        // 요청 헤더에 담긴 Access Token을 통해 유저 조회
-        Long userId = jwtService.getUserId(request);
-
-        // 정렬 기준 및 방식 변경 서비스
-        User updateUser = userService.changeListSortOrder(
-                userId,
-                changeListSortOrder
-        );
-
-        return new ResponseEntity<>("Success", HttpStatus.OK);
-    }
+//    @PutMapping("/lists")
+//    public ResponseEntity<?> changeListSortOrder(HttpServletRequest request,
+//                                                 @RequestBody ChangeListSortOrder changeListSortOrder){
+//        // 요청 헤더에 담긴 Access Token을 통해 유저 조회
+//        Long userId = jwtService.getUserId(request);
+//
+//        // 정렬 기준 및 방식 변경 서비스
+//        User updateUser = userService.changeListSortOrder(
+//                userId,
+//                changeListSortOrder
+//        );
+//
+//        return new ResponseEntity<>("Success", HttpStatus.OK);
+//    }
 
     /**
      * GET
@@ -262,6 +263,7 @@ public class UserController {
         return new ResponseEntity<>(updateUser.getMainToDoListId(), HttpStatus.OK);
     }
 
+    //[삭제 예정]
     /**
      * PUT
      [updateWeight]:    가중치 변경 API
@@ -275,15 +277,15 @@ public class UserController {
      HTTP Status:       200 (OK)
      ?:                 변경된 가중치가 담긴 Dto ([수정할 사항] <?>로 돼있지만, <weightDto>로 바꿔도 될 듯?)
      **/
-    @PutMapping("/weight")
-    public ResponseEntity<?> updateWeight(HttpServletRequest request,
-                                          @RequestBody UpdateWeight updateWeight){
-        // 요청 헤더에 담긴 Access Token을 통해 유저 조회
-        Long userId = jwtService.getUserId(request);
-
-        // 가중치 변경 서비스
-        WeightDto weightDto = userService.updateWeight(userId,updateWeight);
-
-        return new ResponseEntity<>(weightDto,HttpStatus.OK);
-    }
+//    @PutMapping("/weight")
+//    public ResponseEntity<?> updateWeight(HttpServletRequest request,
+//                                          @RequestBody UpdateWeight updateWeight){
+//        // 요청 헤더에 담긴 Access Token을 통해 유저 조회
+//        Long userId = jwtService.getUserId(request);
+//
+//        // 가중치 변경 서비스
+//        WeightDto weightDto = userService.updateWeight(userId,updateWeight);
+//
+//        return new ResponseEntity<>(weightDto,HttpStatus.OK);
+//    }
 }

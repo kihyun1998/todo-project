@@ -60,6 +60,7 @@ public class ToDoController {
         return ResponseEntity.ok().body("Create ToDo Success");
     }
 
+    // [테스트 필요]: 코드 변경에 따른 테스트 필요
     /**
      * GET
      [getToDos]: 특정 list의 todo를 전부 반환
@@ -80,10 +81,10 @@ public class ToDoController {
         List<ToDoDto> toDoDtoList = ToDoMapper.convertToDtoList(todos);
 
         // [삭제 예정]가중치 값인데 추후 삭제 예정
-        double weight  = userService.getWeight(userId);
-        GetToDosDto getToDosDto = ToDoMapper.convertToGetToDosDto(toDoDtoList,weight);
+//        double weight  = userService.getWeight(userId);
+//        List<ToDoDto> getToDosDto = ToDoMapper.convertToGetToDosDto(toDoDtoList,weight);
 
-        return new ResponseEntity<>(getToDosDto, HttpStatus.OK);
+        return new ResponseEntity<>(toDoDtoList, HttpStatus.OK);
     }
 
     /**

@@ -2,9 +2,7 @@ package com.maker.Smart_To_Do_List.mapper;
 
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.ShowMainDto;
-import com.maker.Smart_To_Do_List.dto.SortDto;
 import com.maker.Smart_To_Do_List.dto.UserInfoDto;
-import com.maker.Smart_To_Do_List.dto.WeightDto;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -24,27 +22,29 @@ public class UserMapper {
         userDto.setLoginId(user.getLoginId());
         userDto.setUserName(user.getUserName());
         userDto.setUserEmail(user.getUserEmail());
-        userDto.setWeight(user.getWeight());
+        //[삭제예정] weight
+//        userDto.setWeight(user.getWeight());
 
         return userDto;
     }
 
-    /**
-     [convertToSort]: 유저 도메인을 정렬정보 Dto로 변경하는 매퍼
-     user:            유저 도메인
-
-     return:          정렬정보가 담긴 Dto(SortDto)
-     **/
-    public static SortDto convertToSort(User user){
-        // 정렬정보 Dto 객체 생성
-        SortDto sortDto = new SortDto();
-
-        // 정렬정보 Dto에 정렬기준과 정렬방식 저장
-        sortDto.setSortBy(user.getSortBy());
-        sortDto.setOrderBy(user.getOrderBy());
-
-        return sortDto;
-    }
+    // [삭제 예정]
+//    /**
+//     [convertToSort]: 유저 도메인을 정렬정보 Dto로 변경하는 매퍼
+//     user:            유저 도메인
+//
+//     return:          정렬정보가 담긴 Dto(SortDto)
+//     **/
+//    public static SortDto convertToSort(User user){
+//        // 정렬정보 Dto 객체 생성
+//        SortDto sortDto = new SortDto();
+//
+//        // 정렬정보 Dto에 정렬기준과 정렬방식 저장
+//        sortDto.setSortBy(user.getSortBy());
+//        sortDto.setOrderBy(user.getOrderBy());
+//
+//        return sortDto;
+//    }
 
     /**
      [convertToMain]: 유저 도메인을 정렬정보 Dto로 변경하는 매퍼
@@ -63,20 +63,21 @@ public class UserMapper {
         return showMainDto;
     }
 
-    /**
-     [convertToWeight]: 유저 도메인을 가중치정보 Dto로 변경하는 매퍼
-     user:              유저 도메인
-
-     return:            가중치가 담긴 Dto (weightDto)
-     **/
-    public static WeightDto convertToWeight(User user) {
-        // 가중치 Dto 객체 생성
-        WeightDto weightDto = new WeightDto();
-
-        // 가능치 Dto 객체에 유저 이름과 가중치 저장
-        weightDto.setUsername(user.getUserName());
-        weightDto.setWeight(user.getWeight());
-
-        return weightDto;
-    }
+    //[삭제 예정]
+//    /**
+//     [convertToWeight]: 유저 도메인을 가중치정보 Dto로 변경하는 매퍼
+//     user:              유저 도메인
+//
+//     return:            가중치가 담긴 Dto (weightDto)
+//     **/
+//    public static WeightDto convertToWeight(User user) {
+//        // 가중치 Dto 객체 생성
+//        WeightDto weightDto = new WeightDto();
+//
+//        // 가능치 Dto 객체에 유저 이름과 가중치 저장
+//        weightDto.setUsername(user.getUserName());
+//        weightDto.setWeight(user.getWeight());
+//
+//        return weightDto;
+//    }
 }

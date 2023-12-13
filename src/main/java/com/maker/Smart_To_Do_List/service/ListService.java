@@ -58,17 +58,20 @@ public class ListService {
         return ToDoListMapper.convertToDto(savedToDoList);
     }
 
+    // [테스트 필요]: sort 기능 제거로 인한 테스트 필요
     /**
      [getToDoLists]: 특정 유저가 소유한 ToDoList를 모두 조회하는 서비스
      userId: ToDoList를 조회할 유저의 아이디
      **/
-    public GetListDto getToDoLists(long userId){
+    public List<ToDoListDto> getToDoLists(long userId){
 
         // 유저 조회 및 검증
         User user = verificationService.foundUser(userId);
 
-        List<ToDoList> toDoLists;
+        List<ToDoList> toDoLists = listRepository.findByUser_UserIdOrderByCreatedDateAsc(userId);
+        
 
+        // [삭제 예정]
         /**
          Sort
             - Date: 날짜 정렬
@@ -78,28 +81,25 @@ public class ListService {
             - DESC: 내림차순
          ( * Sort와 Order는 User 테이블의 Attribute )
          **/
-        if ((Objects.equals(user.getSortBy(),"Date")) && Objects.equals(user.getOrderBy(),"ASC")){
-            toDoLists = listRepository.findByUser_UserIdOrderByCreatedDateAsc(userId);
-        }else if((Objects.equals(user.getSortBy(),"Date")) && Objects.equals(user.getOrderBy(),"DESC")){
-            toDoLists = listRepository.findByUser_UserIdOrderByCreatedDateDesc(userId);
-        }else if((Objects.equals(user.getSortBy(),"Name")) && Objects.equals(user.getOrderBy(),"ASC")){
-            toDoLists = listRepository.findByUser_UserIdOrderByListNameAsc(userId);
-        }else if((Objects.equals(user.getSortBy(),"Name")) && Objects.equals(user.getOrderBy(),"DESC")){
-            toDoLists = listRepository.findByUser_UserIdOrderByListNameDesc(userId);
-        }else{
-            throw new AppException(ErrorCode.NOT_FOUND, "Sort or Order standard Not Found!");
-        }
+//        if ((Objects.equals(user.getSortBy(),"Date")) && Objects.equals(user.getOrderBy(),"ASC")){
+//            toDoLists = listRepository.findByUser_UserIdOrderByCreatedDateAsc(userId);
+//        }else if((Objects.equals(user.getSortBy(),"Date")) && Objects.equals(user.getOrderBy(),"DESC")){
+//            toDoLists = listRepository.findByUser_UserIdOrderByCreatedDateDesc(userId);
+//        }else if((Objects.equals(user.getSortBy(),"Name")) && Objects.equals(user.getOrderBy(),"ASC")){
+//            toDoLists = listRepository.findByUser_UserIdOrderByListNameAsc(userId);
+//        }else if((Objects.equals(user.getSortBy(),"Name")) && Objects.equals(user.getOrderBy(),"DESC")){
+//            toDoLists = listRepository.findByUser_UserIdOrderByListNameDesc(userId);
+//        }else{
+//            throw new AppException(ErrorCode.NOT_FOUND, "Sort or Order standard Not Found!");
+//        }
 
-        // 도메인 -> Dto
-        List<ToDoListDto> toDoListDtoList = ToDoListMapper.convertToDtoList(toDoLists);
+//        // SortDto 생성
+//        SortDto sortDto = UserMapper.convertToSort(user);
 
-        // SortDto 생성
-        SortDto sortDto = UserMapper.convertToSort(user);
+//        // GetListDto 생성 ( List<TodoListDto> + SortDto )
+//        GetListDto getListDto = ToDoListMapper.convertToGetListDto(toDoListDtoList,sortDto);
 
-        // GetListDto 생성 ( List<TodoListDto> + SortDto )
-        GetListDto getListDto = ToDoListMapper.convertToGetListDto(toDoListDtoList,sortDto);
-
-        return getListDto;
+        return ToDoListMapper.convertToDtoList(toDoLists);
     }
 
     /**

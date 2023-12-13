@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,7 +53,7 @@ public class ListController {
     @GetMapping("/lists")
     public ResponseEntity<?> getToDoLists(HttpServletRequest request){
         Long userId = jwtService.getUserId(request);
-        GetListDto getListDto = listService.getToDoLists(userId);
+        List<ToDoListDto> getListDto = listService.getToDoLists(userId);
         return new ResponseEntity<>(getListDto, HttpStatus.OK);
     }
 
