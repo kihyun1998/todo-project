@@ -133,27 +133,6 @@ public class UserService {
         return userRepository.save(updateUser);
     }
 
-    // 삭제 예정
-    /**
-     [changeListSortOrder]: 정렬 기준 및 방식 변경 서비스
-     userId:                서비스를 이용할 유저의 아이디
-     changeListSortOrder:   바꿀 정렬 기준(SortBy) 및 방식(OrderBy)이 담긴 Dto
-
-     return:                유저 (User)
-     **/
-//    public User changeListSortOrder(Long userId, ChangeListSortOrder changeListSortOrder){
-//
-//        // 유저 아이디 검증 및 유저 조회
-//        User updateUser = verificationService.foundUser(userId);
-//
-//        // 정렬 기준 및 방식 변경
-//        updateUser.setSortBy(changeListSortOrder.getSortBy());
-//        updateUser.setOrderBy(changeListSortOrder.getOrderBy());
-//
-//
-//        return userRepository.save(updateUser);
-//    }
-
     /**
      [deleteUser]:      유저 탈퇴 서비스
      userId:            서비스를 이용할 유저의 아이디
@@ -201,41 +180,4 @@ public class UserService {
         // DB에 저장
         return userRepository.save(updateUser);
     }
-
-    // [삭제 예정]
-    /**
-     [getWeight]:       가중치 조최 서비스
-     userId:            서비스를 이용할 유저의 아이디
-
-     return:            가중치 (Double)
-     **/
-//    public double getWeight(Long userId){
-//        // 유저 아이디 검증 및 유저 조회
-//        User selectedUser = verificationService.foundUser(userId);
-//
-//        // 유저정보에서 가중치 추출
-//        return selectedUser.getWeight();
-//    }
-
-    // [삭제 예정]
-    /**
-     [updateWeight]:    가중치 변경 서비스
-     userId:            서비스를 이용할 유저의 아이디
-     updateWeight:      변경할 가중치
-
-     return:            유저이름과 가중치가 담긴 Dto (WeightDto)
-     **/
-//    public WeightDto updateWeight(Long userId, UpdateWeight updateWeight){
-//        // 유저 아이디 검증 및 유저 조회
-//        User updateUser = verificationService.foundUser(userId);
-//
-//        // 변경할 가중치로 업데이트
-//        updateUser.setWeight(updateWeight.getWeight());
-//
-//        // DB에 저장
-//        User updatedUser = userRepository.save(updateUser);
-//
-//        // 유저정보에서 유저이름과 가중치 추출
-//        return UserMapper.convertToWeight(updatedUser);
-//    }
 }

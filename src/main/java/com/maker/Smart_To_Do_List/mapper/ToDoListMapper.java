@@ -20,13 +20,4 @@ public class ToDoListMapper {
     public static List<ToDoListDto> convertToDtoList(List<ToDoList> toDoLists){
         return toDoLists.stream().map(ToDoListMapper::convertToDto).collect(Collectors.toList());
     }
-
-    // 삭제 예정
-//    public static GetListDto convertToGetListDto(List<ToDoListDto> toDoListDtoList,
-//                                                 SortDto sortDto){
-//        GetListDto getListDto = new GetListDto();
-//        getListDto.setToDoListDto(toDoListDtoList);
-//        getListDto.setSortDto(sortDto);
-//        return getListDto;
-//    }
 }

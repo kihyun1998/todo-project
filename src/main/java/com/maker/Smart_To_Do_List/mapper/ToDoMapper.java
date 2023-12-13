@@ -36,12 +36,4 @@ public class ToDoMapper {
 
         return toDoDto;
     }
-
-    //[삭제 예정]
-//    public static GetToDosDto convertToGetToDosDto(List<ToDoDto> toDoDtoList,double weight){
-//        GetToDosDto getToDosDto = new GetToDosDto();
-//        getToDosDto.setToDoDtoList(toDoDtoList);
-//        getToDosDto.setWeight(weight);
-//        return getToDosDto;
-//    }
 }
