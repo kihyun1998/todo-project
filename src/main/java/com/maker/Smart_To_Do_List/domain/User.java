@@ -1,5 +1,6 @@
 package com.maker.Smart_To_Do_List.domain;
 
+import com.maker.Smart_To_Do_List.enums.Gender;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,15 +34,27 @@ public class User extends BaseTimeEntity{
     private String loginPw;
 
     @NotNull
-    @Column(name = "userName",unique = true)
+    @Column(name = "user_name", unique = true)
     private String userName;
 
     @NotNull
-    @Column(name = "user_email",unique = true)
+    @Column(name = "user_email", unique = true)
     private String userEmail;
+
+    @NotNull
+    @Column(name = "user_age")
+    private Integer userAge;
+
+    @Column(name = "user_job")
+    private String userJob;
+
+    @NotNull
+    @Column(name = "user_gender")
+    private Gender userGender;
 
     @Column(name = "main_list")
     private Long mainToDoListId;
+
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,orphanRemoval=true)
