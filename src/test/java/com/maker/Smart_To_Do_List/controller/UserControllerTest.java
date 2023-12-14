@@ -3,6 +3,7 @@ package com.maker.Smart_To_Do_List.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maker.Smart_To_Do_List.dto.JoinRequest;
 import com.maker.Smart_To_Do_List.dto.LoginRequest;
+import com.maker.Smart_To_Do_List.enums.Gender;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.service.UserService;
@@ -46,11 +47,14 @@ class UserControllerTest {
         String userName = "test Man";
         String userEmail = "test@test.com";
         String loginPwCheck = "password";
+        String userJob = "Student";
+        int userAge = 25;
+        Gender userGender = Gender.MALE;
 
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw, loginPwCheck,userName,userEmail))))
+                        .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw, loginPwCheck,userName,userEmail, userAge, userJob, userGender))))
                         .andDo(print())
                         .andExpect(status().isOk());
     }
@@ -64,6 +68,9 @@ class UserControllerTest {
         String userName = "test Man";
         String userEmail = "test@test.com";
         String loginPwCheck = "password";
+        String userJob = "Student";
+        int userAge = 25;
+        Gender userGender = Gender.MALE;
 
         // RunTimeException Throw 됐다고 가정
         when(userService.join(any(),any(),any(),any(),any()))
@@ -72,7 +79,7 @@ class UserControllerTest {
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw, loginPwCheck,userName,userEmail))))
+                        .content(objectMapper.writeValueAsBytes(new JoinRequest(loginId, loginPw, loginPwCheck,userName,userEmail, userAge, userJob, userGender))))
                 .andDo(print())
                 .andExpect(status().isConflict());
     }
