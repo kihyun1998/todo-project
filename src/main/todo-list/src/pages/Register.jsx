@@ -145,12 +145,12 @@ const Register = () => {
           onChange={handlers.onChangeId}
           value={id}
         />
-        {!idChecked&&
         <Button
-          text={"중복확인"}
+          text={idChecked?"확인완료":"중복확인"}
           onClick={handlers.checkIdDup}
           styles={dupButtonStyle}
-        />}
+          disabled={idChecked?true:false}
+        />
         <br />
 
         <Input
@@ -159,12 +159,12 @@ const Register = () => {
           onChange={handlers.onChangeName}
           value={name}
         />
-        {!nameChecked&&
         <Button
-          text={"중복확인"}
+          text={nameChecked?"확인완료":"중복확인"}
           onClick={handlers.checkNameDup}
           styles={dupButtonStyle}
-        />}
+          disabled={nameChecked?true:false}
+        />
         <br />
 
         <Input

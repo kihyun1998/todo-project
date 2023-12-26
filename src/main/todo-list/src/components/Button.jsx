@@ -4,14 +4,14 @@ const Button = ({ text, onClick, styles, disabled }) => {
   const style = {
     "minWidth":"80px",
     "minHeight": "30px",
-    "cursor": "pointer",
+    "cursor": disabled?"default":"pointer",
 
     "color": "#606060",
     "border": "3px solid #d4d4d4",
     "padding": "10px",
     "fontWeight": "600",
 
-    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "backgroundColor": disabled?"rgba(0, 0, 0, 0.1)":"rgba(0, 0, 0, 0)",
     "borderRadius": "5px",
   }
 
@@ -20,8 +20,8 @@ const Button = ({ text, onClick, styles, disabled }) => {
       style={Object.assign({}, styles, style)}
       onClick={onClick}
       whileHover={{
-        border: "3px solid #bf979c",
-        scale: 1.1,
+        border: disabled?"3px solid #d4d4d4":"3px solid #bf979c",
+        scale: disabled?1:1.1,
       }}
       disabled={disabled}
     >
