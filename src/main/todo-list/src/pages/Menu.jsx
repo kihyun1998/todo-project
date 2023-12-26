@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 import styled from "styled-components";
@@ -33,9 +33,6 @@ const menuStyle = {
   zIndex: 0,
 }
 
-const sortStyle = {
-  cursor:"pointer"
-}
 
 const Menu = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "toDoLists"]);
@@ -47,7 +44,6 @@ const Menu = () => {
   const [toDoLists, setToDoLists] = useState([]);
   const [menuExpended, setMenuExpended] = useState(false);
   const [addListLoading, setAddListLoading] = useState(false);
-  const [changeSortLoading, setChangeSortLoading] = useState(false);
 
   const controls = useAnimationControls();
 
@@ -59,7 +55,10 @@ const Menu = () => {
   const logout = () => {
     removeCookie("accessToken");
     removeCookie("toDoLists");
+    alert("로그아웃 되었습니다.")
+    window.location.href="/"
   }
+
   const onChangeToDoListName = (e) => setToDoListName(e.target.value);
 
   const addToDoList = async() => {
@@ -300,7 +299,6 @@ const Menu = () => {
             className={styles.menuLink} 
             onClick={()=>{
               logout()
-              window.location.href="/"
             }}
           >로그아웃</NavLink>
         </motion.div>)}
