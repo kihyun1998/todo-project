@@ -2,6 +2,7 @@ package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.*;
+import com.maker.Smart_To_Do_List.enums.Gender;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.mapper.UserMapper;
@@ -69,6 +70,9 @@ public class UserService {
                 .loginPw(encoder.encode(loginPw))
                 .userName(userName)
                 .userEmail(userEmail)
+                .userAge(25)                // ..
+                .userJob("Student")         // ..
+                .userGender(Gender.NONE)    // front 구현 후 삭제
                 .build();
 
         // DB에 저장

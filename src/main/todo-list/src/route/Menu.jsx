@@ -6,8 +6,6 @@ import axios from "axios";
 import styled from "styled-components";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 
-import Button from "./css/component/Button";
-import Input from "./css/component/Input";
 import TodoList from "./css/component/TodoList";
 import Loading from "./css/component/Loading";
 
@@ -24,11 +22,7 @@ const activeStyle = {
 const menuStyle = {
   display: "flex",
   flexDirection: "column",
-  // minHeight: "100vh",
-  // width: "100px",
   flex: "1 1 0",
-  // borderRight: "2px solid #EDEDED",
-  // boxShadow: "2px 0px 3px #EDEDED",
   paddingTop: "100px",
   height: "70vh",
   position: "sticky",
@@ -52,8 +46,6 @@ const Menu = () => {
   const [toDoLists, setToDoLists] = useState([]);
   const [menuExpended, setMenuExpended] = useState(false);
   const [addListLoading, setAddListLoading] = useState(false);
-  const [sortBy, setSortBy] = useState("Date");
-  const [orderBy, setOrderBy] = useState("ASC");
   const [changeSortLoading, setChangeSortLoading] = useState(false);
 
   const controls = useAnimationControls();
@@ -108,12 +100,11 @@ const Menu = () => {
             Authorization: `Bearer ${cookies.accessToken}`
           }
         });
-        setSortBy(res.data.sortDto.sortBy);
-        setOrderBy(res.data.sortDto.orderBy);
+        console.log(res)
         
-        await setCookie("toDoLists", res.data.toDoListDto);
+        setCookie("toDoLists", res.data? res.data:"");
       } catch(err) {
-        console.log(err.response.data);
+        console.log(err.response?.data);
       }
       
     }
@@ -138,7 +129,6 @@ const Menu = () => {
     if(expended){
       await controls.set({display:"block"})
       controls.start({
-        // height: `${toDoLists.length*100}px`,
         height: "auto"
       })
     } else {
@@ -149,38 +139,9 @@ const Menu = () => {
     }
   }
 
-  // const navHover = async() => {
-  //   if(menuExpended){
-  //     controls.start({opacity:1})
-  //   } else {
-  //     controls.start({opacity:0})
-  //   }
-  // }
-
   useEffect(()=>{
     expendTodoLists();
   }, [controls, expended])
-
-
-  const submitSortOrder = async() => {
-    setChangeSortLoading(true);
-    try {
-      const res = await axios.put("/api/v1/user/lists", {
-        sortBy: sortBy,
-        orderBy: orderBy
-      }, {
-        headers: {
-          Authorization: `Bearer ${cookies.accessToken}`
-        }
-      })
-      console.log(res)
-      getToDoListData()
-    } catch (e) {
-      console.log(e.response.data)
-    }
-    setChangeSortLoading(false);
-  }
-
 
   return (
     <motion.div 
@@ -195,13 +156,6 @@ const Menu = () => {
       onMouseEnter={expandMenu}
       onMouseLeave={closeMenu}
     >
-      {/* <motion.span
-        className={`material-symbols-outlined`}
-        style={menuExpendStyle}
-        onClick={expendMenu}
-      >
-        arrow_forward
-      </motion.span> */}
       <motion.div
         variants={linkVariants}
         initial="hidden"
@@ -275,115 +229,7 @@ const Menu = () => {
             )}
             </AnimatePresence>
           </div>
-          <AnimatePresence>
-            {isEditing&&
-              <motion.div
-                initial={{opacity:0, y:"-20px", height:"0px"}}
-                animate={{opacity:1, y:"0px", height:"30px"}}
-                exit={{
-                  opacity:0,
-                  transition:{delay:"0.3"},
-                  y:"-20px",
-                  height:"0px"
-                }}
-                style={{
-                  backgroundColor: "rgba(70, 70, 70, 0.3)",
-                }}
-              >
-              <motion.div
-                initial={{opacity:0}}
-                animate={{
-                  opacity:1,
-                  transition:{delay:"0.3"}
-                }}
-                exit={{opacity:0}}
-                style={{
-                  display:"flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "25px",
-                  paddingRight: "10px"
-                }}  
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    //flex: "1 1 0",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "min-content"
-                    }}
-                  >
-                    <motion.div className="material-symbols-outlined"
-                    style={sortStyle}
-                    onClick={()=>setSortBy("Name")}
-                    initial={{
-                      width: sortBy==="Date"?"0%":"100%",
-                      scale: sortBy==="Date"?0:1,
-                      rotate:sortBy==="Date"?360:0,
-                    }}
-                    animate={{
-                      width: sortBy==="Date"?"100%":"0%",
-                      scale: sortBy==="Date"?1:0,
-                      rotate:sortBy==="Date"?0:360,
-                    }}
-                    >calendar_month</motion.div>
 
-                    <motion.div className="material-symbols-outlined"
-                      style={sortStyle}
-                      onClick={()=>setSortBy("Date")}
-                      initial={{
-                        width: sortBy==="Date"?"100%":"0%",
-                        scale: sortBy==="Date"?1:0,
-                        rotate:sortBy==="Date"?0:360,
-                      }}
-                      animate={{
-                        width: sortBy==="Date"?"0%":"100%",
-                        scale: sortBy==="Date"?0:1,
-                        rotate:sortBy==="Date"?360:0,
-                      }}
-                    >sort_by_alpha</motion.div>
-                  </div>
-
-                  <motion.div className="material-symbols-outlined"
-                    style={sortStyle}
-                    onClick={()=>{setOrderBy(orderBy==="ASC"?"DESC":"ASC")}}
-                    initial={{
-                      rotate:orderBy==="ASC"?180:0,
-                      translateY: orderBy==="ASC"?"-20%":"0%"
-                    }}
-                    animate={{
-                      rotate:orderBy==="ASC"?0:180,
-                      translateY: orderBy==="ASC"?"0":"-20%"
-                    }}
-                  >Sort</motion.div>
-                </div>
-                
-                {!changeSortLoading?
-                <motion.div 
-                  className="material-symbols-outlined"
-                  style={{
-                    color: "rgb(0, 0, 0)",
-                    cursor:"pointer",
-                    //flex: "1 1 0",
-                    textAlign: "center"
-                  }}
-                  whileHover={{
-                    color:"rgb(50, 150, 50)",
-                    scale: 1.3
-                  }}
-                  onClick={submitSortOrder}
-                >
-                  check
-                </motion.div>:
-                <Loading />
-                }
-              </motion.div>
-              </motion.div>
-            }
-            </AnimatePresence>
           {toDoLists&&(
             <motion.div
               style={{overflow:"hidden"}}
