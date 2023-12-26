@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from "react"
 
 const Deadline = ({returnParam, defaultValue}) => {
   const inputStyle = {

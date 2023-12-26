@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
-import styles from "./css/Intro.module.css";
-import axios from "axios";
-import { useCookies } from "react-cookie";
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { useCookies } from "react-cookie"
+import axios from "axios"
 
-import TodoTable from "./css/component/TodoTable";
-import { AnimatePresence, motion } from "framer-motion";
-import Loading from "./css/component/Loading";
-import styled from "styled-components";
+import styles from "../styles/Intro.module.css"
+
+import TodoTable from "../components/TodoTable"
+import Loading from "../components/Loading"
 
 const userNameStyle = {
   fontSize: "3rem",
   color: "darkblue",
 }
-
 
 const Intro = () => {
   const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"]);

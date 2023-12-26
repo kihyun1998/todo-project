@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
-import styles from "./css/Register.module.css";
+import styles from "../styles/Register.module.css"
 
-import Input from "./css/component/Input"
-import Button from "./css/component/Button"
-import Loading from "./css/component/Loading";
+import Input from "../components/Input"
+import Button from "../components/Button"
+import Loading from "../components/Loading"
 
 const dupButtonStyle = {
   position: "absolute",

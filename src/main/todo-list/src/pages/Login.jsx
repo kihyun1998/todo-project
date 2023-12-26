@@ -1,13 +1,14 @@
-import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Input from "./css/component/Input";
-import Button from "./css/component/Button";
-import { useCookies } from 'react-cookie';
-import { motion } from "framer-motion";
-import Loading from "./css/component/Loading"
+import axios from "axios"
+import { useCookies } from 'react-cookie'
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { motion } from "framer-motion"
 
-import styles from "./css/Login.module.css"
+import styles from "../styles/Login.module.css"
+
+import Input from "../components/Input"
+import Button from "../components/Button"
+import Loading from "../components/Loading"
 
 const loginStyle = {
   margin: "0 auto",

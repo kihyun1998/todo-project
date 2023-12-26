@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "./css/Todo.module.css";
-import Input from "./css/component/Input";
+
+import styles from "../styles/Todo.module.css";
+
+import Input from "../components/Input";
 
 const Todo = () => {
   const [todo, setTodo] = useState("");

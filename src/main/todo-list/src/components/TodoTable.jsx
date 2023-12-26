@@ -1,12 +1,14 @@
 import { useCookies } from "react-cookie";
-import Todo from "./Todo"
-import axios from "axios";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "../TodoTable.module.css"
+import axios from "axios";
+
+import styles from "../styles/TodoTable.module.css"
+
+import Todo from "./Todo"
 import Loading from "./Loading";
 
-import { motion } from "framer-motion";
 
 const hLineStyle = {
   width: "30%",

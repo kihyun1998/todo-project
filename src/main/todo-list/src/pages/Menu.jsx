@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useCookies } from 'react-cookie';
-import styles from "./css/Menu.module.css";
-import axios from "axios";
-import styled from "styled-components";
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
+import styled from "styled-components";
+import axios from "axios";
 
-import TodoList from "./css/component/TodoList";
-import Loading from "./css/component/Loading";
+import styles from "../styles/Menu.module.css";
+
+import TodoList from "../components/TodoList";
+import Loading from "../components/Loading";
 
 const ToDoListInput = styled.input`
   margin-left: 35px;

@@ -1,19 +1,20 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react"
+import { useCookies } from 'react-cookie'
+import { useNavigate, useParams } from "react-router-dom"
+import axios from "axios"
 
-import styles from "./css/Todo.module.css"
-import Input from "./css/component/Input"
-import Button from "./css/component/Button"
-import TodoInput from "./css/component/TodoInput";
-import Importance from "./css/component/Importance";
-import EstimatedTime from "./css/component/EstimatedTime";
-import Deadline from "./css/component/Deadline";
-import Difficulty from "./css/component/Difficulty";
-import TodoTable from "./css/component/TodoTable";
-import Loading from "./css/component/Loading";
+import styles from "../styles/Todo.module.css"
 
-import axios from "axios";
-import { useCookies } from 'react-cookie';
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import Input from "../components/Input"
+import Button from "../components/Button"
+import TodoInput from "../components/TodoInput"
+import Importance from "../components/Importance"
+import EstimatedTime from "../components/EstimatedTime"
+import Deadline from "../components/Deadline"
+import Difficulty from "../components/Difficulty"
+import TodoTable from "../components/TodoTable"
+import Loading from "../components/Loading"
+
 
 
 const TodoBase = () => {

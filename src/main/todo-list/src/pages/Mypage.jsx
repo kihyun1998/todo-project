@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useCookies } from "react-cookie";
-
-import ProfileInfo from "./css/component/ProfileInfo";
-
-import Button from "./css/component/Button";
-import PasswordChange from "./css/component/PasswordChange";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+
+import ProfileInfo from "../components/ProfileInfo";
+import Button from "../components/Button";
+import PasswordChange from "../components/PasswordChange";
 
 const coverStyle = {
   position: "fixed",

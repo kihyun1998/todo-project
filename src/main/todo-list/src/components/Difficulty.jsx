@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import styled from "styled-components"
 
 const Difficulty = ({returnParam, defaultValue}) => {
 

@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-import Input from "./Input"
 import styled from "styled-components";
 import axios from "axios";
+
+import Input from "./Input"
 import Loading from "./Loading";
 
 const StyledDiv = styled.div`

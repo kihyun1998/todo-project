@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from "../ProfileInfo.module.css";
-import userimg from "../img/userimg.png" // 일단 기본 이미지 넣어서 띄워봄
+import styles from "../styles/ProfileInfo.module.css";
+// import userimg from "../../public/img/userimg.png" // 일단 기본 이미지 넣어서 띄워봄
+
 function ProfileInfo({ name, email,profileImg }) {
   return (            //위에 나중에 서버랑 맞춰서 써야함  유저 이미지는 src = {이미지} 넣음 ㅇㅇ
     
@@ -21,7 +22,7 @@ function ProfileInfo({ name, email,profileImg }) {
       />
       
       <div className={styles.profileImg}>
-        <img src={userimg} alt="profile image" /> 
+        <img src="/img/userimg.png" alt="profile" /> 
       </div>
       
       <div style={{margin : "20px"}} className={styles.profileDetails}>

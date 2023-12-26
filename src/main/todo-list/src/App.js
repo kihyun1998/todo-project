@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import styles from "./route/css/App.module.css";
-import Menu from "./route/Menu";
-import Intro from "./route/Intro";
-import TodoBase from "./route/TodoBase";
-import Login from "./route/Login";
-import Register from "./route/Register";
-import Mypage from "./route/Mypage";
+
+import styles from "./styles/App.module.css";
+import Menu from "./pages/Menu";
+import Intro from "./pages/Intro";
+import TodoBase from "./pages/TodoBase";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Mypage from "./pages/Mypage";
 
 function App() {
 
