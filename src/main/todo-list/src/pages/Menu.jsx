@@ -21,16 +21,16 @@ const activeStyle = {
 }
 
 const menuStyle = {
-  display: "flex",
-  flexDirection: "column",
-  flex: "1 1 0",
-  paddingTop: "100px",
-  height: "70vh",
-  position: "sticky",
-  backgroundColor: "#bfbdbd",
-  borderRadius: "100px 0px 0px 0px",
-  boxShadow: "7px 7px 10px #737373 inset",
-  zIndex: 0,
+  // display: "flex",
+  // flexDirection: "column",
+  // flex: "1 1 0",
+  // paddingTop: "100px",
+  // height: "70vh",
+  // position: "sticky",
+  // backgroundColor: "#bfbdbd",
+  // borderRadius: "100px 0px 0px 0px",
+  // boxShadow: "7px 7px 10px #737373 inset",
+  // zIndex: 0,
 }
 
 
@@ -146,9 +146,9 @@ const Menu = () => {
   return (
     <motion.div 
       className={styles.menu} 
-      style={menuStyle}
+      // style={menuStyle}
       animate={{
-        width: menuExpended ? "280px": "0px", 
+        width: menuExpended ? "280px": "100px", 
         flexGrow: menuExpended ? 2:1,
       }}
       transition = {{delay: menuExpended ? 0:0.2}}

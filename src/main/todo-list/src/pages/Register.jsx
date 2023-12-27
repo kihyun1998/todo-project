@@ -21,6 +21,10 @@ const Register = () => {
   const [pw, setPw] = useState("");
   const [pwC, setPwC] = useState("");
   const [email, setEmail] = useState("");
+  const [age, setAge] = useState(0);
+  const [job, setJob] = useState("");
+  const [gender, setGender] = useState("");
+
 
   const [pwStr, setStr] = useState("");
   const [pwCStr, setPwCStr] = useState("");
@@ -39,6 +43,10 @@ const Register = () => {
     },
     onChangePwC:(e) => setPwC(e.target.value),
     onChangeEmail:(e) => setEmail(e.target.value),
+    onChangeAge:(e) => setAge(e.target.value),
+    onChangeJob:(e) => setJob(e.target.value),
+    onChangeGender:(e) => setGender(e.target.value),
+    
 
     onChangePw(e) {
       if (e.target.value.length < 8) {
@@ -192,6 +200,31 @@ const Register = () => {
           label="이메일"
           onChange={handlers.onChangeEmail}
           value={email}
+        />
+        <br />
+
+        <Input
+          id="age"
+          label="나이"
+          onChange={handlers.onChangeAge}
+          value={age}
+          type={"number"}
+        />
+        <br />
+
+        <Input
+          id="job"
+          label="직업"
+          onChange={handlers.onChangeJob}
+          value={job}
+        />
+        <br />
+
+        <Input
+          id="gender"
+          label="성별"
+          onChange={handlers.onChangeGender}
+          value={gender}
         />
         <br />
         <span
