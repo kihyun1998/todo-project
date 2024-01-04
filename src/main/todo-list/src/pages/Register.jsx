@@ -6,6 +6,7 @@ import styles from "../styles/Register.module.css"
 import Input from "../components/Input"
 import Button from "../components/Button"
 import Loading from "../components/Loading"
+import DropDown from "../components/DropDown";
 
 const dupButtonStyle = {
   position: "absolute",
@@ -23,7 +24,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(0);
   const [job, setJob] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("선택안함");
 
 
   const [pwStr, setStr] = useState("");
@@ -220,11 +221,13 @@ const Register = () => {
         />
         <br />
 
-        <Input
+        <DropDown
           id="gender"
           label="성별"
-          onChange={handlers.onChangeGender}
+          setValue={setGender}
           value={gender}
+          datas={["선택안함", "남자", "여자"]}
+          
         />
         <br />
         <span
