@@ -1,6 +1,6 @@
 import styles from "../styles/Input.module.css"
 
-const Input = ({ type, label, value, id, name, onChange, onClick, style, placeholder, DC=false }) => {
+const Input = ({ type, label, value, id, name, onChange, onClick, style, placeholder, DC=false, min, max}) => {
 
   let styleSpan = {
     height: "50px",
@@ -20,6 +20,8 @@ const Input = ({ type, label, value, id, name, onChange, onClick, style, placeho
         name = {name}
         defaultChecked = {DC}
         placeholder = {placeholder}
+        min={min}
+        max={max}
       />
     </div>
 

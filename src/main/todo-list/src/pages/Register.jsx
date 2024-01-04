@@ -210,6 +210,8 @@ const Register = () => {
           onChange={handlers.onChangeAge}
           value={age}
           type={"number"}
+          min={0}
+          max={150}
         />
         <br />
 
