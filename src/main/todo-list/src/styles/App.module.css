@@ -1,6 +1,6 @@
 .app {
   min-height: 100vh;
-  height:max-content;
+  height:calc(max-content + 100px);
 
   display: flex;
   justify-content: center;

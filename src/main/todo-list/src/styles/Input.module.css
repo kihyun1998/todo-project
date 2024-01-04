@@ -1,0 +1,32 @@
+input {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 2px solid #d6d6d6;
+
+  width: 100%;
+  height: 100%;
+
+  font-family: Sunflower, sans-serif;
+  font-weight: 1000;
+  color: #949494;
+  font-size: 100%;
+
+  background-color:rgba(0, 0, 0, 0);
+}
+
+label {
+  display:inline-block;
+  width: 200px;
+  font-size: 1.3rem;
+}
+
+input[type="radio"] {
+  width: 20px;
+}
+
+input[type="radio"]~label {
+  width: fit-content;
+}
+
+
