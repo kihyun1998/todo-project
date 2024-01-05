@@ -5,7 +5,7 @@ import styles from "../styles/Register.module.css"
 
 import Input from "../components/Input"
 import Button from "../components/Button"
-import Loading from "../components/Loading"
+import Spinner from "../components/Spinner"
 import DropDown from "../components/DropDown";
 
 const dupButtonStyle = {
@@ -250,7 +250,7 @@ const Register = () => {
           }}
         >
           {loading?
-            <Loading />:
+            <Spinner />:
             <Button
               text={"가입"}
               onClick={handlers.submit}

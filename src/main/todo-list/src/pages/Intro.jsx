@@ -6,6 +6,7 @@ import axios from "axios"
 import styles from "../styles/Intro.module.css"
 
 import TodoTable from "../components/TodoTable"
+import Spinner from "../components/Spinner"
 import Loading from "../components/Loading"
 
 const userNameStyle = {
@@ -59,6 +60,7 @@ const Intro = () => {
 
   return (
     <div className={styles.intro}>
+      <Loading isLoading={true}/>
       <h1 style={{marginTop:"100px"}}><span style={userNameStyle}>{userName}</span>의 하루</h1>
       <AnimatePresence>
       {logined?
@@ -183,7 +185,7 @@ const Intro = () => {
                   >
                     check
                   </motion.div>:
-                  <Loading />
+                  <Spinner />
                   }
                   
                 </motion.div>

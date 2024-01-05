@@ -8,7 +8,7 @@ import axios from "axios";
 import styles from "../styles/Menu.module.css";
 
 import TodoList from "../components/TodoList";
-import Loading from "../components/Loading";
+import Spinner from "../components/Spinner";
 
 const ToDoListInput = styled.input`
   margin-left: 35px;
@@ -257,7 +257,7 @@ const Menu = () => {
                   />
                   <span style={{textAlign:"center"}}>
                     {addListLoading?
-                      <Loading styles={{fontSize:"24px", x:"80%"}}/>:
+                      <Spinner styles={{fontSize:"24px", x:"80%"}}/>:
                       <motion.span
                         className={`material-symbols-outlined`}
                         onClick={addToDoList}

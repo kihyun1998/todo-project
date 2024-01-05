@@ -1,20 +1,17 @@
-import { motion } from "framer-motion"
+import { ClockLoader } from "react-spinners"
+import styles from "../styles/Loading.module.css"
 
-const loadingStyle = {
-  fontSize: "30px",
-}
-
-const Loading = ({styles}) => {
-  return(
-    <motion.span 
-      className="material-symbols-outlined"
-      animate={{rotate: 180}}
-      transition={{repeat:Infinity, duration:1}}
-      style={Object.assign({}, loadingStyle, styles)}
-    >
-      cached
-    </motion.span>
+export default function Loading({isLoading}) {
+  return(isLoading&&
+    <div className={styles.loading}>
+      <ClockLoader 
+        color="#36d7b7" 
+        size={100}
+        loading={isLoading}
+        cssOverride={{
+          animationDelay: "0s",
+        }}
+      />
+    </div>
   )
 }
-
-export default Loading

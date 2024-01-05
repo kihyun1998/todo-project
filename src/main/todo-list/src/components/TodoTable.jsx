@@ -7,7 +7,7 @@ import axios from "axios";
 import styles from "../styles/TodoTable.module.css"
 
 import Todo from "./Todo"
-import Loading from "./Loading";
+import Spinner from "./Spinner";
 
 
 const hLineStyle = {
@@ -344,7 +344,7 @@ const TodoTable = ({listId, reload}) => {
             {toggleDone?"완료":"미완료"}
           </motion.div>
           {aiSorting?
-            <Loading 
+            <Spinner 
               styles={{
                 fontSize: "3rem",
               }}
@@ -432,7 +432,7 @@ const TodoTable = ({listId, reload}) => {
               textAlign: "center"
             }}
           >
-            <Loading 
+            <Spinner 
               styles={{
                 fontSize: "5rem"
               }}

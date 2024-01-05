@@ -7,7 +7,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import Input from "./Input"
-import Loading from "./Loading";
+import Spinner from "./Spinner";
 
 const StyledDiv = styled.div`
   ${props=>props.isEditing&&"display: flex;"}
@@ -156,7 +156,7 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
       {isEditing && !isEditingTitle && (
         <span> 
           {deleteLoading?
-            <Loading />:
+            <Spinner />:
             <motion.span 
               className="material-symbols-outlined" 
               style={deleteStyle} 

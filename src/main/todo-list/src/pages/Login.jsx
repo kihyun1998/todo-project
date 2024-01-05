@@ -8,7 +8,7 @@ import styles from "../styles/Login.module.css"
 
 import Input from "../components/Input"
 import Button from "../components/Button"
-import Loading from "../components/Loading"
+import Spinner from "../components/Spinner"
 
 const loginStyle = {
   margin: "0 auto",
@@ -105,7 +105,7 @@ const Login = () => {
             
           >
             {loading?
-              <Loading />:
+              <Spinner />:
               <Button
                 text={"로그인"}
                 onClick={handlers.onClickLogin}

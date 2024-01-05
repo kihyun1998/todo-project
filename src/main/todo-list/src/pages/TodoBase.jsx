@@ -13,7 +13,7 @@ import EstimatedTime from "../components/EstimatedTime"
 import Deadline from "../components/Deadline"
 import Difficulty from "../components/Difficulty"
 import TodoTable from "../components/TodoTable"
-import Loading from "../components/Loading"
+import Spinner from "../components/Spinner"
 
 
 
@@ -172,7 +172,7 @@ const TodoBase = () => {
                     />
                     <span style={{textAlign:"center", width:"80px"}}>
                         {loading?
-                            <Loading styles={{fontSize:"36px"}}/>:
+                            <Spinner styles={{fontSize:"36px"}}/>:
                             <Button 
                                 text="추가"
                                 onClick={submit}

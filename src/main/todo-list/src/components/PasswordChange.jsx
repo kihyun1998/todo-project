@@ -7,7 +7,7 @@ import axios from "axios";
 
 import Input from "./Input";
 import Button from "./Button";
-import Loading from "./Loading";
+import Spinner from "./Spinner";
 
 const mainStyle = {
   position: "absolute",
@@ -154,7 +154,7 @@ const PasswordChange = ({setChangingPW}) => {
       
       <span>
         {loading?
-          <Loading />:
+          <Spinner />:
           <Button 
             disabled = {!isPwSame}
             onClick={changePassword}
