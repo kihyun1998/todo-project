@@ -14,6 +14,12 @@ const dupButtonStyle = {
   translateX: "450%",
 }
 
+const genderDto = {
+  "선택안함": "NONE",
+  "남자": "MALE",
+  "여자": "FEMALE"
+}
+
 const Register = () => {
   const [id, setId] = useState("");
   const [idChecked, setIdChecked] = useState(false);
@@ -111,9 +117,12 @@ const Register = () => {
             loginPw: pw,
             loginPwCheck: pwC,
             userName: name,
-            userEmail: email
+            userEmail: email,
+            userJob: job,
+            userGender: genderDto.gender,
+            userAge: age,
           });
-
+          alert("회원가입 완료!")
           window.location.href = "/user/login";
           setLoading(false)
         } catch (err) {
