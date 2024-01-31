@@ -83,8 +83,8 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
           Authorization: `Bearer ${cookies.accessToken}`
         }
       });
-      console.log(res.data)
-      // getToDoListData();
+
+      setCookie("toDoLists", cookies.toDoLists.filter(todo => todo.listId!==listId))
       setDeleteLoading(false)
     } catch(e) {
       switch(e.response.status){
