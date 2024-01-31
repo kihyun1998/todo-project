@@ -19,19 +19,18 @@ import Input from "./Input";
 const Todo = ({listId, todo, getTodos}) => {
 
   const [cookies, setCookie] = useCookies(["accessToken"])
-  const [toDo, setTodo] = useState(todo);
 
-  const [deadline, setDeadline] = useState(new Date(Date.parse(toDo.deadline)))
-  const [difficulty, setDifficulty] = useState(toDo.difficulty)
-  const [estimatedTime, setEstimatedTime] = useState(toDo.estimatedTime)
-  const [importance, setImportance] = useState(toDo.importance)
-  const [todoId, setTodoId] = useState(toDo.toDoId)
-  const [todoTitle, setTodoTitle] = useState(toDo.todoTitle)
-  const [status, setStatus] = useState(toDo.status);
-  const [createdDate, setCreatedDate] = useState(new Date(Date.parse(toDo.createdDate)))
-  const [leftDay, setLeftDay] = useState(parseInt(toDo.leftDate/1000/60/60/24))
-  const [leftHours, setLeftHours] = useState(parseInt(toDo.leftDate/1000/60/60%24))
-  const [leftMinutes, setLeftMinutes] = useState(parseInt(toDo.leftDate/1000/60%60))
+  const [deadline, setDeadline] = useState(new Date(Date.parse(todo.deadline)))
+  const [difficulty, setDifficulty] = useState(todo.difficulty)
+  const [estimatedTime, setEstimatedTime] = useState(todo.estimatedTime)
+  const [importance, setImportance] = useState(todo.importance)
+  const [todoId, setTodoId] = useState(todo.toDoId)
+  const [todoTitle, setTodoTitle] = useState(todo.todoTitle)
+  const [status, setStatus] = useState(todo.status);
+  const [createdDate, setCreatedDate] = useState(new Date(Date.parse(todo.createdDate)))
+  const [leftDay, setLeftDay] = useState(parseInt(todo.leftDate/1000/60/60/24))
+  const [leftHours, setLeftHours] = useState(parseInt(todo.leftDate/1000/60/60%24))
+  const [leftMinutes, setLeftMinutes] = useState(parseInt(todo.leftDate/1000/60%60))
 
   const [isEditing, setIsEditing] = useState(false)
   const [backClicked, setBackClicked] = useState(false);
@@ -120,8 +119,9 @@ const Todo = ({listId, todo, getTodos}) => {
       // if(status===0) {
       //   await chengeWeight(toDo);
       // }
-      setStatus(pre=>pre===1?0:1)
+      // setStatus(pre=>pre===1?0:1)
       getTodos()
+      setStatus(pre=>(pre+1)%2)
     } catch(err) {
       console.log(err)
     }
@@ -221,7 +221,7 @@ const Todo = ({listId, todo, getTodos}) => {
                   marginRight: "20px"
                 }}
               >
-                {`${toDo.leftDate>0?leftDay>0?leftDay+"일 전":leftHours>0?leftHours+"시간 전":leftMinutes>0?leftMinutes+"분 전":"시간초과":""}`}
+                {`${todo.leftDate>0?leftDay>0?leftDay+"일 전":leftHours>0?leftHours+"시간 전":leftMinutes>0?leftMinutes+"분 전":"시간초과":""}`}
               </div>
             
               {/* 수정 버튼 */}
@@ -389,11 +389,11 @@ const Todo = ({listId, todo, getTodos}) => {
             <Button 
               text={"취소"}
               onClick={()=>{
-                setDeadline(new Date(Date.parse(toDo.deadline)))
-                setDifficulty(toDo.difficulty)
-                setEstimatedTime(toDo.estimatedTime)
-                setImportance(toDo.importance)
-                setTodoTitle(toDo.todoTitle)
+                setDeadline(new Date(Date.parse(todo.deadline)))
+                setDifficulty(todo.difficulty)
+                setEstimatedTime(todo.estimatedTime)
+                setImportance(todo.importance)
+                setTodoTitle(todo.todoTitle)
                 setIsEditing(pre=>!pre)
               }}
             />

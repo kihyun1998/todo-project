@@ -100,7 +100,6 @@ const Menu = () => {
             Authorization: `Bearer ${cookies.accessToken}`
           }
         });
-        console.log(res)
         
         setCookie("toDoLists", res.data? res.data:"");
       } catch(err) {

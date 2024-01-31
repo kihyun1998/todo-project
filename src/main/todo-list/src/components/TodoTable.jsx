@@ -123,18 +123,20 @@ const TodoTable = ({listId, reload}) => {
   //   return score
   // }
 
-  const seperateTodosByStatus = () => {
-    let cTodos = []
-    let ucTodos = []
+  // const seperateTodosByStatus = () => {
+  //   let cTodos = []
+  //   let ucTodos = []
 
-    todos.map((todo)=> {
-      if(todo.status===1) cTodos.push(todo)
-      else ucTodos.push(todo)
-    })
+  //   for(var todo of todos){
+  //     if(todo.status===1) cTodos.push(todo)
+  //     else ucTodos.push(todo)
+  //   }
 
-    setCheckedTodos([...cTodos])
-    setUncheckedTodos([...ucTodos])
-  }
+  //   setCheckedTodos([...cTodos])
+  //   setUncheckedTodos([...ucTodos])
+  //   setToggleDone(pre=>!pre)
+  //   setToggleDone(pre=>!pre)
+  // }
 
   const getTodos = async() => {
     
@@ -145,8 +147,7 @@ const TodoTable = ({listId, reload}) => {
                 Authorization: `Bearer ${cookies.accessToken}`
             }
         });
-        let temp = res.data.toDoDtoList
-        
+        let temp = res.data
         setTodos([...temp])
         // setTodosLoaded(true)
         setLoading(true)
@@ -157,23 +158,21 @@ const TodoTable = ({listId, reload}) => {
 
   useEffect(()=>{
     calcLeftDate()
-    seperateTodosByStatus()
   }, [todos])
 
-  const aiSort = async() => {
-    setLoading(false)
-    alert("서비스 중지")
-    // let temp = await showOutput(JSON.stringify(uncheckedTodos));
-    // setUncheckedTodos([...temp])
-    // setAiSorting(false)
-  }
+  // const aiSort = async() => {
+  //   setLoading(false)
+  //   alert("서비스 중지")
+  //   let temp = await showOutput(JSON.stringify(uncheckedTodos));
+  //   setUncheckedTodos([...temp])
+  //   setAiSorting(false)
+  // }
 
-  useEffect(()=>{
-    console.log(uncheckedTodos)
-    if(aiSorting){
-      aiSort()
-    }
-  }, [uncheckedTodos])
+  // useEffect(()=>{
+  //   if(aiSorting){
+  //     aiSort()
+  //   }
+  // }, [uncheckedTodos])
 
 
   // useEffect(()=>{
@@ -386,11 +385,11 @@ const TodoTable = ({listId, reload}) => {
       
 
       <div
-          style={{
-            width: "93%",
-            marginLeft : "18px",
-            borderBottom: "4px solid #aaa",
-            lineHeight: "0.5em",}}
+        style={{
+          width: "93%",
+          marginLeft : "18px",
+          borderBottom: "4px solid #aaa",
+          lineHeight: "0.5em",}}
       />
       {loading&&
       <div style = {{ 
@@ -398,48 +397,57 @@ const TodoTable = ({listId, reload}) => {
         marginTop : "15px",
         overflowY : todos.length > 4 ? "scroll" : "none" }}
       >
-        {!aiSorting?<div>
-          {toggleDone&&
-            <div>
-              {checkedTodos.map((todo, idx)=> {
-                return <Todo
+      <div>
+        <div>
+          {todos.map((todo, idx)=> {
+            return todo.status==toggleDone&&
+              <Todo
                 key={idx}
                 listId={listId}
                 todo={todo}
                 getTodos={getTodos}
               />
-              })}
-            </div>
-          }
-          {!toggleDone&&
-            <div>
-              {uncheckedTodos.map((todo, idx)=> {
-                return <Todo
-                key={idx}
-                listId={listId}
-                todo={todo}
-                getTodos={getTodos}
-              />
-              })}
-            </div>}
-          </ div>:
-          <div
-            style={{
-              // height: "100%",
-              width: "fit-content",
-              margin: "0 auto",
-              marginTop: "15%",
-              textAlign: "center"
-            }}
-          >
-            <Spinner 
-              styles={{
-                fontSize: "5rem"
-              }}
+          })}
+        </div>
+        {/* {toggleDone?
+          <div>
+            {checkedTodos.map((todo, idx)=> {
+              return <Todo
+              key={idx}
+              listId={listId}
+              todo={todo}
+              getTodos={getTodos}
             />
-          </div>
-          
-        }
+            })}
+          </div>:
+          <div>
+            {uncheckedTodos.map((todo, idx)=> {
+              return <Todo
+              key={idx}
+              listId={listId}
+              todo={todo}
+              getTodos={getTodos}
+            />
+            })}
+          </div>} */}
+        </ div>
+        {/* 
+        :
+        <div
+          style={{
+            // height: "100%",
+            width: "fit-content",
+            margin: "0 auto",
+            marginTop: "15%",
+            textAlign: "center"
+          }}
+        >
+          <Spinner 
+            styles={{
+              fontSize: "5rem"
+            }}
+          />
+        </div> */}
         
 
         {/* {todos.map((todo, idx)=>{

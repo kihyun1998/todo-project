@@ -60,7 +60,6 @@ const Intro = () => {
 
   return (
     <div className={styles.intro}>
-      <Loading isLoading={true}/>
       <h1 style={{marginTop:"100px"}}><span style={userNameStyle}>{userName}</span>의 하루</h1>
       <AnimatePresence>
       {logined?
