@@ -34,7 +34,7 @@ public class ListService {
      listName: 리스트 이름
      userId: 생성한 유저의 아이디
      **/
-    public ToDoListDto createList(String listName, Long userId){
+    public ToDoListDto createList(String listName, String userId){
 
         // 유저 조회 및 검증
         User selectedUser = verificationService.foundUser(userId);
@@ -62,7 +62,7 @@ public class ListService {
      [getToDoLists]: 특정 유저가 소유한 ToDoList를 모두 조회하는 서비스
      userId: ToDoList를 조회할 유저의 아이디
      **/
-    public List<ToDoListDto> getToDoLists(long userId){
+    public List<ToDoListDto> getToDoLists(String userId){
 
         // 유저 조회 및 검증
         User user = verificationService.foundUser(userId);
@@ -77,7 +77,7 @@ public class ListService {
      userId: ToDoList를 조회할 유저의 아이디
      listId: 조회할 ToDoList의 아이디
      **/
-    public ToDoListDto getToDoList(Long userId, Long listId){
+    public ToDoListDto getToDoList(String userId, Long listId){
 
         // 접근한 ToDoList에 대해 접근자와 소유자가 동일한지 검증
         verificationService.checkListUser(
@@ -98,7 +98,7 @@ public class ListService {
      listId: 변경할 ToDoList의 아이디
      changeListNameRequest: 바꿀 이름
      **/
-    public ToDoListDto changeListName(Long userId,Long listId,ChangeListNameRequest changeListNameRequest){
+    public ToDoListDto changeListName(String userId,Long listId,ChangeListNameRequest changeListNameRequest){
 
         // 변경할 ToDoList에 대해 접근자와 소유자가 동일한지 검증
         verificationService.checkListUser(
@@ -125,7 +125,7 @@ public class ListService {
      userId: ToDoList 삭제 요청한 유저의 아이디
      listId: 삭제할 ToDoList의 아이디
      **/
-    public void deleteToDoList(Long userId, Long listId) throws IOException{
+    public void deleteToDoList(String userId, Long listId) throws IOException{
 
         // 삭제할 ToDoList에 대해 접근자와 소유자가 동일한지 검증
         verificationService.checkListUser(

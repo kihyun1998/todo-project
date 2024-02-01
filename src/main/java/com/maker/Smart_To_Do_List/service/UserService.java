@@ -1,5 +1,6 @@
 package com.maker.Smart_To_Do_List.service;
 
+import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.*;
 import com.maker.Smart_To_Do_List.enums.Gender;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import com.maker.Smart_To_Do_List.auth.JwtUtil;
+
+import java.util.UUID;
 
 
 @Service
@@ -64,20 +67,16 @@ public class UserService {
         // Builder를 통해 User 도메인 생성
         // 패스워드(loginPw)는 암호화되어 저장
         // 정렬기준(sortBy)은 날짜(Date), 정렬방식(OrderBy)은 오름차순(ASC)이 기본 값
-        // 가중치는 0.1 (무엇에 대한 가중치?)
         User user = User.builder()
+                .userId(UUID.randomUUID().toString().replace("-", ""))
                 .loginId(loginId)
                 .loginPw(encoder.encode(loginPw))
                 .userName(userName)
                 .userEmail(userEmail)
-                .userAge(25)                // ..
-                .userJob("Student")         // ..
-                .userGender(Gender.NONE)    // front 구현 후 삭제
                 .build();
 
         // DB에 저장
         userRepository.save(user);
-
         return "SUCCESS";
     }
 
@@ -119,7 +118,7 @@ public class UserService {
 
      AppException:          패스워드가 틀린 경우
      **/
-    public User changePassword(Long userId, ChangePasswordRequest changePasswordRequest){
+    public User changePassword(String userId, ChangePasswordRequest changePasswordRequest){
 
         // 유저 아이디 검증 및 유저 조회
         User updateUser = verificationService.foundUser(userId);
@@ -142,7 +141,7 @@ public class UserService {
      userId:            서비스를 이용할 유저의 아이디
      deleteUserRequest: 유저 패스워드가 담긴 Dto
      **/
-    public void deleteUser(Long userId, DeleteUserRequest deleteUserRequest){
+    public void deleteUser(String userId, DeleteUserRequest deleteUserRequest){
         // 유저 아이디 검증 및 유저 조회
         User selectedUser = verificationService.foundUser(userId);
 
@@ -159,7 +158,7 @@ public class UserService {
 
      return:                메인화면에 표시될 ToDoList의 아이디, 유저 이름이 담긴 Dto (ShowMainDto)
      **/
-    public ShowMainDto getMainToDoListId(Long userId){
+    public ShowMainDto getMainToDoListId(String userId){
         // 유저 아이디 검증 및 유저 조회
         User selectedUser = verificationService.foundUser(userId);
 
@@ -174,7 +173,7 @@ public class UserService {
 
      return:                    유저 (User) (ShowMainDto를 반환하면 어떨까?)
      **/
-    public User updateMainToDoListId(Long userId, ChangeMainListId changeMainListId){
+    public User updateMainToDoListId(String userId, ChangeMainListId changeMainListId){
         // 유저 아이디 검증 및 유저 조회
         User updateUser = verificationService.foundUser(userId);
         

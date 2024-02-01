@@ -44,7 +44,7 @@ public class ToDoController {
                                              @PathVariable("listId") final long listId){
 
         // 로그인한 jwt 토큰을 통해 userId 추출
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
 
         // todo 생성함수 호출
         // 실질적인 생성은 todoService의 creatToDo가 한다.
@@ -69,7 +69,7 @@ public class ToDoController {
                                       HttpServletRequest request){
         
         // 로그인한 jwt 토큰을 통해 userId 추출
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
 
         // 반환한 todo들을 todos 리스트에 저장
         List<ToDo> todos = toDoService.getToDos(
@@ -94,7 +94,7 @@ public class ToDoController {
                                              @PathVariable("listId") final long listId,
                                              @PathVariable("todoId") final long toDoId){
 
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
 
         // updateToDoValue() 안에 리스트-투두 검증 로직있음
         CreateToDoRequest createToDoDto = toDoService.updateToDoValue(
@@ -116,7 +116,7 @@ public class ToDoController {
                                           @PathVariable("listId") final long listId,
                                           @PathVariable("todoId") final long toDoId){
 
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
 
         toDoService.changeStatus(
                 userId,
@@ -138,7 +138,7 @@ public class ToDoController {
                                            @PathVariable("listId") final long listId,
                                            @PathVariable("todoId") final long toDoId) throws IOException {
 
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
         toDoService.deleteToDo(
                 userId,
                 listId,

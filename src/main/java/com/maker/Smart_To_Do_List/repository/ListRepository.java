@@ -10,9 +10,9 @@ import java.util.Optional;
 public interface ListRepository extends JpaRepository<ToDoList, Long> {
     Optional<ToDoList> findByListName(String listName);
     Optional<ToDoList> findByListId(Long listId);
-    List<ToDoList> findByUser_UserId(Long userId);
-    List<ToDoList> findByUser_UserIdOrderByCreatedDateAsc(Long userId);
-    List<ToDoList> findByUser_UserIdOrderByCreatedDateDesc(Long userId);
-    List<ToDoList> findByUser_UserIdOrderByListNameAsc(Long userId);
-    List<ToDoList> findByUser_UserIdOrderByListNameDesc(Long userId);
+    List<ToDoList> findByUser_UserId(String userId);
+    List<ToDoList> findByUser_UserIdOrderByCreatedDateAsc(String userId);
+    List<ToDoList> findByUser_UserIdOrderByCreatedDateDesc(String userId);
+    List<ToDoList> findByUser_UserIdOrderByListNameAsc(String userId);
+    List<ToDoList> findByUser_UserIdOrderByListNameDesc(String userId);
 }

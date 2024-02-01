@@ -30,7 +30,7 @@ public class ToDoService {
      listId: 들어갈 list 아이디
      createToDoRequest: ToDo를 생성할 때 사용하는 dto
      **/
-    public void createToDo(Long userId,
+    public void createToDo(String userId,
                            Long listId,
                            CreateToDoRequest createToDoRequest) {
         // 해당 리스트를 소유한 유저인지 체크
@@ -61,7 +61,7 @@ public class ToDoService {
      userId: 유저가 소유한 리스트만 보여주고 싶어서 유저 아이디도 입력
      listId: 반환하고 싶은 리스트 입력
      **/
-    public List<ToDo> getToDos(long userId,long listId){
+    public List<ToDo> getToDos(String userId,long listId){
         // 해당 리스트를 소유한 유저인지 체크
         verificationService.checkListUser(
                 userId,
@@ -72,7 +72,7 @@ public class ToDoService {
         return toDoRepository.findByToDoList_ListId(listId);
     }
 
-    public CreateToDoRequest updateToDoValue(long userId,
+    public CreateToDoRequest updateToDoValue(String userId,
                                              long listId,
                                              long toDoId,
                                              CreateToDoRequest createToDoRequest) {
@@ -109,7 +109,7 @@ public class ToDoService {
      listId: 검증을 위한 리스트 아이디
      toDoId: 상태를 변경할 todo아이디
      **/
-    public void changeStatus(long userId,
+    public void changeStatus(String userId,
                              long listId,
                              long toDoId,
                              ChangeStatus changeStatus){
@@ -130,7 +130,7 @@ public class ToDoService {
      listId: 검증을 위한 리스트 아이디
      toDoId: 삭제할 todo아이디
      **/
-    public void deleteToDo(long userId,
+    public void deleteToDo(String userId,
                            long listId,
                            long toDoId)throws IOException {
 

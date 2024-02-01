@@ -21,9 +21,8 @@ import java.util.List;
 public class User extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", unique = true)
-    private Long userId;
+    private String userId;
 
     @NotNull
     @Column(name = "login_id", unique = true)
@@ -41,14 +40,12 @@ public class User extends BaseTimeEntity{
     @Column(name = "user_email", unique = true)
     private String userEmail;
 
-    @NotNull
     @Column(name = "user_age")
     private Integer userAge;
 
     @Column(name = "user_job")
     private String userJob;
 
-    @NotNull
     @Column(name = "user_gender")
     private Gender userGender;
 
@@ -58,7 +55,7 @@ public class User extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,orphanRemoval=true)
-    private List<ToDoList> toDoLists = new ArrayList<>();
+    private List<ToDoList> toDoLists;
 
     public void addToDoList(ToDoList toDoList){
         toDoLists.add(toDoList);

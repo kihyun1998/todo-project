@@ -147,7 +147,7 @@ public class UserController {
     public ResponseEntity<?> changePassword(HttpServletRequest request,
                                             @RequestBody ChangePasswordRequest changePasswordRequest){
         // 요청 헤더에 담긴 Access Token을 통해 유저 조회
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
 
         // 패스워드 변경 서비스
         User updateUser = userService.changePassword(
@@ -174,7 +174,7 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(HttpServletRequest request,
                                            @RequestBody DeleteUserRequest deleteUserRequest){
         // 요청 헤더에 담긴 Access Token을 통해 유저 조회
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
 
         // 유저 탈퇴 서비스
         userService.deleteUser(
@@ -198,7 +198,7 @@ public class UserController {
     @GetMapping("/main")
     public ResponseEntity<?> getMainToDoList(HttpServletRequest request){
         // 요청 헤더에 담긴 Access Token을 통해 유저 조회
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
 
         // 메인 ToDoList 조회 서비스
         ShowMainDto showMainDto = userService.getMainToDoListId(userId);
@@ -224,7 +224,7 @@ public class UserController {
     public ResponseEntity<?> updateMainToDoList (HttpServletRequest request,
                                                  @RequestBody ChangeMainListId changeMainListId){
         // 요청 헤더에 담긴 Access Token을 통해 유저 조회
-        Long userId = jwtService.getUserId(request);
+        String userId = jwtService.getUserId(request);
 
         // 메인 ToDoList 변경 서비스
         User updateUser = userService.updateMainToDoListId(

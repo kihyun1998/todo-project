@@ -29,7 +29,7 @@ public class JwtService {
      return: 유저 아이디 (Long)
      AppException: 유저 정보가 없는 경우
      **/
-    public Long getUserId(HttpServletRequest request){
+    public String getUserId(HttpServletRequest request){
         // 요청에서 헤더 추출
         final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 

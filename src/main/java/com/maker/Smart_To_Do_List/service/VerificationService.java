@@ -51,7 +51,7 @@ public class VerificationService {
      userId: 검증할 소유자 아이디
      listId: 검증할 리스트 아이디
      **/
-    public void checkListUser(Long userId, Long listId){
+    public void checkListUser(String userId, Long listId){
         listRepository.findByListId(listId)
                 .ifPresent(list->{
                     if(!list.getUser().getUserId().equals(userId)){
@@ -66,7 +66,7 @@ public class VerificationService {
      listName: 중복 검증할 리스트 이름
      **/
 
-    public void checkListNameDuplicate(Long userId, String listName){
+    public void checkListNameDuplicate(String userId, String listName){
         listRepository.findByListName(listName)
                 .ifPresent(list ->{
                     if (list.getUser().getUserId().equals(userId)){
@@ -101,7 +101,7 @@ public class VerificationService {
      [foundUser]: 고유번호를 통해 유저 조회 및 검증
      userId: 탐색할 유저 아이디
      **/
-    public User foundUser(Long userId){
+    public User foundUser(String userId){
         Optional<User> user = userRepository.findByUserId(userId);
         if (user.isEmpty()){
             throw new AppException(ErrorCode.NOT_FOUND, "User is not found!!");

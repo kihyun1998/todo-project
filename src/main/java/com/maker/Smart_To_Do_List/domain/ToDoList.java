@@ -28,7 +28,7 @@ public class ToDoList extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "toDoList",fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,orphanRemoval=true)
-    private List<ToDo> toDos = new ArrayList<>();
+    private List<ToDo> toDos;
 
     public void addToDo(ToDo toDo){
         toDos.add(toDo);
