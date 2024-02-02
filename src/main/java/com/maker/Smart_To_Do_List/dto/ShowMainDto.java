@@ -12,5 +12,5 @@ import lombok.Setter;
 @Setter
 public class ShowMainDto {
     private String userName;
-    private Long mainToDoListId;
+    private String mainToDoListId;
 }

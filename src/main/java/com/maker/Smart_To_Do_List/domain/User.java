@@ -50,7 +50,7 @@ public class User extends BaseTimeEntity{
     private Gender userGender;
 
     @Column(name = "main_list")
-    private Long mainToDoListId;
+    private String mainToDoListId;
 
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,
