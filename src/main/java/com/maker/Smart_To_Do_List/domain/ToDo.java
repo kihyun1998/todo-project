@@ -20,9 +20,8 @@ import java.util.Date;
 public class ToDo extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "toDo_id", unique = true, nullable = false)
-    private long toDoId;
+    private String toDoId;
 
     @NotNull
     @Column(name = "toDo_title")

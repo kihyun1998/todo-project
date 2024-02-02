@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 
 @Service
@@ -47,6 +48,7 @@ public class ListService {
 
         // ToDoList 도메인에 리스트 이름, 소유자 저장
         ToDoList toDoList = ToDoList.builder()
+                .listId(UUID.randomUUID().toString().replace("-", ""))
                 .listName(listName)
                 .user(selectedUser)
                 .build();
@@ -77,7 +79,7 @@ public class ListService {
      userId: ToDoList를 조회할 유저의 아이디
      listId: 조회할 ToDoList의 아이디
      **/
-    public ToDoListDto getToDoList(String userId, Long listId){
+    public ToDoListDto getToDoList(String userId, String listId){
 
         // 접근한 ToDoList에 대해 접근자와 소유자가 동일한지 검증
         verificationService.checkListUser(
@@ -98,7 +100,7 @@ public class ListService {
      listId: 변경할 ToDoList의 아이디
      changeListNameRequest: 바꿀 이름
      **/
-    public ToDoListDto changeListName(String userId,Long listId,ChangeListNameRequest changeListNameRequest){
+    public ToDoListDto changeListName(String userId,String listId,ChangeListNameRequest changeListNameRequest){
 
         // 변경할 ToDoList에 대해 접근자와 소유자가 동일한지 검증
         verificationService.checkListUser(
@@ -125,7 +127,7 @@ public class ListService {
      userId: ToDoList 삭제 요청한 유저의 아이디
      listId: 삭제할 ToDoList의 아이디
      **/
-    public void deleteToDoList(String userId, Long listId) throws IOException{
+    public void deleteToDoList(String userId, String listId) throws IOException{
 
         // 삭제할 ToDoList에 대해 접근자와 소유자가 동일한지 검증
         verificationService.checkListUser(

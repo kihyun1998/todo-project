@@ -180,6 +180,7 @@ const TodoTable = ({listId, reload}) => {
   // }, [todosLoaded])
 
   useEffect(()=>{
+    
     setLoading(false)
     getTodos()
   }, [listId, reload])
@@ -187,6 +188,7 @@ const TodoTable = ({listId, reload}) => {
   useEffect(()=>{
     if (cookies.toDoLists!==undefined){
       cookies.toDoLists.forEach((todo, idx)=>{
+        console.log(todo.listId, listId)
         if(todo.listId === listId){
           setListName(todo.listName)
         }

@@ -110,11 +110,9 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
           Authorization: `Bearer ${cookies.accessToken}`
         }
       });
-      console.log(res.data)
       setIsEditingTitle(false);
       getToDoListData();
     } catch(e) {
-      console.log(e.response)
     }
   }
 

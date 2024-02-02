@@ -18,9 +18,8 @@ import java.util.List;
 public class ToDoList extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="list_id", unique = true, nullable = false)
-    private Long listId;
+    private String listId;
 
     @NotNull
     @Column(name = "list_name")

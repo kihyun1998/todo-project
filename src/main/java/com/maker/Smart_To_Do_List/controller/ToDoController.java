@@ -41,7 +41,7 @@ public class ToDoController {
     @PostMapping("/{listId}/create")
     public ResponseEntity<String> createToDo(HttpServletRequest request,
                                              @RequestBody CreateToDoRequest createToDoDto,
-                                             @PathVariable("listId") final long listId){
+                                             @PathVariable("listId") final String listId){
 
         // 로그인한 jwt 토큰을 통해 userId 추출
         String userId = jwtService.getUserId(request);
@@ -65,7 +65,7 @@ public class ToDoController {
      [getToDos]: 특정 list의 todo를 전부 반환
      **/
     @GetMapping("/{listId}/todos")
-    public ResponseEntity<?> getToDos(@PathVariable("listId") final long listId,
+    public ResponseEntity<?> getToDos(@PathVariable("listId") final String listId,
                                       HttpServletRequest request){
         
         // 로그인한 jwt 토큰을 통해 userId 추출
@@ -91,8 +91,8 @@ public class ToDoController {
     @PutMapping("/{listId}/{todoId}")
     public ResponseEntity<?> updateToDoValue(HttpServletRequest request,
                                              @RequestBody CreateToDoRequest createToDoRequest,
-                                             @PathVariable("listId") final long listId,
-                                             @PathVariable("todoId") final long toDoId){
+                                             @PathVariable("listId") final String listId,
+                                             @PathVariable("todoId") final String toDoId){
 
         String userId = jwtService.getUserId(request);
 
@@ -113,8 +113,8 @@ public class ToDoController {
     @PutMapping("/{listId}/{todoId}/status")
     public ResponseEntity<?> changeStatus(HttpServletRequest request,
                                           @RequestBody ChangeStatus changeStatus,
-                                          @PathVariable("listId") final long listId,
-                                          @PathVariable("todoId") final long toDoId){
+                                          @PathVariable("listId") final String listId,
+                                          @PathVariable("todoId") final String toDoId){
 
         String userId = jwtService.getUserId(request);
 
@@ -135,8 +135,8 @@ public class ToDoController {
      **/
     @DeleteMapping("/{listId}/{todoId}")
     public ResponseEntity<Void> deleteToDo(HttpServletRequest request,
-                                           @PathVariable("listId") final long listId,
-                                           @PathVariable("todoId") final long toDoId) throws IOException {
+                                           @PathVariable("listId") final String listId,
+                                           @PathVariable("todoId") final String toDoId) throws IOException {
 
         String userId = jwtService.getUserId(request);
         toDoService.deleteToDo(

@@ -51,7 +51,7 @@ public class VerificationService {
      userId: 검증할 소유자 아이디
      listId: 검증할 리스트 아이디
      **/
-    public void checkListUser(String userId, Long listId){
+    public void checkListUser(String userId, String listId){
         listRepository.findByListId(listId)
                 .ifPresent(list->{
                     if(!list.getUser().getUserId().equals(userId)){
@@ -79,7 +79,7 @@ public class VerificationService {
      [foundList]: ToDoList 조회 및 검증
      listId: 탐색할 리스트 아이디
      **/
-    public ToDoList foundList(Long listId){
+    public ToDoList foundList(String listId){
         Optional<ToDoList> opToDoList = listRepository.findByListId(listId);
         if (opToDoList.isEmpty()){
             throw new AppException(ErrorCode.NOT_FOUND, "ToDoList is not found!!");
@@ -90,7 +90,7 @@ public class VerificationService {
      [foundToDo]: ToDo 조회 및 검증
      toDoId: 탐색할 todo
      **/
-    public ToDo foundToDo(Long toDoId){
+    public ToDo foundToDo(String toDoId){
         Optional<ToDo> opToDo = toDoRepository.findByToDoId(toDoId);
         if (opToDo.isEmpty()){
             throw new AppException(ErrorCode.NOT_FOUND, "ToDo is not found!!");
@@ -134,7 +134,7 @@ public class VerificationService {
      []
      **/
     // 미사용 함수
-    public ToDoList foundMainList(Long listId){
+    public ToDoList foundMainList(String listId){
         Optional<ToDoList> opToDoList = listRepository.findByListId(listId);
         if (opToDoList.isEmpty()){
             return null;

@@ -109,7 +109,7 @@ const TodoBase = () => {
         >
             <div>
                 <TodoTable 
-                    listId={parseInt(listId)}
+                    listId={listId}
                     reload={reload}
                 />
             </div>

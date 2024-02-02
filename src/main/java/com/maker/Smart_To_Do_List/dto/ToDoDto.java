@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ToDoDto {
-    private Long toDoId;
+    private String toDoId;
     private String todoTitle;
     private long estimatedTime;
     private LocalDateTime deadline;

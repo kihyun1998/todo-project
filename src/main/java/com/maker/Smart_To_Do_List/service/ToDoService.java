@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 
 // @RequireArgsConstructor를 사용하면
@@ -31,7 +32,7 @@ public class ToDoService {
      createToDoRequest: ToDo를 생성할 때 사용하는 dto
      **/
     public void createToDo(String userId,
-                           Long listId,
+                           String listId,
                            CreateToDoRequest createToDoRequest) {
         // 해당 리스트를 소유한 유저인지 체크
         verificationService.checkListUser(
@@ -41,6 +42,7 @@ public class ToDoService {
 
         // builder를 통해 ToDo를 생성한다.
         ToDo toDo = ToDo.builder()
+                .toDoId(UUID.randomUUID().toString().replace("-", ""))
                 .todoTitle(createToDoRequest.getTodoTitle())
                 .estimatedTime(createToDoRequest.getEstimatedTime())
                 .deadline(createToDoRequest.getDeadline())
@@ -61,7 +63,7 @@ public class ToDoService {
      userId: 유저가 소유한 리스트만 보여주고 싶어서 유저 아이디도 입력
      listId: 반환하고 싶은 리스트 입력
      **/
-    public List<ToDo> getToDos(String userId,long listId){
+    public List<ToDo> getToDos(String userId,String listId){
         // 해당 리스트를 소유한 유저인지 체크
         verificationService.checkListUser(
                 userId,
@@ -73,8 +75,8 @@ public class ToDoService {
     }
 
     public CreateToDoRequest updateToDoValue(String userId,
-                                             long listId,
-                                             long toDoId,
+                                             String listId,
+                                             String toDoId,
                                              CreateToDoRequest createToDoRequest) {
         // 해당 리스트를 소유한 유저인지 체크
         verificationService.checkListUser(
@@ -110,8 +112,8 @@ public class ToDoService {
      toDoId: 상태를 변경할 todo아이디
      **/
     public void changeStatus(String userId,
-                             long listId,
-                             long toDoId,
+                             String listId,
+                             String toDoId,
                              ChangeStatus changeStatus){
         // 해당 리스트를 소유한 유저인지 체크
         verificationService.checkListUser(
@@ -131,8 +133,8 @@ public class ToDoService {
      toDoId: 삭제할 todo아이디
      **/
     public void deleteToDo(String userId,
-                           long listId,
-                           long toDoId)throws IOException {
+                           String listId,
+                           String toDoId)throws IOException {
 
         // 해당 리스트를 소유한 유저인지 체크
         verificationService.checkListUser(

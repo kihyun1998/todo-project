@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ListRepository extends JpaRepository<ToDoList, Long> {
+public interface ListRepository extends JpaRepository<ToDoList, String> {
     Optional<ToDoList> findByListName(String listName);
-    Optional<ToDoList> findByListId(Long listId);
+    Optional<ToDoList> findByListId(String listId);
     List<ToDoList> findByUser_UserId(String userId);
     List<ToDoList> findByUser_UserIdOrderByCreatedDateAsc(String userId);
     List<ToDoList> findByUser_UserIdOrderByCreatedDateDesc(String userId);

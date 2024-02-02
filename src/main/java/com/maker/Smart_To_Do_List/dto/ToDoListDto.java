@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ToDoListDto {
-    private Long listId;
+    private String listId;
     private String listName;
 }
