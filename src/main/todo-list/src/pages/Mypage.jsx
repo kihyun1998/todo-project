@@ -57,12 +57,12 @@ const Mypage = () => {
           name = {userInfo.userName}
           email = {userInfo.userEmail}
         />
-        <span style={{marginLeft : "87px"}}>  
-          <Button
-            text={"비밀번호 변경"}
-            onClick={()=>setChangingPW(true)}
-          />
-        </span>
+          
+        <Button
+          styles={{marginLeft:"70px"}}
+          text={"비밀번호 변경"}
+          onClick={()=>setChangingPW(true)}
+        />
       </div>
       <AnimatePresence>
       {changingPW&& (

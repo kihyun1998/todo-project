@@ -5,10 +5,8 @@ import styles from "../styles/ProfileInfo.module.css";
 function ProfileInfo({ name, email,profileImg }) {
   return (            //위에 나중에 서버랑 맞춰서 써야함  유저 이미지는 src = {이미지} 넣음 ㅇㅇ
     
-    <div className={styles.profileDetails}>
-      <h1 style={{
-        marginLeft : "70px" , marginTop:"50px"
-      }}>
+    <div className={styles.profile}>
+      <h1>
         내 정보
       </h1>
 
@@ -25,20 +23,14 @@ function ProfileInfo({ name, email,profileImg }) {
         <img src="/img/userimg.png" alt="profile" /> 
       </div>
       
-      <div style={{margin : "20px"}} className={styles.profileDetails}>
-        {/* <img src= {userimg} /> */}
+      <div className={styles.profileDetails}>
         <div>
-          <p> 이름 </p>
-          <p style={{fontSize: "1.3rem", color: "darkblue"}}>{name}</p>
+          <h2>이름</h2>
+          <p>{name}</p>
         </div>
-        <div
-          style={{
-            marginTop: "30px",
-            marginBottom: "30px",
-          }}
-        >
-        <p> 이메일 </p>
-        <p style={{fontSize: "1.3rem", color: "darkblue"}}>{email}</p>
+        <div>
+          <h2>이메일</h2>
+          <p>{email}</p>
         </div>
       </div>
     </div>

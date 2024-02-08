@@ -1,13 +1,12 @@
+@import url(styles.css);
+
 .menuCon {
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
   align-items: end;
 
-  /* height: 100%; */
-
   margin-top: 200px;
-  
 }
 
 .menu {
@@ -16,29 +15,25 @@
   flex: 1 1 0;
   margin-top: 200px;
   
-  /* position: sticky; */
-  /* height: 70%; */
-  /* top: 0; */
 
   border-radius: 100px 0px 0px 0px;
   padding-top: 100px;
-  box-shadow: 7px 7px 10px #737373 inset;
+  box-shadow: 7px 7px 10px var(--color-dark) inset;
 
-  background-color: #bfbdbd;
+  background-color: var(--color-mid);
 
   z-index: 0;
 }
 
 .menu a:visited {
-  color:#606060;
+  color:var(--color-dark);
 }
 
 .menu a {
-  color:#606060;
-  text-decoration: none;
   display: block;
-  /* overflow: hidden; */
-  /* opacity: 0; */
+
+  color:var(--color-dark);
+  text-decoration: none;
 }
 
 .menuLink {
@@ -47,8 +42,6 @@
 }
 
 .menu > div {
-  /* font-size: 25px;
-  padding: 20px 0px 20px 0px; */
   width: 100%;
 }
 
@@ -67,11 +60,11 @@
 }
 
 .menu a:hover {
-  background-color: #606060;
+  background-color: var(--color-dark);
   color: white;
   transition: all 0.75s;
 }
 
 .active{
-  background-color: #606060;
+  background-color: var(--color-dark);
 }

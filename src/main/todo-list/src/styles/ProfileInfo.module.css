@@ -1,3 +1,11 @@
+@import url(styles.css);
+
+.profile h1{
+  color: var(--color-font);
+  margin-top: 50px;
+  margin-left: 70px;
+}
+
 .profileContainer {
   display: flex;
   align-items: center;
@@ -7,26 +15,36 @@
 .profileImg img {
   width: 150px;
   height: 150px;
-  object-fit: cover;
+
   margin-top: 70px;
   margin-bottom: 30px;
   margin-left: 70px;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  object-fit: cover;
 }
 
-.profileDetails {
-  font-size: 20px;
-  color: #333;
-}
  
 .profileDetails h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
+  font-size: var(--size-font-mid);
 }
 
-.profileDetails p {
-  margin-left: 70px;
+.profileDetails > div > p {
+  width: 20%;
+
+  border: 1px solid var(--color-dark);
+  border-radius: 10px;
   margin-top: 20px;
-  margin-bottom: 5px;
+  padding: 5px;
+  padding-left: 10px;
+
+  font-size: var(--size-font-small);
+
+  background-color: var(--color-input-bg);
+}
+
+.profileDetails > div {
+  margin-left: 70px;
+  margin-bottom: 50px;
 }

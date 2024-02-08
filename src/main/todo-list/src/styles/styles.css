@@ -1,0 +1,16 @@
+:root {
+  --color-dark: #606060;
+  --color-mid: #9b9b9b;
+  --color-light: #d4d4d4;
+  
+  --color-font: var(--color-dark);
+  --color-input-bg: #9b9b9b10;
+  
+  --size-font-big: 2.5rem;
+  --size-font-mid: 1.8rem;
+  --size-font-small: 1.3rem;
+}
+
+.dark-mode {
+  
+}
