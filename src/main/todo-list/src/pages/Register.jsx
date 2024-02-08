@@ -10,8 +10,8 @@ import DropDown from "../components/DropDown";
 
 const dupButtonStyle = {
   position: "absolute",
-  translateY: "-150%",
-  translateX: "450%",
+  translateY: "-165%",
+  translateX: "500%",
 }
 
 const genderDto = {
@@ -156,6 +156,8 @@ const Register = () => {
 
   return (
     <div className={styles.register}>
+      <h1>회원가입</h1>
+      <hr/>
       <form action="">
         <Input
           id="id"
@@ -170,7 +172,8 @@ const Register = () => {
           disabled={idChecked?true:false}
         />
         <br />
-
+        <hr/>
+        <br />
         <Input
           id="name"
           label="닉네임"
@@ -184,7 +187,8 @@ const Register = () => {
           disabled={nameChecked?true:false}
         />
         <br />
-
+        <hr/>
+        <br />
         <Input
           id="pw"
           type="password"
@@ -194,7 +198,8 @@ const Register = () => {
         />
         {pwStr}
         <br />
-
+        <hr/>
+        <br />
         <Input
           id="pwC"
           type="password"
@@ -204,7 +209,8 @@ const Register = () => {
         />
         {pwCStr}
         <br />
-
+        <hr/>
+        <br />
         <Input
           id="email"
           label="이메일"
@@ -212,7 +218,8 @@ const Register = () => {
           value={email}
         />
         <br />
-
+        <hr/>
+        <br />
         <Input
           id="age"
           label="나이"
@@ -223,7 +230,8 @@ const Register = () => {
           max={150}
         />
         <br />
-
+        <hr/>
+        <br />
         <Input
           id="job"
           label="직업"
@@ -231,7 +239,8 @@ const Register = () => {
           value={job}
         />
         <br />
-
+        <hr/>
+        <br />
         <DropDown
           id="gender"
           label="성별"
@@ -241,12 +250,13 @@ const Register = () => {
           
         />
         <br />
+        
         <span
           style={{
             display: "flex",
             justifyContent: "center",
             alignContent: "center",
-            width: "50%"
+            width: "7%"
           }}
         >
           {loading?
