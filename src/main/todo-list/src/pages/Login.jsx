@@ -10,27 +10,6 @@ import Input from "../components/Input"
 import Button from "../components/Button"
 import Spinner from "../components/Spinner"
 
-const loginStyle = {
-  margin: "0 auto",
-  width: "40%",
-  marginTop: "10%",
-  height: "70%",
-  borderRadius: "30px",
-  boxShadow: "5px 5px 3px #737373 inset",
-  // textAlign: "center",
-  // color: "white",
-}
-
-const bgcoverStyle = {
-  margin: "0 auto",
-  width: "85%",
-  height: "100%",
-  borderRadius: "30px",
-  paddingTop: "10%",
-  paddingLeft: "15%",
-  backgroundColor: "rgba(255, 255, 255, 0.8)",
-}
-
 const Login = () => {
   const [cookies, setCookie] = useCookies(['accessToken']);
   const navigate = useNavigate();
@@ -70,13 +49,9 @@ const Login = () => {
 
   return (
     <motion.div 
-      className={styles.bg}
-      style={loginStyle}
-      // initial={{backgroundPositionX: "0",}}
-      // aniamte={{backgroundPositionX: "100",}}
-      // transition={{repeat:Infinity, repeatType:"reverse"}}
+      className={styles.login}
     >
-      <div style={bgcoverStyle}>
+      <div>
       <form action="">
         <Input
           id="id"
@@ -95,14 +70,7 @@ const Login = () => {
             style={{marginBottom:"100px"}}
           /><br />
           <span
-            style={{
-              width: "30%",
-              marginLeft:"270px",
-              display: "flex",
-              justifyContent: "center",
-              alignContent: "center",
-            }}
-            
+          className={styles["login-button"]}
           >
             {loading?
               <Spinner />:
@@ -112,8 +80,6 @@ const Login = () => {
               />
             }
           </span>
-          
-          
         </form>
       </div>
     </motion.div>

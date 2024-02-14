@@ -1,18 +1,124 @@
 @import url(styles.css);
 
+.pointer {
+  cursor: pointer
+}
+
+.scroll::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--color-mid);
+}
+
 .intro {
   display: flex;
   flex-direction: column;
   align-items: center;
 
   width: 80%;
-  height: 100%;
 
   margin: 0 auto;
+  padding-top: 100px;
+
   text-align: center;
 }
 
-.scroll::-webkit-scrollbar {
-  width: 10px;
-  background-color: var(--color-mid);
+.emph {
+  font-size: var(--size-font-big);
+  color: darkblue;
+}
+
+.mainList {
+  height: 60vh;
+  min-width: 60vw;
+
+  padding-top: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  box-shadow: 7px 7px 10px var(--color-dark) inset;
+
+  background-color: var(--color-lighter);
+}
+
+.mainList-conf-con {
+  text-align: center;
+  width: 98%;
+  display: flex;
+  justify-content: end;
+}
+
+.mainList-conf {
+  position: absolute;
+  translate: 20% -60%;
+
+  height: 200px;
+  width: 300px;
+  
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 7px grey;
+
+  background-color: var(--color-lighter);
+}
+
+.mainList-conf-list {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  
+  width: 80%;
+  height: 80%;
+  
+  margin: 0 auto;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.mainList-conf-list > div{
+  height: 40px;
+  width: 100%;
+
+  font-size: var(--size-font-small);
+}
+
+.mainList-list {
+  translate: 0 -10%;
+  height: 90%;
+  text-align: left;
+}
+
+.mainList-null {
+  margin-top: 20%;
+  text-align: center;
+}
+
+.intro-con {
+  display: flex;
+  align-items: center;
+
+  height: 50%;
+  width: 100%;
+}
+
+.intro-text1 {
+  height: 100%;
+  width: 55%;
+
+  border-right: 3px solid grey;
+  margin-top: 100px;
+
+  text-align: left;
+}
+
+.intro-text2 {
+  margin-left: 50px;
+  font-size: 1.5rem;
+}
+
+.intro-img {
+  width: 90%;
+  
+  border-radius: 10px;
+  border: 2px solid lightgrey;
+  box-shadow: 5px 5px 5px grey;
 }

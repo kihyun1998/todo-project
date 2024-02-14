@@ -9,11 +9,6 @@ import TodoTable from "../components/TodoTable"
 import Spinner from "../components/Spinner"
 import Loading from "../components/Loading"
 
-const userNameStyle = {
-  fontSize: "3rem",
-  color: "darkblue",
-}
-
 const Intro = () => {
   const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"]);
   const [userName, setUserName] = useState("당신");
@@ -60,46 +55,23 @@ const Intro = () => {
 
   return (
     <div className={styles.intro}>
-      <h1 style={{marginTop:"100px"}}><span style={userNameStyle}>{userName}</span>의 하루</h1>
+      <h1><span className={styles.emph}>{userName}</span>의 하루</h1>
       <AnimatePresence>
       {logined?
         <motion.div
-          style={{
-            backgroundColor: "rgb(245, 245, 245)",
-            borderRadius: "30px",
-            boxShadow: "7px 7px 10px #737373 inset",
-            height: "60vh",
-            minWidth: "60vw",
-            border: "2px solid rgba(0, 0, 0, 0.2)",
-            paddingTop: "10px",
-          }}
-          initial={{
-            scale: 0,
-          }}
-          animate={{
-            scale: 1,
-          }}
+          className={styles.mainList}
+          initial={{scale: 0}}
+          animate={{scale: 1}}
           transition={{
             type: "spring", 
             stiffness: 100, 
             damping: 20
           }}
         >
-          <div
-            style={{
-              textAlign: "center",
-              width: "98%",
-              display: "flex",
-              justifyContent: "end"
-
-            }}
-          >
+          <div className={styles["mainList-conf-con"]}>
             <div>
               <motion.span
-                className="material-symbols-outlined"
-                style={{
-                  cursor: "pointer",
-                }}
+                className={`material-symbols-outlined ${styles.pointer}`}
                 whileHover={{
                   scale: 1.3,
                   color: "rgb(10, 10, 10)",
@@ -109,55 +81,26 @@ const Intro = () => {
               >
                 Settings
               </motion.span>
-              
+              <AnimatePresence>
               {setting && 
                 <motion.div
-                  style={{
-                    position: "absolute",
-                    height: "200px",
-                    width: "300px",
-                    translateY: "-60%",
-                    translateX: "20%",
-                    backgroundColor: "rgba(240, 240, 240, 0.9)",
-                    borderRadius: "20px",
-                    boxShadow: "0px 0px 7px grey",
-                    // display: "flex",
-                    padding: "20px",
-                  }}
-                  initial={{
-                    scaleY: 0,
-                  }}
-                  animate={{
-                    scaleY: 1,
-                  }}
+                  className={styles["mainList-conf"]}
+                  initial={{scaleY: 0}}
+                  animate={{scaleY: 1}}
+                  exit={{ scaleY: 0}}
                 >
                   <div
-                    className={styles.scroll}
-                    style={{
-                      display: "flex",
-                      margin: "0 auto",
-                      flexDirection: "column",
-                      alignItems: "baseline",
-                      overflowY: "scroll",
-                      overflowX: "hidden",
-                      width: "80%",
-                      height: "80%",
-                    }}
+                    className={styles["mainList-conf-list"]}
                   >
                     {cookies.toDoLists.map((todoList, idx)=> {
                       return(
                         <motion.div 
                           key={idx} 
+                          className={`${styles.pointer}`}
                           style={{
-                            fontSize: "1.2rem",
-                            width: "100%",
-                            cursor: "pointer",
-                            height: "40px",
                             backgroundColor:tempMainList===todoList.listId ?
-                              "rgba(0, 0, 0, 0.3)":"rgba(0, 0, 0, 0)",
+  "rgba(0, 0, 0, 0.3)":"rgba(0, 0, 0, 0)",
                           }}
-
-
                           onClick={()=>{
                             setTempMainList(todoList.listId)
                           }}
@@ -169,11 +112,9 @@ const Intro = () => {
                   </div>
                   {!loading?
                   <motion.div
-                    className="material-symbols-outlined"
-                    style={{
+                    className={`material-symbols-outlined ${styles.pointer}`}
+                    initial={{
                       color: "rgb(0, 0, 0)",
-                      cursor:"pointer",
-                      //flex: "1 1 0",
                       textAlign: "center"
                     }}
                     whileHover={{
@@ -189,60 +130,33 @@ const Intro = () => {
                   
                 </motion.div>
               }
+              </AnimatePresence>
             </div>
           </div>
-          <div
-            style={{
-              textAlign: "left",
-              transform:"translateY(-10%)",
-              height: "90%"
-            }}
-          >
+          <div className={styles["mainList-list"]}>
           {mainList!==null?
             <TodoTable 
               listId={mainList}/>:
             <div
-              style={{
-                marginTop: "20%",
-                textAlign: "center"
-              }}
+              className={styles["mainList-null"]}
             >메인 화면에 띄울 Todo List를 선택 해 주세요.↗️</div>
           }
           </div>
         </motion.div>:
         <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            height: "50%",
-          }}
+          className={styles["intro-con"]}
         >
           <div
-            style={{
-              borderRight: "3px solid grey",
-              textAlign: "left",
-              width: "55%",
-              marginTop: "100px",
-              height: "100%",
-            }}
+            className={styles["intro-text1"]}
           >
           <img 
             src="/img/1.png" 
             alt="" 
-            style={{
-              borderRadius: "10px",
-              border: "2px solid lightgrey",
-              boxShadow: "5px 5px 5px grey",
-              width: "90%",
-            }}
+            className={styles["intro-img"]}
           />
           </div>
           <div
-            style={{
-              marginLeft: "50px",
-              fontSize: "1.5rem",
-            }}
+            className={styles["intro-text2"]}
           >
             <br /><br /><br />
             <span>
@@ -253,7 +167,7 @@ const Intro = () => {
               당신이 등록한 많은 할 일 중에   
             </span><br />
             <span>
-            <span style={{color: "darkblue", fontSize: "2rem"}}>AI</span>가 추천해주는 일을 먼저 해보세요!
+            <span className={styles.emph}>AI</span>가 추천해주는 일을 먼저 해보세요!
             </span>
           </div>
         </div>

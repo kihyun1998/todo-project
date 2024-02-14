@@ -9,16 +9,8 @@ const TimeCaseStyle = styled.div`
 
   transition: .3s all;
 
-  // scroll-behavior: smooth;
-  // scroll-snap-type: mandatory;
-  //   -webkit-overflow-scrolling: touch;
-  //   -webkit-scroll-snap-type: mandatory;
-  //   -ms-scroll-snap-type: mandatory;
-
   &::-webkit-scrollbar {
     display: none;
-    // width: 20px;
-    // height: 10px;
   }
 `;
 

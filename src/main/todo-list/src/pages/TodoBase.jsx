@@ -24,7 +24,7 @@ const TodoBase = () => {
     const [content, setContent] = useState("")
     const [importance, setImportance] = useState(0);
     const [deadline, setDeadline] = useState(new Date("1900-01-01T00:00"));
-    const [estimatedTime, setEstimatedTime] = useState(60);
+    const [estimatedTime, setEstimatedTime] = useState(0);
     const [difficulty, setDifficulty] = useState(0);
     const [loading, setLoading] = useState(false);
     const [backClicked, setBackClicked] = useState(false);

@@ -2,6 +2,7 @@
   --color-dark: #606060;
   --color-mid: #9b9b9b;
   --color-light: #d4d4d4;
+  --color-lighter: #f9f9f9;
   
   --color-font: var(--color-dark);
   --color-input-bg: #9b9b9b10;

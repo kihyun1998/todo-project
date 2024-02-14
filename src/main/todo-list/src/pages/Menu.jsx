@@ -20,20 +20,6 @@ const activeStyle = {
   color: "white"
 }
 
-const menuStyle = {
-  // display: "flex",
-  // flexDirection: "column",
-  // flex: "1 1 0",
-  // paddingTop: "100px",
-  // height: "70vh",
-  // position: "sticky",
-  // backgroundColor: "#bfbdbd",
-  // borderRadius: "100px 0px 0px 0px",
-  // boxShadow: "7px 7px 10px #737373 inset",
-  // zIndex: 0,
-}
-
-
 const Menu = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "toDoLists"]);
   
