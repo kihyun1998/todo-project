@@ -1,13 +1,63 @@
-.a a:visited {
-  text-decoration: none;
-  color: #606060;
+@import url(styles.css);
+
+.pointer {
+  cursor: pointer;
+}
+
+.todoTable {
+  height: 100%;
+}
+
+.funcBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 50px 80px 20px 40px;
 }
 
 .a a {
+  font-size: var(--size-font-mid);
   text-decoration: none;
-  color: #606060;
+  color: var(--color-dark);
 }
 
-.icon {
-  font-size: 2rem;
+.a a:visited {
+  text-decoration: none;
+  color: var(--color-dark);
+}
+
+.func {
+  display: flex;
+  justify-content: space-between;
+
+  width: 20%;
+
+  margin-right: 50px,;
+}
+
+.func-btn {
+  width: 100px;
+
+  border-radius: 10px;
+  padding: 5px;
+  
+  font-size: var(--size-font-mid);
+  text-align: center;
+  background-color: var(--color-input-bg);
+
+  cursor: pointer;
+}
+
+.hr {
+  width: 93%;
+
+  margin-left: 18px;
+  border-bottom: 4px solid var(--color-mid);
+  line-height: 0.5em;
+}
+
+.table {
+  height : 85%;
+  margin-top : 15px;
 }

@@ -18,9 +18,9 @@
 
   border-radius: 100px 0px 0px 0px;
   padding-top: 100px;
-  box-shadow: 7px 7px 10px var(--color-dark) inset;
+  box-shadow: 7px 7px 10px var(--color-mid) inset;
 
-  background-color: var(--color-mid);
+  background-color: var(--color-light);
 
   z-index: 0;
 }

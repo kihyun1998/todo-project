@@ -9,18 +9,6 @@ import styles from "../styles/TodoTable.module.css"
 import Todo from "./Todo"
 import Spinner from "./Spinner";
 
-
-const hLineStyle = {
-  width: "30%",
-  height: "30px",
-  marginLeft: "30px",
-  marginTop: "30px",
-  marginBottm: "10px",
-  fontSize: "1.2rem",
-  color: "coral",
-  borderBottom: "2px solid grey"
-}
-
 const TodoTable = ({listId, reload}) => {
   const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"]);
   const [todos, setTodos] = useState([]);
@@ -294,49 +282,22 @@ const TodoTable = ({listId, reload}) => {
   return (
     
     <div
-      style={{
-        height: "100%",
-      }}
+      className={styles.todoTable}
     >   
       <div
-        style={{
-          marginLeft : "40px" , 
-          marginTop:"50px",
-          marginBottom: "20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        className={styles.funcBar}
       >
         <div 
           className={styles.a} 
-          style={{
-            fontSize: "2rem",
-          }}
         >
             <Link to={`/todo/${listId}`}>
             {listName}</Link>
         </div>
         <div
-          style={{
-            display: "flex",
-            width: "20%",
-            justifyContent: "space-between",
-            marginRight: "50px", 
-          }}
+          className={styles.func}
         >
           <motion.div
-            style={{
-              backgroundColor: "rgba(100, 100, 100, 0.2)",
-              color: "rgba()",
-              fontSize: "1.8rem",
-              borderRadius: "10px",
-              padding: "5px",
-              textAlign: "center",
-              width: "100px",
-              cursor: "pointer",
-
-            }}
+            className={styles["func-btn"]}
             whileHover={{
               scale:1.1,
             }}
@@ -352,9 +313,9 @@ const TodoTable = ({listId, reload}) => {
             />:
             <div>
               <motion.div
+                className = {`material-symbols-outlined ${styles.pointer}`}
                 style={{
-                  fontSize: "3rem",
-                  cursor: "pointer"
+                  fontSize: "3rem"
                 }}
                 whileHover={{
                   color: "rgba(0, 0, 200, 1)"
@@ -366,7 +327,6 @@ const TodoTable = ({listId, reload}) => {
                 }}
                 onMouseEnter={()=>setAiHovered(true)}
                 onMouseLeave={()=>setAiHovered(false)}
-                className="material-symbols-outlined"
               >
                 magic_button
               </motion.div>
@@ -387,17 +347,14 @@ const TodoTable = ({listId, reload}) => {
       
 
       <div
-        style={{
-          width: "93%",
-          marginLeft : "18px",
-          borderBottom: "4px solid #aaa",
-          lineHeight: "0.5em",}}
+        className={styles.hr}
       />
       {loading&&
-      <div style = {{ 
-        height : "85%",
-        marginTop : "15px",
-        overflowY : todos.length > 4 ? "scroll" : "none" }}
+      <div 
+        className={styles.table}
+        style = {{ 
+          overflowY : todos.length > 4 ? "scroll" : "none" 
+        }}
       >
       <div>
         <div>
