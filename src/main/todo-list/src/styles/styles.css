@@ -7,6 +7,7 @@
   
   --color-font: var(--color-dark);
   --color-input-bg: #9b9b9b10;
+  --color-emph: darkblue;
   
   --size-font-big: 2.5rem;
   --size-font-mid: 1.8rem;
@@ -20,4 +21,6 @@
   --color-lighter: #414141;
   --color-white: rgb(34, 34, 34);
 
+  --color-font: var(--color-dark);
+  --color-emph: rgb(0, 137, 139);
 }

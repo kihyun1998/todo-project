@@ -2,7 +2,7 @@
 
 .input {
   height: 50px;
-  width: fit-content;
+  width: 20rem;
 }
 
 .input input {
@@ -22,7 +22,7 @@
 
 .input label {
   display:inline-block;
-  width: 200px;
+  width: 100%;
   font-size: var(--size-font-small);
   margin-bottom: 1rem;
 }

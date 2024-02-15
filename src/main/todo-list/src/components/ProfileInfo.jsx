@@ -11,12 +11,7 @@ function ProfileInfo({ name, email,profileImg }) {
       </h1>
 
       <div
-        style={{
-          width: "90%",
-          marginLeft : "70px",
-          borderBottom: "4px solid #aaa",
-          lineHeight: "0.5em",
-        }}
+        className={styles.hr}
       />
       
       <div className={styles.profileImg}>

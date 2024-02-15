@@ -24,7 +24,7 @@
 
 .emph {
   font-size: var(--size-font-big);
-  color: darkblue;
+  color: var(--color-emph);
 }
 
 .mainList {

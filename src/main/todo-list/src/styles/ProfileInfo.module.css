@@ -6,6 +6,13 @@
   margin-left: 70px;
 }
 
+.hr {
+  width: 90%;
+  margin-left : 70px;
+  border-bottom: 4px solid var(--color-light);
+  line-height: 0.5em;
+}
+
 .profileContainer {
   display: flex;
   align-items: center;

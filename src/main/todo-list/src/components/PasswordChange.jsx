@@ -2,29 +2,13 @@ import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
+
+import styles from "../styles/PasswordChange.module.css"
 
 import Input from "./Input";
 import Button from "./Button";
 import Spinner from "./Spinner";
-
-const mainStyle = {
-  position: "absolute",
-  width: "30%",
-  height: "50%",
-  // backgroundColor: "grey",
-  border: "3px solid grey",
-  borderRadius: "30px",
-  paddingTop: "20px",
-  paddingLeft: "50px",
-  margin: "0 auto",
-  top: "30%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-around",
-  backgroundColor: "#e5e5e5",
-}
 
 const textStyle = {
   marginTop: "15px",
@@ -107,7 +91,7 @@ const PasswordChange = ({setChangingPW}) => {
   }, [cPw, cPwC])
 
   return (
-    <div style={mainStyle}>
+    <div className={styles.passwordChange}>
       <motion.span
         className="material-symbols-outlined"
         style={{
@@ -139,7 +123,8 @@ const PasswordChange = ({setChangingPW}) => {
         value={cPw}
         type="password"
         onChange={onChangeCPw}
-      /><br /><div style={textStyle}>{str}</div>
+      />
+      <div className={styles.checkMessage}>{str}</div>
       </div>
 
       <div>
@@ -149,7 +134,8 @@ const PasswordChange = ({setChangingPW}) => {
         value={cPwC}
         type="password"
         onChange={onChangeCPwC}
-      /><br /><div style={textStyle}>{cPwCStr}</div>
+      />
+      <div className={styles.checkMessage}>{cPwCStr}</div>
       </div>
       
       <span>
