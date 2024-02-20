@@ -1,52 +1,52 @@
-.star{
-  /* margin-top: 0px;
-  margin-left: 50px; */
+@import url(styles.css);
+
+.star__con{
   display: flex;
   justify-content: space-between;
-  
+}
+
+.star {
+  margin-left: 30px;
+
+  font-size: 1.5rem;
+  word-spacing:-30px;
+  color: #edf01a;
 }
 
 .todoapp__item {
   display: flex;
   width: 90%;
   height: 65px;
+
   padding: 10px 20px 0px 20px;
-  /* height: 20px; */
   margin-top: 4px;
   margin-bottom: 30px;
   margin-left: 29px;
-  font-size : 22px;
-  box-shadow: 3px 3px 5px grey;
-  /* border: 2px solid lightgrey; */
   border-radius: 20px;
+  box-shadow: 3px 3px 5px var(--color-mid);
+  
+  font-size : 22px;
   background-color: rgba(137, 182, 187, 0.656);
 }
+
 .todoapp__item-checkbox {
   margin-left: 0px;
   margin-right: 10px;
   cursor: pointer;
-  
 }
+
 .todoapp__item-ctx {
   flex: 1;
-  /* min-height: min-content; */
-  /* margin-top: 100px;
-  margin-left: 100px; */
 }
 
 .todoapp__item-deadline{
   color: rgba(199, 59, 71, 0.715);
   width: 50%;
-  /* float: right;
-  display: flex;
-  justify-content: flex-end; */
 }
 
 .todoapp__item-edit-btn,
 .todoapp__item-delete-btn {
-  /* border: none;
-  border-radius: 0; */
-  color: rgb(100, 100, 100);
+  color: var(--color-dark);
   margin-left: 10px;
   height: 30px;
   width: 30x;
@@ -55,8 +55,8 @@
 .todoapp__item-edit-btn:hover,
 .todoapp__item-delete-btn:hover {
   cursor: pointer;
-  /* background-color: #d0ebff; */
 }
+
 .todoapp__item-edit-btn {
   margin-right: 3px;
 }
@@ -68,15 +68,41 @@
     font-size: 15px;
 }
 .show-details-check{
-  color: grey;
+  color: var(--color-drak);
   text-decoration-line: line-through;
 }
 
 .icon div span {
-  font-size: 2rem;
+  font-size: var(--sice-fonr-big);
 }
 
-/* .todoapp__item a:visited {
-  color: #606060;
-  text-decoration: none;
-} */
+.edit__cover {
+  position:fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.edit__box {
+  position: relative;
+  top: 15%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  width: 400px;
+  height: 300px;
+
+  border: 1px solid var(--color-mid);
+  border-radius: 30px;
+  padding-top: 20px;
+  margin: 0 auto;
+
+  background-color: var(--color-white);
+}

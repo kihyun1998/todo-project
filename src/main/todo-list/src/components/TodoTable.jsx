@@ -86,6 +86,7 @@ const TodoTable = ({listId, reload}) => {
       let leftDate = new Date(todo.deadline) - new Date();
       todos[idx].leftDate = leftDate<0?-1:leftDate
     })
+    console.log(todos)
 
     // let leftDate = new Date(todo.deadline) - new Date();
 

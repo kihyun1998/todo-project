@@ -38,13 +38,6 @@ const Todo = ({listId, todo, getTodos}) => {
   const navigator = useNavigate();
 
   // 별 / 얼굴 임티 스타일
-  const starStyle = {
-    fontSize: "1.5rem",
-    marginLeft: "30px",
-    wordSpacing:"-30px",
-    // color : "aqua"
-    color: "#edf01a"
-  }
   const faceStyle = {
     fontSize: "1.0rem", 
   }
@@ -54,7 +47,6 @@ const Todo = ({listId, todo, getTodos}) => {
   const titleClick = () =>{
     setMenu(isOpen => !isOpen)
   }
-
 
   // 할 일 상태에 따른 스타일
   const titleStyle = {
@@ -155,17 +147,16 @@ const Todo = ({listId, todo, getTodos}) => {
         setBackClicked(pre=>!pre)
       }}
     >
-      
-  
+
         {/* 할 일 제목 & 별 */}
         
         <div className={styles['todoapp__item-ctx']}>
 
-          <div className={styles.star}>
+          <div className={styles.star__con}>
             <div 
                   htmlFor="emptyStar"
-                  className="material-symbols-outlined"
-                  style={starStyle}>
+                  className={`${styles.star} material-symbols-outlined`}
+                  >
                   { importance < 20 ? "Star ": importance < 40 ? "Star Star" : "Star Star Star" }
             </div>
             {dateHovered&&
@@ -221,7 +212,7 @@ const Todo = ({listId, todo, getTodos}) => {
                   marginRight: "20px"
                 }}
               >
-                {`${todo.leftDate>0?leftDay>0?leftDay+"일 전":leftHours>0?leftHours+"시간 전":leftMinutes>0?leftMinutes+"분 전":"시간초과":""}`}
+                {/* {`${todo.leftDate>0?leftDay>0?leftDay+"일 전":leftHours>0?leftHours+"시간 전":leftMinutes>0?leftMinutes+"분 전":"시간초과":""}`} */}
               </div>
             
               {/* 수정 버튼 */}
@@ -246,7 +237,7 @@ const Todo = ({listId, todo, getTodos}) => {
                     scale:1.3,
                     color: "rgb(0, 0, 0)"
                   }}
-                  style={{color: "rgb(100, 100, 100)"}}
+                  // style={{color: "rgb(100, 100, 100)"}}
                 >
                   {deadline>createdDate?"Event":""}
                 </motion.span>
@@ -257,7 +248,6 @@ const Todo = ({listId, todo, getTodos}) => {
                       onClick={()=>setIsEditing(pre=>!pre)}
                       whileHover={{
                         scale: 1.3,
-                        color: "rgb(0, 0, 0)"
                       }}
                       animate={{
                         rotate:isEditing?-45:0
@@ -286,35 +276,12 @@ const Todo = ({listId, todo, getTodos}) => {
         </div>
 
       {isEditing&&
+      <div>
         <div
-        >
-        <div
-          style={{
-            position:"fixed",
-            width: "100%",
-            height: "100%",
-            top: "0",
-            left: "0",
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-            
-          }}
+          className={styles.edit__cover}
         >
           <motion.div
-            style={{
-              position: "relative",
-              width: "400px",
-              height: "300px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
-              alignItems: "center",
-              border: "1px solid grey",
-              borderRadius: "30px",
-              paddingTop: "20px",
-              margin: "0 auto",
-              top: "15%",
-              backgroundColor: "white",
-            }}         
+            className={styles.edit__box}       
           >
             <Input 
               type="text" 
@@ -330,7 +297,6 @@ const Todo = ({listId, todo, getTodos}) => {
           <div
             style={{
               display: "flex",
-              // flexDirection: "column",
               justifyContent: "space-around",
               width: "70%",
               fontSize: "1.3rem",
@@ -404,6 +370,7 @@ const Todo = ({listId, todo, getTodos}) => {
         </div>
       }
     </div>
+    
   );
 }
 
