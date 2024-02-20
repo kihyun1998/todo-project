@@ -1,14 +1,30 @@
+import { useCookies } from "react-cookie"
 import styles from "../styles/DarkMode.module.css"
 import { motion } from "framer-motion"
+import { useEffect } from "react"
 
 export default function DarkMode ({darkMode, setDarkMode}) {
-  
+  const [cookies, setCookies] = useCookies()
+
+  useEffect(()=>{
+    console.log(cookies.darkMode==="true")
+    if (cookies.darkMode === "true") {
+      setDarkMode(true)
+    } else {
+      setDarkMode(false)
+    }
+  }, [])
+
+  useEffect(()=>{
+    setCookies("darkMode", darkMode)
+  }, [darkMode])
 
   return (
     <motion.div 
       className={styles.darkMode}
       onClick={()=>{
-        setDarkMode(pre=>!pre)}}
+        setDarkMode(pre=>!pre)
+      }}
       style={{
         justifyContent: darkMode?"end":"start"
       }}
