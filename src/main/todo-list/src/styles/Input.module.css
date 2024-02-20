@@ -18,6 +18,8 @@
   font-size: 100%;
 
   background-color: var(--color-input-bg);
+
+  transition: color var(--time-transition);
 }
 
 .input label {

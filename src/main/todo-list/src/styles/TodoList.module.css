@@ -28,6 +28,8 @@
   font-size : 22px;
   /* background-color: rgba(137, 182, 187, 0.656); */
   background-color: var(--color-theme);
+
+  transition: background-color var(--time-transition), box-shadow var(--time-transition);
 }
 
 .todoapp__item-checkbox {
@@ -47,7 +49,6 @@
 
 .todoapp__item-edit-btn,
 .todoapp__item-delete-btn {
-  color: var(--color-dark);
   margin-left: 10px;
   height: 30px;
   width: 30x;
@@ -106,4 +107,6 @@
   margin: 0 auto;
 
   background-color: var(--color-white);
+
+  transition: background-color var(--time-transition);
 }

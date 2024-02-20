@@ -21,6 +21,8 @@
   --color-deepblue: #0e42eb6a;
 
   --background-url: url("/public/img/backgrounds/default.jpg");
+
+  --time-transition: 0.3s
 }
 
 .dark-mode {
@@ -32,10 +34,6 @@
 
   --color-font: var(--color-dark);
   --color-emph: rgb(0, 137, 139);
-}
-
-.theme__default {
-
 }
 
 .theme__lavender {

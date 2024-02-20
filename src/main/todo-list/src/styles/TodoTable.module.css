@@ -47,6 +47,7 @@
   background-color: var(--color-input-bg);
 
   cursor: pointer;
+  transition: background-color var(--time-transition);
 }
 
 .hr {

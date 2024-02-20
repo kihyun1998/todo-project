@@ -24,8 +24,8 @@
   border-radius: 0px 0px 10px 10px;
 
   background-color: var(--color-white);
-  /* display: flex;
-  flex-direction: column; */
+
+  transition: background-color var(--time-transition);
 }
 
 .box div {
@@ -38,13 +38,17 @@
   
   background-color: var(--color-white);
 
-  transition: background-color 0.5s ease;
+  transition: background-color var(--time-transition);
 }
 
 .box div:hover {
   background-color: var(--color-light);
+
+  transition: background-color var(--time-transition);
 }
 
 .checked {
   background-color: var(--color-mid) !important;
+  
+  transition: background-color var(--time-transition);
 }

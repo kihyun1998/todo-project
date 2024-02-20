@@ -6,7 +6,9 @@
 
 .scroll::-webkit-scrollbar {
   width: 10px;
-  background-color: var(--color-mid);
+  background-color: var(--color-theme);
+
+  transition:background-color var(--time-transition) ;
 }
 
 .intro {
@@ -25,6 +27,8 @@
 .emph {
   font-size: var(--size-font-big);
   color: var(--color-theme);
+
+  transition: color var(--time-transition);
 }
 
 .mainList {
@@ -37,6 +41,8 @@
   box-shadow: 7px 7px 10px var(--color-light) inset;
 
   background-color: var(--color-lighter);
+
+  transition: background-color var(--time-transition), box-shadow var(--time-transition);
 }
 
 .mainList-conf-con {
@@ -58,6 +64,8 @@
   box-shadow: 0px 0px 7px grey;
 
   background-color: var(--color-lighter);
+
+  transition: background-color var(--time-transition);
 }
 
 .mainList-conf-list {
@@ -120,5 +128,7 @@
   
   border-radius: 10px;
   border: 2px solid lightgrey;
-  box-shadow: 5px 5px 5px grey;
+  box-shadow: 5px 5px 5px var(--color-mid);
+
+  transition: box-shadow var(--time-transition);
 }

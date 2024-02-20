@@ -10,10 +10,6 @@ import Input from "./Input";
 import Button from "./Button";
 import Spinner from "./Spinner";
 
-const textStyle = {
-  marginTop: "15px",
-}
-
 const PasswordChange = ({setChangingPW}) => {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "toDoLists"]);
   const navigate = useNavigate();

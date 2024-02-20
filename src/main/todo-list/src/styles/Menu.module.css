@@ -23,6 +23,8 @@
   background-color: var(--color-light);
 
   z-index: 0;
+
+  transition: background-color var(--time-transition), box-shadow var(--time-transition);
 }
 
 .menu a:visited {
