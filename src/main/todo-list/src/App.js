@@ -10,17 +10,28 @@ import Register from "./pages/Register";
 import Mypage from "./pages/Mypage";
 import DarkMode from "./components/DarkMode";
 import { useState } from "react";
+import Theme from "./components/Theme";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
+  const [theme, setTheme] = useState("theme__default")
 
   return (
     <BrowserRouter >
-      <div className={`${styles.app} ${darkMode&&"dark-mode"}` }>
-        <DarkMode 
-          darkMode={darkMode}
-          setDarkMode={setDarkMode}
-        />
+    <div className={`${styles.app__cover} ${darkMode&&"dark-mode"} ${theme}`}>
+      <div className={`${styles.app}` }>
+        <div
+          className={styles.toolbar}
+        >
+          <DarkMode 
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
+          />
+          <Theme 
+            theme={theme}
+            setTheme={setTheme}
+          />
+        </div>
         <Menu />
         <div className={styles.main}>
           <Routes>
@@ -32,6 +43,7 @@ function App() {
           </Routes>
         </div>
         <div style={{flex: "1 1 0"}}></div>
+      </div>
       </div>
     </BrowserRouter>
   );

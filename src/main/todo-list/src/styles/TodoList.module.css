@@ -26,7 +26,8 @@
   box-shadow: 3px 3px 5px var(--color-mid);
   
   font-size : 22px;
-  background-color: rgba(137, 182, 187, 0.656);
+  /* background-color: rgba(137, 182, 187, 0.656); */
+  background-color: var(--color-theme);
 }
 
 .todoapp__item-checkbox {

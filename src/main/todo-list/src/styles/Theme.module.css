@@ -1,0 +1,79 @@
+@import url(styles.css);
+
+.theme__btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 50px;
+  
+  border: 1px solid var(--color-input-bg);
+  border-radius: 4rem;
+  box-shadow: 0px 0px 8px 0.3px var(--color-theme);
+
+  background-color: var(--color-lighter);
+
+  cursor: pointer;
+}
+
+.theme_selector {
+  position: absolute;
+  translate: 200px 0;
+
+  display: inline-flex;
+  justify-content: space-around;
+
+  width: 300px;
+  height: 200px;
+
+  padding: 10%;
+
+  border: 1px solid var(--color-input-bg);
+  border-radius: 1rem;
+  background-color: var(--color-lighter);
+
+  z-index: 1;
+
+}
+
+.theme_selector > div {
+  width: 2rem;
+  height: 2rem;
+
+  margin: 5px;
+  border: 1px solid var(--color-input-bg);
+  border-radius: 4rem;
+  
+  cursor: pointer;
+}
+
+.theme__default {
+  background-color: var(--color-white);
+  box-shadow: 0px 0px 8px 0.3px var(--color-light);
+}
+
+.theme__lavender {
+  background-color: var(--color-lavender);
+  box-shadow: 0px 0px 8px 0.3px var(--color-lavender);
+}
+
+.theme__mint {
+  background-color: var(--color-mint);
+  box-shadow: 0px 0px 8px 0.3px var(--color-mint);
+}
+
+.theme__orange {
+  background-color: var(--color-orange);
+  box-shadow: 0px 0px 8px 0.3px var(--color-orange);
+}
+
+.theme__pink {
+  background-color: var(--color-pink);
+  box-shadow: 0px 0px 8px 0.3px var(--color-pink);
+}
+
+.theme__deepblue {
+  background-color: var(--color-deepblue);
+  box-shadow: 0px 0px 8px 0.3px var(--color-deepblue);
+}

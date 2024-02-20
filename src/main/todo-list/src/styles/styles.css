@@ -8,10 +8,19 @@
   --color-font: var(--color-dark);
   --color-input-bg: #9b9b9b10;
   --color-emph: darkblue;
+  --color-theme: var(--color-mid);
   
   --size-font-big: 2.5rem;
   --size-font-mid: 1.8rem;
   --size-font-small: 1.3rem;
+
+  --color-lavender: #c096e46a;
+  --color-mint: #00b9926a;
+  --color-orange: #e637106a;
+  --color-pink: #ff23866a;
+  --color-deepblue: #0e42eb6a;
+
+  --background-url: url("/public/img/backgrounds/default.jpg");
 }
 
 .dark-mode {
@@ -23,4 +32,38 @@
 
   --color-font: var(--color-dark);
   --color-emph: rgb(0, 137, 139);
+}
+
+.theme__default {
+
+}
+
+.theme__lavender {
+  --color-theme: var(--color-lavender);
+  --background-url: url("/public/img/backgrounds/lavander.jpg");
+}
+
+.theme__mint {
+  --color-theme: var(--color-mint);
+  --background-url: url("/public/img/backgrounds/mint.jpg");
+}
+
+.theme__orange {
+  --color-theme: var(--color-orange);
+  --background-url: url("/public/img/backgrounds/orange.jpg");
+}
+
+.theme__pink {
+  --color-theme: var(--color-pink);
+  --background-url: url("/public/img/backgrounds/pink.jpg");
+}
+
+.theme__deepblue {
+  --color-theme: var(--color-deepblue);
+  --background-url: url("/public/img/backgrounds/deepblue.jpg");
+}
+
+.theme__what {
+  --color-theme: var(--color-mid);
+  --background-url: url("/public/img/backgrounds/what.png");
 }

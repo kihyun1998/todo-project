@@ -1,7 +1,14 @@
 @import url(styles.css);
 
 * {
-  transition: color, background-color 0.3s;
+  transition: color 0.2s, background-color 0.3s, box-shadow 0.3s;
+}
+
+.app__cover {
+  background-image: var(--background-url);
+  background-size: repeat;
+
+  transition: background-image 0.5s;
 }
 
 .app {
@@ -15,8 +22,8 @@
   color: var(--color-dark);
   font-weight: 600;
   font-family: 'Gowun Dodum', sans-serif;
-  background-color: var(--color-lighter);
-  
+  background-color: rgba(0, 0, 0, 0.5);
+
   padding: 0 30px;
 }
 
@@ -27,7 +34,7 @@
   
   min-height: 90vh;
   background-color: var(--color-white);
-  box-shadow: 0px 0px 30px var(--color-mid);
+  box-shadow: 0px 0px 30px var(--color-theme);
   border-radius: 30px 30px 0px 0px;
   /* text-align: center; */
   flex: 10 1 0;
