@@ -1,5 +1,9 @@
 @import url(styles.css);
 
+* {
+  transition: color, background-color 0.3s;
+}
+
 .app {
   min-height: 100vh;
   height:calc(max-content + 100px);
@@ -28,4 +32,16 @@
   /* text-align: center; */
   flex: 10 1 0;
   z-index: 2;
+}
+
+.toolbar {
+  position: absolute;
+
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+  
+  width: 10%;
+
+  margin-top: 20px;
 }
