@@ -24,19 +24,19 @@ export default function DropDown({value, setValue, datas, label}) {
       exit={{height:"0px"}}
     >
       {datas.map(data=>{
+        console.log(value, data)
         return<motion.div
+          className={value===data?styles.checked:""}
           key={data} 
           onClick={()=>{
             setValue(data)
             setIsDrop(false)
           }}
           initial={{
-            opacity: 0,
-            backgroundColor: value===data?"rgb(230, 230, 230)":"rgb(255, 255, 255)",
+            opacity: 0
           }}
           animate={{opacity: 1}}
           exit={{opacity: 0}}
-          whileHover={{backgroundColor: "rgb(230, 230, 230)"}}
         >
           {data}
         </motion.div>
