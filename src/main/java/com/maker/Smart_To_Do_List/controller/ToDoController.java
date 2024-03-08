@@ -13,6 +13,7 @@ import com.maker.Smart_To_Do_List.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -63,22 +65,20 @@ public class ToDoController {
      * GET
      [getToDos]: 특정 list의 todo를 전부 반환
      **/
-    @GetMapping("/{listId}/todos")
-    public ResponseEntity<?> getToDos(@PathVariable("listId") final String listId,
-                                      HttpServletRequest request){
+    @GetMapping(value = "/{listId}/todos", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> getToDos(@PathVariable("listId") final String listId,
+                                                        HttpServletRequest request){
         
         // 로그인한 jwt 토큰을 통해 userId 추출
         String userId = jwtService.getUserId(request);
 
-        // 반환한 todo들을 todos 리스트에 저장
-        List<ToDo> todos = toDoService.getToDos(
+        // todo들, list정보를 반환
+        Map<String, Object> result = toDoService.getToDos(
                 userId,
                 listId
         );
-        // 원할한 JSON 반호나을 위해 todo객체를 dto로 변환
-        List<ToDoDto> toDoDtoList = ToDoMapper.convertToDtoList(todos);
 
-        return new ResponseEntity<>(toDoDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
