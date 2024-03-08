@@ -70,12 +70,12 @@
     font-size: 15px;
 }
 .show-details-check{
-  color: var(--color-drak);
+  color: var(--color-dark);
   text-decoration-line: line-through;
 }
 
 .icon div span {
-  font-size: var(--sice-fonr-big);
+  font-size: var(--sice-font-big);
 }
 
 .edit__cover {
@@ -109,4 +109,9 @@
   background-color: var(--color-white);
 
   transition: background-color var(--time-transition);
+}
+
+.todoName_checked {
+  color: var(--color-dark);
+  text-decoration: line-through;
 }

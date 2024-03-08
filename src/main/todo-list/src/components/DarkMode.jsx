@@ -7,7 +7,6 @@ export default function DarkMode ({darkMode, setDarkMode}) {
   const [cookies, setCookies] = useCookies()
 
   useEffect(()=>{
-    console.log(cookies.darkMode==="true")
     if (cookies.darkMode === "true") {
       setDarkMode(true)
     } else {

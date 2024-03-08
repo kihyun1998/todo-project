@@ -14,9 +14,7 @@ import TodoInput from "./TodoInput";
 import Button from "./Button";
 import Input from "./Input";
 
-
-
-const Todo = ({listId, todo, getTodos}) => {
+const Todo = ({listId, todo, getTodos, deleteTodo}) => {
 
   const [cookies, setCookie] = useCookies(["accessToken"])
 
@@ -48,18 +46,6 @@ const Todo = ({listId, todo, getTodos}) => {
     setMenu(isOpen => !isOpen)
   }
 
-  // 할 일 상태에 따른 스타일
-  const titleStyle = {
-    flex : "1",
-    // cursor: "pointer"
-  }
-  const titleStyleCheck = {
-    flex : "1",
-    color : "rgba(169, 169, 169, 0.521)",
-    textDecorationLine : "line-through",
-    // cursor: "pointer"
-  }
-
   const editTodo = async() => {
     try {
       let timezoneOffset = deadline.getTimezoneOffset() * 60000; // 분을 밀리초로 변환
@@ -85,18 +71,15 @@ const Todo = ({listId, todo, getTodos}) => {
     }
   }
 
-  const deleteTodo = async() => {
+  const _deleteTodo = async() => {
     if(window.confirm("할 일을 삭제하시겠습니까?")){
-      try {
-        const res = await axios.delete(`/api/v1/list/${listId}/${todoId}`, {
-          headers: {Authorization: `Bearer ${cookies.accessToken}`}
-        })
-        getTodos()
-      } catch(err) {
-        if(err.response.status===404) getTodos()
-      }
+      const res = await axios.delete(`/api/v1/list/${listId}/${todoId}`, {
+        headers: {Authorization: `Bearer ${cookies.accessToken}`}
+      })
+      if(res.status === 200)
+        deleteTodo(todoId)
+        // getTodos()
     }
-    
   }
 
   const changeStatus = async() => {
@@ -195,7 +178,7 @@ const Todo = ({listId, todo, getTodos}) => {
 
                 
               </span>
-              <span style={status===0 ? titleStyle : titleStyleCheck} onClick={titleClick}>
+              <span className={status===0 ? styles.todoName : styles.todoName_checked} onClick={titleClick}>
                 {todoTitle}
               </span>
             </div>
@@ -261,7 +244,7 @@ const Todo = ({listId, todo, getTodos}) => {
                 <span className={styles['todoapp__item-delete-btn']}>
                   <motion.span 
                     className="material-symbols-outlined"
-                    onClick={deleteTodo}
+                    onClick={_deleteTodo}
                     whileHover={{
                       scale: 1.3,
                       color: "rgb(230, 0, 0)"
