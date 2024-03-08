@@ -16,12 +16,13 @@ const coverStyle = {
   zIndex:1
 }
 
-const Mypage = () => {
+const Mypage = ({setIsLoading}) => {
   const [userInfo,setUserInfo] = useState({});
   const [cookies, setCookie] = useCookies(["accessToken"]);
   const [changingPW, setChangingPW] = useState(false)
 
   const getUserInfo = async() => {
+    setIsLoading(true)
     let res;
     try {
       res = await axios.get(`/api/v1/user/info`, {
@@ -33,6 +34,7 @@ const Mypage = () => {
     } catch(err) {
       console.log(err.response.data)
     } 
+    setIsLoading(false)
   }
 
   useEffect(()=>{

@@ -9,7 +9,7 @@ import TodoTable from "../components/TodoTable"
 import Spinner from "../components/Spinner"
 import Loading from "../components/Loading"
 
-const Intro = () => {
+const Intro = ({setIsLoading}) => {
   const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"]);
   const [userName, setUserName] = useState("당신");
   const [logined, setLogined] = useState(false);
@@ -136,7 +136,9 @@ const Intro = () => {
           <div className={styles["mainList-list"]}>
           {mainList!==null?
             <TodoTable 
-              listId={mainList}/>:
+              listId={mainList}
+              setIsLoading={setIsLoading}
+            />:
             <div
               className={styles["mainList-null"]}
             >메인 화면에 띄울 Todo List를 선택 해 주세요.↗️</div>

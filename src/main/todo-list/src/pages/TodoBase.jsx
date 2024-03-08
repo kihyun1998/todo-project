@@ -17,7 +17,7 @@ import Spinner from "../components/Spinner"
 
 
 
-const TodoBase = () => {
+const TodoBase = ({setIsLoading}) => {
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const {listId} = useParams();
 
@@ -111,6 +111,7 @@ const TodoBase = () => {
                 <TodoTable 
                     listId={listId}
                     reload={reload}
+                    setIsLoading={setIsLoading}
                 />
             </div>
             <div className={styles.inputs}>

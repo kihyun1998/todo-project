@@ -9,12 +9,14 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Mypage from "./pages/Mypage";
 import DarkMode from "./components/DarkMode";
-import { useState } from "react";
 import Theme from "./components/Theme";
+import Loading from "./components/Loading"
+import { useEffect, useState } from "react";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
   const [theme, setTheme] = useState("theme__default")
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <BrowserRouter >
@@ -35,16 +37,19 @@ function App() {
         <Menu />
         <div className={styles.main}>
           <Routes>
-              <Route path="/todo/:listId" element={<TodoBase />}/>
-              <Route path="/" element={<Intro />}/>
+              <Route path="/todo/:listId" element={<TodoBase setIsLoading={setIsLoading}/>}/>
+              <Route path="/" element={<Intro setIsLoading={setIsLoading}/>}/>
               <Route path="/user/login" element={<Login />}/>
               <Route path="/user/join" element={<Register />}/>
-              <Route path="/mypage" element={<Mypage />} />
+              <Route path="/mypage" element={<Mypage setIsLoading={setIsLoading}/>} />
           </Routes>
         </div>
         <div style={{flex: "1 1 0"}}></div>
       </div>
       </div>
+      <Loading 
+        isLoading={isLoading}
+      />
     </BrowserRouter>
   );
 }

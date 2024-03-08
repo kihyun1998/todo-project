@@ -1,5 +1,5 @@
 import { useCookies } from "react-cookie";
-import { motion, useForceUpdate } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -7,15 +7,12 @@ import axios from "axios";
 import styles from "../styles/TodoTable.module.css"
 
 import Todo from "./Todo"
-import Spinner from "./Spinner";
-import Loading from "./Loading";
 
-const TodoTable = ({listId, reload}) => {
+const TodoTable = ({listId, reload, setIsLoading}) => {
   const [cookies] = useCookies(["accessToken", "toDoLists"]);
   const [todos, setTodos] = useState([]);
   const [listName, setListName] = useState("");
 
-  const [loading, setLoading] = useState(false);
   const [toggleDone, setToggleDone] = useState(false);
 
   const calcLeftDate = () => {
@@ -26,15 +23,15 @@ const TodoTable = ({listId, reload}) => {
   }
 
   const deleteTodo = (todoId) => {
-    setLoading(true)
+    setIsLoading(true)
     setTodos(pre=>[...pre.filter(todo=>todo.toDoId !== todoId)])
     setTodos(pre=>[...pre])
-    setLoading(false)
+    setIsLoading(false)
   }
 
   const getTodos = async() => {
     let res;
-    setLoading(true)
+    setIsLoading(true)
     try{
         res = await axios.get(`/api/v1/list/${listId}/todos`, {
             headers: {
@@ -45,7 +42,7 @@ const TodoTable = ({listId, reload}) => {
     } catch(err) {
       console.log(err)
     }
-    setLoading(false)
+    setIsLoading(false)
   }
 
   useEffect(()=>{
@@ -53,7 +50,7 @@ const TodoTable = ({listId, reload}) => {
   }, [todos])
 
   useEffect(()=>{
-    setLoading(false)
+    setIsLoading(false)
     getTodos()
   }, [listId, reload])
 
@@ -85,9 +82,6 @@ const TodoTable = ({listId, reload}) => {
   return (
     
     <div className={styles.todoTable}>
-      <Loading 
-        isLoading={loading}
-      />
       <div className={styles.funcBar}>
         <div className={styles.a}>
             <Link to={`/todo/${listId}`}>
