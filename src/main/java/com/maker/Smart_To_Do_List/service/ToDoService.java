@@ -4,6 +4,8 @@ import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
 import com.maker.Smart_To_Do_List.dto.ChangeStatus;
 import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
+import com.maker.Smart_To_Do_List.dto.ToDoDto;
+import com.maker.Smart_To_Do_List.dto.ToDoListDto;
 import com.maker.Smart_To_Do_List.mapper.ToDoMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.ToDoRepository;
@@ -31,9 +33,9 @@ public class ToDoService {
      listId: 들어갈 list 아이디
      createToDoRequest: ToDo를 생성할 때 사용하는 dto
      **/
-    public void createToDo(String userId,
-                           String listId,
-                           CreateToDoRequest createToDoRequest) {
+    public ToDoDto createToDo(String userId,
+                                    String listId,
+                                    CreateToDoRequest createToDoRequest) {
         // 해당 리스트를 소유한 유저인지 체크
         verificationService.checkListUser(
                 userId,
@@ -56,6 +58,8 @@ public class ToDoService {
         ToDoList selectedList = verificationService.foundList(listId);
         selectedList.addToDo(toDo); // 입력받은 리스트에 ToDo추가
         listRepository.save(selectedList); // ToDo를 추가한 리스트 저장
+
+        return ToDoMapper.convertToDto(toDo);
     }
 
     /**
@@ -71,7 +75,7 @@ public class ToDoService {
         );
 
         // JPA를 사용하여 리스트를 통한 모든 ToDo조회 후 return
-        return toDoRepository.findByToDoList_ListId(listId);
+        return toDoRepository.findByToDoList_ListIdOrderByCreatedDateDesc(listId);
     }
 
     public CreateToDoRequest updateToDoValue(String userId,

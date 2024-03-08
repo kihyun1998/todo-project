@@ -39,7 +39,7 @@ public class ToDoController {
      [createToDo]:  todo 생성 API
      **/
     @PostMapping("/{listId}/create")
-    public ResponseEntity<String> createToDo(HttpServletRequest request,
+    public ResponseEntity<ToDoDto> createToDo(HttpServletRequest request,
                                              @RequestBody CreateToDoRequest createToDoDto,
                                              @PathVariable("listId") final String listId){
 
@@ -48,7 +48,7 @@ public class ToDoController {
 
         // todo 생성함수 호출
         // 실질적인 생성은 todoService의 creatToDo가 한다.
-        toDoService.createToDo(
+        ToDoDto toDoDto = toDoService.createToDo(
                 userId,
                 listId,
                 createToDoDto
@@ -56,8 +56,7 @@ public class ToDoController {
         );
 
         // 200과 생성 성공을 반환
-        // [수정할 사항] 이 때 생성 성공말고 만들어진 ToDo를 반환하는게 좋다.
-        return ResponseEntity.ok().body("Create ToDo Success");
+        return new ResponseEntity<>(toDoDto, HttpStatus.OK);
     }
 
     /**

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface ToDoRepository extends JpaRepository<ToDo, String> {
     Optional<ToDo> findByToDoId(String toDoId);
-    List<ToDo> findByToDoList_ListId(String listId);
+    List<ToDo> findByToDoList_ListIdOrderByCreatedDateDesc(String listId);
 }
