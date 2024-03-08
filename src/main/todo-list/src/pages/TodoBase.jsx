@@ -57,6 +57,7 @@ const TodoBase = ({setIsLoading}) => {
     const onChangeContent = (e) => setContent(e.target.value)
 
     // useEffect(()=>console.log(importance), [importance])
+
     const submit = async(e) => {
         e.preventDefault();
         let res;
@@ -77,6 +78,7 @@ const TodoBase = ({setIsLoading}) => {
                     Authorization: `Bearer ${cookies.accessToken}`
                 }
             })
+            
             setContent("")
             setImportance(0);
             setDeadline(new Date("1900-01-01T00:00"));

@@ -2,10 +2,7 @@ package com.maker.Smart_To_Do_List.service;
 
 import com.maker.Smart_To_Do_List.domain.ToDo;
 import com.maker.Smart_To_Do_List.domain.ToDoList;
-import com.maker.Smart_To_Do_List.dto.ChangeStatus;
-import com.maker.Smart_To_Do_List.dto.CreateToDoRequest;
-import com.maker.Smart_To_Do_List.dto.ToDoDto;
-import com.maker.Smart_To_Do_List.dto.ToDoListDto;
+import com.maker.Smart_To_Do_List.dto.*;
 import com.maker.Smart_To_Do_List.mapper.ToDoMapper;
 import com.maker.Smart_To_Do_List.repository.ListRepository;
 import com.maker.Smart_To_Do_List.repository.ToDoRepository;
@@ -13,8 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 // @RequireArgsConstructor를 사용하면
@@ -67,15 +63,31 @@ public class ToDoService {
      userId: 유저가 소유한 리스트만 보여주고 싶어서 유저 아이디도 입력
      listId: 반환하고 싶은 리스트 입력
      **/
-    public List<ToDo> getToDos(String userId,String listId){
+    public Map<String, Object> getToDos(String userId, String listId){
         // 해당 리스트를 소유한 유저인지 체크
         verificationService.checkListUser(
                 userId,
                 listId
         );
 
+        List<ToDo> todos = toDoRepository.findByToDoList_ListIdOrderByCreatedDateDesc(listId);
+        List<ToDoDto> todoDtos = ToDoMapper.convertToDtoList(todos);
+
+        String listName = listRepository.findByListId(listId).get().getListName();
+        ToDoListDto toDoListDto = new ToDoListDto();
+        toDoListDto.setListName(listName);
+        toDoListDto.setListId(listId);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("list", toDoListDto);
+        result.put("todos", todoDtos);
+        ToDoListNToDosDto toDoListNToDosDto = ToDoListNToDosDto.builder()
+                .todoList(toDoListDto)
+                .todos(todoDtos)
+                .build();
+
         // JPA를 사용하여 리스트를 통한 모든 ToDo조회 후 return
-        return toDoRepository.findByToDoList_ListIdOrderByCreatedDateDesc(listId);
+        return result;
     }
 
     public CreateToDoRequest updateToDoValue(String userId,

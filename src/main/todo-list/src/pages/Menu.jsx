@@ -21,7 +21,7 @@ const activeStyle = {
 }
 
 const Menu = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "toDoLists"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
   
   const [expended, setExpended] = useState(false);
   const [inputExpended, setInputExpended] = useState(false);
@@ -40,7 +40,6 @@ const Menu = () => {
 
   const logout = () => {
     removeCookie("accessToken");
-    removeCookie("toDoLists");
     alert("로그아웃 되었습니다.")
     window.location.href="/"
   }
@@ -86,19 +85,13 @@ const Menu = () => {
             Authorization: `Bearer ${cookies.accessToken}`
           }
         });
-        
-        setCookie("toDoLists", res.data? res.data:"");
+        setToDoLists(res.data)
       } catch(err) {
         console.log(err.response?.data);
       }
       
     }
   };
-
-  useEffect(()=>{
-    if(cookies.toDoLists != null)
-      setToDoLists([...cookies.toDoLists]);
-  }, [cookies.toDoLists])
 
   useEffect(()=>{
     getToDoListData();
@@ -127,6 +120,25 @@ const Menu = () => {
   useEffect(()=>{
     expendTodoLists();
   }, [controls, expended])
+
+  const deleteTodoList = (listId) => {
+    setToDoLists(pre=>[...pre.filter(todoList=>todoList.listId !== listId)])
+  }
+
+  const TodoLists = () => {
+    return (
+      toDoLists.map((toDoList, idx) => 
+        <TodoList 
+          key={idx}
+          className={styles.todoList} 
+          listId={toDoList.listId}
+          text={toDoList.listName}
+          isEditing={isEditing}
+          getToDoListData = {getToDoListData}
+          deleteTodoList={deleteTodoList}
+        />)
+    )
+  }
 
   return (
     <motion.div 
@@ -221,16 +233,7 @@ const Menu = () => {
               initial={{display:"none", height:"0px"}}
               animate={controls}
             >
-              {toDoLists.map((toDoList, idx) => 
-                <TodoList 
-                  key={idx}
-                  className={styles.todoList} 
-                  listId={toDoList.listId}
-                  text={toDoList.listName}
-                  isEditing={isEditing}
-                  getToDoListData = {getToDoListData}
-                />
-              )}
+              <TodoLists />
               {inputExpended&&(
                 <div style={{
                     backgroundColor: "rgba(0, 0, 0, 0.1)", 

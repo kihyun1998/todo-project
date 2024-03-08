@@ -9,7 +9,7 @@ import styles from "../styles/TodoTable.module.css"
 import Todo from "./Todo"
 
 const TodoTable = ({listId, reload, setIsLoading}) => {
-  const [cookies] = useCookies(["accessToken", "toDoLists"]);
+  const [cookies] = useCookies(["accessToken"]);
   const [todos, setTodos] = useState([]);
   const [listName, setListName] = useState("");
 
@@ -25,7 +25,6 @@ const TodoTable = ({listId, reload, setIsLoading}) => {
   const deleteTodo = (todoId) => {
     setIsLoading(true)
     setTodos(pre=>[...pre.filter(todo=>todo.toDoId !== todoId)])
-    setTodos(pre=>[...pre])
     setIsLoading(false)
   }
 
@@ -35,10 +34,11 @@ const TodoTable = ({listId, reload, setIsLoading}) => {
     try{
         res = await axios.get(`/api/v1/list/${listId}/todos`, {
             headers: {
-                Authorization: `Bearer ${cookies.accessToken}`
+              Authorization: `Bearer ${cookies.accessToken}`
             }
         });
-        setTodos([...res.data])
+        setListName(res.data.list.listName)
+        setTodos([...res.data.todos])
     } catch(err) {
       console.log(err)
     }
@@ -54,15 +54,6 @@ const TodoTable = ({listId, reload, setIsLoading}) => {
     getTodos()
   }, [listId, reload])
 
-  useEffect(()=>{
-    if (cookies.toDoLists!==undefined){
-      cookies.toDoLists.forEach((todo, idx)=>{
-        if(todo.listId === listId){
-          setListName(todo.listName)
-        }
-      })
-    }
-  }, [cookies.todoLists, listId])
 
   const Todos = () => {
     return (

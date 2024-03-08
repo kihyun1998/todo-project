@@ -10,13 +10,14 @@ import Spinner from "../components/Spinner"
 import Loading from "../components/Loading"
 
 const Intro = ({setIsLoading}) => {
-  const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"]);
+  const [cookies, setCookie] = useCookies(["accessToken"]);
   const [userName, setUserName] = useState("당신");
   const [logined, setLogined] = useState(false);
   const [setting, setSetting] = useState(false);
   const [mainList, setMainList] = useState(0);
   const [tempMainList, setTempMainList] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [todoLists, setTodoLists] = useState([]);
 
   const getMainInfo = async() => {
     if(cookies.accessToken != null) {
@@ -30,6 +31,23 @@ const Intro = ({setIsLoading}) => {
       } catch(e) {
         console.log(e)
       }
+    }
+  }
+
+  const getTodoLists = async() => {
+    if (cookies.accessToken != null) {
+      let res;
+      try{
+        res = await axios.get("/api/v1/list/lists", {
+          headers: {
+            Authorization: `Bearer ${cookies.accessToken}`
+          }
+        });
+        setTodoLists(res.data)
+      } catch(err) {
+        console.log(err.response?.data);
+      }
+      
     }
   }
 
@@ -51,6 +69,7 @@ const Intro = ({setIsLoading}) => {
 
   useEffect(() => {
     getMainInfo()
+    getTodoLists()
   }, [])
 
   return (
@@ -92,7 +111,7 @@ const Intro = ({setIsLoading}) => {
                   <div
                     className={styles["mainList-conf-list"]}
                   >
-                    {cookies.toDoLists.map((todoList, idx)=> {
+                    {todoLists.map((todoList, idx)=> {
                       return(
                         <motion.div 
                           key={idx} 

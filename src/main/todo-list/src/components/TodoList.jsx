@@ -17,7 +17,7 @@ const StyledDiv = styled.div`
   background-color: ${props=>props.isEditing?"rgba(100, 0, 0, 0.1)":"rgba(0, 0, 0, 0.1)"};
 `
 
-const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
+const TodoList = ({ className, listId, text, isEditing, getToDoListData, deleteTodoList }) => {
   const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"])
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -74,7 +74,7 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
     cursor:"pointer",
   }
 
-  const deleteTodoList = async() => {
+  const _deleteTodoList = async() => {
     console.log(`Try to delete listId:${listId}`)
     try{
       setDeleteLoading(true)
@@ -83,8 +83,7 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
           Authorization: `Bearer ${cookies.accessToken}`
         }
       });
-
-      setCookie("toDoLists", cookies.toDoLists.filter(todo => todo.listId!==listId))
+      deleteTodoList(listId)
       setDeleteLoading(false)
     } catch(e) {
       switch(e.response.status){
@@ -158,7 +157,7 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData }) => {
             <motion.span 
               className="material-symbols-outlined" 
               style={deleteStyle} 
-              onClick={deleteTodoList}
+              onClick={_deleteTodoList}
               whileHover={{
                 color:"rgb(250, 0, 0)", 
                 scale: 1.3

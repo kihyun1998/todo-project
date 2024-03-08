@@ -91,10 +91,6 @@ const Todo = ({listId, todo, getTodos, deleteTodo}) => {
       {
         headers:{Authorization: `Bearer ${cookies.accessToken}`}
       })
-      // if(status===0) {
-      //   await chengeWeight(toDo);
-      // }
-      // setStatus(pre=>pre===1?0:1)
       getTodos()
       setStatus(pre=>(pre+1)%2)
     } catch(err) {
