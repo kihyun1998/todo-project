@@ -105,9 +105,6 @@ const TodoBase = ({setIsLoading}) => {
     return (
         <div 
             className={styles.test}
-            onClick={()=>{
-                setBackClicked(pre=>!pre)
-            }}
         >
             <div>
                 <TodoTable 
@@ -116,7 +113,12 @@ const TodoBase = ({setIsLoading}) => {
                     setIsLoading={setIsLoading}
                 />
             </div>
-            <div className={styles.inputs}>
+            <div 
+                className={styles.inputs}
+                onClick={()=>{
+                    setBackClicked(pre=>!pre)
+                }}
+            >
                 <Input 
                     value={content}
                     id="content"

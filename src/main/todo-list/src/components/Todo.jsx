@@ -65,7 +65,7 @@ const Todo = ({listId, todo, getTodos, deleteTodo}) => {
 
       getTodos()
       navigator(".")
-      setIsEditing(pre=>!pre)
+      setIsEditing(false)
     } catch(err) {
       console.log(err.response.data)
     }
@@ -117,13 +117,12 @@ const Todo = ({listId, todo, getTodos, deleteTodo}) => {
     }
   }
 
-
   return (
 
     <div 
       className={styles.todoapp__item}
       onClick={()=>{
-        setBackClicked(pre=>!pre)
+        setBackClicked(true)
       }}
     >
 
@@ -224,7 +223,7 @@ const Todo = ({listId, todo, getTodos, deleteTodo}) => {
                 <span className={styles['todoapp__item-edit-btn']}>
                     <motion.span 
                       className="material-symbols-outlined"
-                      onClick={()=>setIsEditing(pre=>!pre)}
+                      onClick={()=>setIsEditing(true)}
                       whileHover={{
                         scale: 1.3,
                       }}
@@ -339,7 +338,7 @@ const Todo = ({listId, todo, getTodos, deleteTodo}) => {
                 setEstimatedTime(todo.estimatedTime)
                 setImportance(todo.importance)
                 setTodoTitle(todo.todoTitle)
-                setIsEditing(pre=>!pre)
+                setIsEditing(false)
               }}
             />
           </div>
