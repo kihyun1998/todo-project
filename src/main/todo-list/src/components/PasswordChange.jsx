@@ -1,7 +1,5 @@
-import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import styles from "../styles/PasswordChange.module.css"
@@ -11,9 +9,6 @@ import Button from "./Button";
 import Spinner from "./Spinner";
 
 const PasswordChange = ({setChangingPW}) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "toDoLists"]);
-  const navigate = useNavigate();
-
   const [pw, setPw] = useState("");
   const [cPw, setCPw] = useState("");
   const [cPwC, setCPwC] = useState("");
@@ -32,11 +27,10 @@ const PasswordChange = ({setChangingPW}) => {
           password:pw,
         }, {
           headers: {
-            Authorization: `Bearer ${cookies.accessToken}`
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
           }
         })
-        await removeCookie("accessToken")
-        await removeCookie("toDoLists")
+        sessionStorage.removeItem("accessToken")
         alert("비밀번호가 변경되었습니다.")
         window.location.href="/user/login"
         setLoading(false)

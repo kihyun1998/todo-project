@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie';
 import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 import styled from "styled-components";
 import axios from "axios";
@@ -21,8 +20,6 @@ const activeStyle = {
 }
 
 const Menu = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
-  
   const [expended, setExpended] = useState(false);
   const [inputExpended, setInputExpended] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -39,7 +36,7 @@ const Menu = () => {
   }
 
   const logout = () => {
-    removeCookie("accessToken");
+    sessionStorage.removeItem("accessToken")
     alert("로그아웃 되었습니다.")
     window.location.href="/"
   }
@@ -57,7 +54,7 @@ const Menu = () => {
       }, 
       {
         headers: {
-          Authorization: `Bearer ${cookies.accessToken}`
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
         }
       })
       getToDoListData();
@@ -77,12 +74,12 @@ const Menu = () => {
   }
 
   const getToDoListData = async() => {
-    if (cookies.accessToken != null) {
+    if ((sessionStorage.getItem("accessToken") != null) && toDoLists.length === 0) {
       let res;
       try{
         res = await axios.get("/api/v1/list/lists", {
           headers: {
-            Authorization: `Bearer ${cookies.accessToken}`
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
           }
         });
         setToDoLists(res.data)
@@ -95,7 +92,7 @@ const Menu = () => {
 
   useEffect(()=>{
     getToDoListData();
-  }, [cookies.accessToken])
+  }, [expended])
 
   const expendToDoList  = () => setExpended(pre=>!pre)
   const expendInput = () => setInputExpended(pre=>!pre)
@@ -160,7 +157,7 @@ const Menu = () => {
       >
         <NavLink className={styles.menuLink} style={({isActive}) => (isActive ? activeStyle:{})}  to={"/"}>메인</NavLink>
       </motion.div>
-      {cookies.accessToken!=null && (
+      {sessionStorage.getItem("accessToken")!=null && (
         <motion.div 
           className={styles.todoList}
           variants={linkVariants}
@@ -268,7 +265,7 @@ const Menu = () => {
           }
         </motion.div>
       )}
-      {cookies.accessToken!=null && (
+      {sessionStorage.getItem("accessToken")!=null && (
         <motion.div
           variants={linkVariants}
           initial="hidden"
@@ -277,7 +274,7 @@ const Menu = () => {
           <NavLink className={styles.menuLink} style={({isActive}) => (isActive ? activeStyle:{})} to={"/mypage"}>내정보</NavLink>
         </motion.div>)}
 
-      {cookies.accessToken!=null && (
+      {sessionStorage.getItem("accessToken")!=null && (
         <motion.div
           variants={linkVariants}
           initial="hidden"
@@ -291,7 +288,7 @@ const Menu = () => {
           >로그아웃</NavLink>
         </motion.div>)}
         
-      {cookies.accessToken==null && (
+      {sessionStorage.getItem("accessToken")==null && (
         <motion.div
           variants={linkVariants}
           initial="hidden"
@@ -300,7 +297,7 @@ const Menu = () => {
           <NavLink className={styles.menuLink} style={({isActive}) => (isActive ? activeStyle:{})} to={"/user/login"}>로그인</NavLink>
         </motion.div>)}
 
-      {cookies.accessToken==null && (
+      {sessionStorage.getItem("accessToken")==null && (
         <motion.div
           variants={linkVariants}
           initial="hidden"

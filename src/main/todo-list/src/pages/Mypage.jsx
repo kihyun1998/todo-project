@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCookies } from "react-cookie";
 import axios from "axios";
 
 import ProfileInfo from "../components/ProfileInfo";
@@ -18,7 +17,6 @@ const coverStyle = {
 
 const Mypage = ({setIsLoading}) => {
   const [userInfo,setUserInfo] = useState({});
-  const [cookies, setCookie] = useCookies(["accessToken"]);
   const [changingPW, setChangingPW] = useState(false)
 
   const getUserInfo = async() => {
@@ -27,7 +25,7 @@ const Mypage = ({setIsLoading}) => {
     try {
       res = await axios.get(`/api/v1/user/info`, {
         headers: {
-          Authorization: `Bearer ${cookies.accessToken}`
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
         }
       });
       setUserInfo(res.data)

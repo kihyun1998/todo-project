@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { useCookies } from "react-cookie"
 import axios from "axios"
 
 import styles from "../styles/Intro.module.css"
 
 import TodoTable from "../components/TodoTable"
 import Spinner from "../components/Spinner"
-import Loading from "../components/Loading"
 
 const Intro = ({setIsLoading}) => {
-  const [cookies, setCookie] = useCookies(["accessToken"]);
   const [userName, setUserName] = useState("당신");
   const [logined, setLogined] = useState(false);
   const [setting, setSetting] = useState(false);
@@ -20,10 +17,10 @@ const Intro = ({setIsLoading}) => {
   const [todoLists, setTodoLists] = useState([]);
 
   const getMainInfo = async() => {
-    if(cookies.accessToken != null) {
+    if(sessionStorage.getItem("accessToken") != null) {
       try{
         const res = await axios.get("/api/v1/user/main", 
-          {headers:{Authorization: `Bearer ${cookies.accessToken}`}})
+          {headers:{Authorization: `Bearer ${sessionStorage.getItem("accessToken").accessToken}`}})
         setUserName(res.data.userName)
         setMainList(res.data.mainToDoListId)
         setTempMainList(res.data.mainToDoListId)
@@ -35,12 +32,12 @@ const Intro = ({setIsLoading}) => {
   }
 
   const getTodoLists = async() => {
-    if (cookies.accessToken != null) {
+    if (sessionStorage.getItem("accessToken") != null) {
       let res;
       try{
         res = await axios.get("/api/v1/list/lists", {
           headers: {
-            Authorization: `Bearer ${cookies.accessToken}`
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
           }
         });
         setTodoLists(res.data)
@@ -56,7 +53,7 @@ const Intro = ({setIsLoading}) => {
       setLoading(true)
       const res = await axios.put("/api/v1/user/main",
         {mainToDoListId:tempMainList},
-        {headers:{Authorization: `Bearer ${cookies.accessToken}`}}
+        {headers:{Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`}}
       )
       await setMainList(tempMainList)
       getMainInfo();

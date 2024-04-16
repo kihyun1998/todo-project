@@ -1,4 +1,3 @@
-import { useCookies } from "react-cookie";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -9,7 +8,6 @@ import styles from "../styles/TodoTable.module.css"
 import Todo from "./Todo"
 
 const TodoTable = ({listId, reload, setIsLoading}) => {
-  const [cookies] = useCookies(["accessToken"]);
   const [todos, setTodos] = useState([]);
   const [listName, setListName] = useState("");
 
@@ -34,7 +32,7 @@ const TodoTable = ({listId, reload, setIsLoading}) => {
     try{
         res = await axios.get(`/api/v1/list/${listId}/todos`, {
             headers: {
-              Authorization: `Bearer ${cookies.accessToken}`
+              Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
             }
         });
         setListName(res.data.list.listName)

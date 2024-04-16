@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 
 import styled from "styled-components";
 import axios from "axios";
@@ -18,8 +17,6 @@ const StyledDiv = styled.div`
 `
 
 const TodoList = ({ className, listId, text, isEditing, getToDoListData, deleteTodoList }) => {
-  const [cookies, setCookie] = useCookies(["accessToken", "toDoLists"])
-
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [ETitle, setETitle] = useState(text);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -80,7 +77,7 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData, deleteT
       setDeleteLoading(true)
       const res = await axios.delete(`/api/v1/list/${listId}`, {
         headers: {
-          Authorization: `Bearer ${cookies.accessToken}`
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
         }
       });
       deleteTodoList(listId)
@@ -106,7 +103,7 @@ const TodoList = ({ className, listId, text, isEditing, getToDoListData, deleteT
       }, 
       {
         headers: {
-          Authorization: `Bearer ${cookies.accessToken}`
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
         }
       });
       setIsEditingTitle(false);

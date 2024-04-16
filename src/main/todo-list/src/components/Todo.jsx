@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -15,9 +14,6 @@ import Button from "./Button";
 import Input from "./Input";
 
 const Todo = ({listId, todo, getTodos, deleteTodo}) => {
-
-  const [cookies, setCookie] = useCookies(["accessToken"])
-
   const [deadline, setDeadline] = useState(new Date(Date.parse(todo.deadline)))
   const [difficulty, setDifficulty] = useState(todo.difficulty)
   const [estimatedTime, setEstimatedTime] = useState(todo.estimatedTime)
@@ -60,7 +56,7 @@ const Todo = ({listId, todo, getTodos, deleteTodo}) => {
         difficulty,
         importance
       }, {
-        headers: {Authorization: `Bearer ${cookies.accessToken}`}
+        headers: {Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`}
       })
 
       getTodos()
@@ -74,7 +70,7 @@ const Todo = ({listId, todo, getTodos, deleteTodo}) => {
   const _deleteTodo = async() => {
     if(window.confirm("할 일을 삭제하시겠습니까?")){
       const res = await axios.delete(`/api/v1/list/${listId}/${todoId}`, {
-        headers: {Authorization: `Bearer ${cookies.accessToken}`}
+        headers: {Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`}
       })
       if(res.status === 200)
         deleteTodo(todoId)
@@ -89,7 +85,7 @@ const Todo = ({listId, todo, getTodos, deleteTodo}) => {
         status:status===0?1:0
       }, 
       {
-        headers:{Authorization: `Bearer ${cookies.accessToken}`}
+        headers:{Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`}
       })
       getTodos()
       setStatus(pre=>(pre+1)%2)

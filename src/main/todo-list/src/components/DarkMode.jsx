@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { useEffect } from "react"
 
 export default function DarkMode ({darkMode, setDarkMode}) {
-  const [cookies, setCookies] = useCookies()
+  const [cookies, setCookies] = useCookies(["darkMode"])
 
   useEffect(()=>{
     if (cookies.darkMode === "true") {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { useCookies } from 'react-cookie'
 import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 
@@ -18,7 +17,6 @@ import Spinner from "../components/Spinner"
 
 
 const TodoBase = ({setIsLoading}) => {
-    const [cookies, setCookie] = useCookies(["accessToken"]);
     const {listId} = useParams();
 
     const [content, setContent] = useState("")
@@ -75,7 +73,7 @@ const TodoBase = ({setIsLoading}) => {
                 deadline: formattedDate,
             }, {
                 headers : {
-                    Authorization: `Bearer ${cookies.accessToken}`
+                    Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
                 }
             })
             

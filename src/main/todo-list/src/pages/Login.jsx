@@ -11,7 +11,6 @@ import Button from "../components/Button"
 import Spinner from "../components/Spinner"
 
 const Login = () => {
-  const [cookies, setCookie] = useCookies(['accessToken']);
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
@@ -27,7 +26,7 @@ const Login = () => {
       try{
         setLoading(true);
         res = await axios.post("/api/v1/user/login", {loginId:id, loginPw:pw});
-        await setCookie("accessToken", res.data);
+        await sessionStorage.setItem("accessToken", res.data);
         navigate("/");
         setLoading(false);
         
