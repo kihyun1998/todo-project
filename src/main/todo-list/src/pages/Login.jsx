@@ -1,5 +1,4 @@
 import axios from "axios"
-import { useCookies } from 'react-cookie'
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
@@ -25,8 +24,10 @@ const Login = () => {
       let res;
       try{
         setLoading(true);
-        res = await axios.post("/api/v1/user/login", {loginId:id, loginPw:pw});
-        await sessionStorage.setItem("accessToken", res.data);
+        res = await axios.post("/api/v1/user/login", {loginId:id, loginPw:pw}, {headers: {
+          'Content-Type': 'application/json'
+        }});
+        sessionStorage.setItem("accessToken", res.data);
         navigate("/");
         setLoading(false);
         

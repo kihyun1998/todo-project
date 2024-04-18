@@ -8,6 +8,7 @@ import styles from "../styles/Menu.module.css";
 
 import TodoList from "../components/TodoList";
 import Spinner from "../components/Spinner";
+import { logout } from "../functions/auth";
 
 const ToDoListInput = styled.input`
   margin-left: 35px;
@@ -33,12 +34,6 @@ const Menu = () => {
   const linkVariants = {
     hidden:{opacity:0},
     show:{opacity: menuExpended ? 1:0, transition:{delay: menuExpended ? 0.2:0}},
-  }
-
-  const logout = () => {
-    sessionStorage.removeItem("accessToken")
-    alert("로그아웃 되었습니다.")
-    window.location.href="/"
   }
 
   const onChangeToDoListName = (e) => setToDoListName(e.target.value);
@@ -283,7 +278,7 @@ const Menu = () => {
           <NavLink 
             className={styles.menuLink} 
             onClick={()=>{
-              logout()
+              logout();
             }}
           >로그아웃</NavLink>
         </motion.div>)}

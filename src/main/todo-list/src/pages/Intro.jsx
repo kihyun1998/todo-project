@@ -18,15 +18,16 @@ const Intro = ({setIsLoading}) => {
 
   const getMainInfo = async() => {
     if(sessionStorage.getItem("accessToken") != null) {
-      try{
+      try {
         const res = await axios.get("/api/v1/user/main", 
-          {headers:{Authorization: `Bearer ${sessionStorage.getItem("accessToken").accessToken}`}})
-        setUserName(res.data.userName)
-        setMainList(res.data.mainToDoListId)
-        setTempMainList(res.data.mainToDoListId)
+          {headers:{Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`}})
+
+        setUserName(res.data.userName);
+        setMainList(res.data.mainToDoListId);
+        setTempMainList(res.data.mainToDoListId);
         setLogined(true);
-      } catch(e) {
-        console.log(e)
+      } catch(err) {
+        console.log(err)
       }
     }
   }
@@ -55,7 +56,7 @@ const Intro = ({setIsLoading}) => {
         {mainToDoListId:tempMainList},
         {headers:{Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`}}
       )
-      await setMainList(tempMainList)
+      setMainList(tempMainList)
       getMainInfo();
       setLoading(false)
       setSetting(false)
