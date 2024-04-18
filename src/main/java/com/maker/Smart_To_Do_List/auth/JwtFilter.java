@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -39,9 +40,8 @@ public class JwtFilter extends OncePerRequestFilter {
         // get Token
         String token = authorization.split(" ")[1];
 
-        // Token 만류 여부 확인
+        // Token 검증
         if(JwtUtil.isExpired(token,secretKey)){
-            log.error("Token has expired !!");
             filterChain.doFilter(request,response);
             return ;
         }

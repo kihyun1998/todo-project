@@ -3,6 +3,7 @@ package com.maker.Smart_To_Do_List.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maker.Smart_To_Do_List.dto.JoinRequest;
 import com.maker.Smart_To_Do_List.dto.LoginRequest;
+import com.maker.Smart_To_Do_List.dto.TokenDto;
 import com.maker.Smart_To_Do_List.enums.Gender;
 import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.exception.ErrorCode;
@@ -93,7 +94,7 @@ class UserControllerTest {
         String loginPw = "password";
 
         when(userService.login(any(),any()))
-                .thenReturn("token");
+                .thenReturn(new TokenDto());
 
         mockMvc.perform(post("/api/v1/users/login")
                         .with(csrf())

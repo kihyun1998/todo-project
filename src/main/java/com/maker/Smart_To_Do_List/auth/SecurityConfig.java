@@ -30,13 +30,14 @@ public class SecurityConfig {
                     .cors()
                 .and() // cors 허용
                     .authorizeRequests()
-                        .antMatchers("/api/v1/user/join","/api/v1/user/join/id","/api/v1/user/join/username","/api/v1/user/login").permitAll() // 토큰 없이 허용
-                        .antMatchers(HttpMethod.POST,"/api/v1/**").authenticated() // 토큰 받아야 허용
+                    .antMatchers("/api/v1/user/join","/api/v1/user/join/id","/api/v1/user/join/username","/api/v1/user/login", "/api/v1/user/refresh").permitAll() // 토큰 없이 허용
+                    .antMatchers(HttpMethod.POST,"/api/v1/**").authenticated() // 토큰 받아야 허용
+
                 .and()
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //jwt 사용할 때 씀
                 .and()
                     .addFilterBefore(new JwtFilter(userService,secretKey), UsernamePasswordAuthenticationFilter.class)
-                    .build();
+                .build();
     }
 }

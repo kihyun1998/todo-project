@@ -9,11 +9,13 @@ import com.maker.Smart_To_Do_List.exception.ErrorCode;
 import com.maker.Smart_To_Do_List.mapper.UserMapper;
 import com.maker.Smart_To_Do_List.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import com.maker.Smart_To_Do_List.auth.JwtUtil;
 
+import javax.naming.AuthenticationException;
 import java.util.UUID;
 
 
@@ -25,13 +27,8 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
     private final VerificationService verificationService;
 
-
-    // application.properties 내에 정의된 jwt.secret 코드
     @Value("${jwt.secret}")
     private String secretKey;
-
-    // Access Token 만료 시간 (ms)
-    private Long expireTimeMs = 1000 * 60 * 24 * 60l;
 
     /**
      [join]:        신규 유저의 회원가입 서비스
@@ -85,9 +82,9 @@ public class UserService {
      loginId:   로그인 아이디
      loginPw:   로그인 패스워드
 
-     return:    Access Token (String)
+     return:    TokenDto
      **/
-    public String login(String loginId, String loginPw){
+    public TokenDto login(String loginId, String loginPw){
         // 로그인 아이디(loginId)를 통해 유저 조회
         User selectedUser = verificationService.foundUserByLoginId(loginId);
 
@@ -95,7 +92,7 @@ public class UserService {
         verificationService.checkPassword(loginPw,selectedUser);
 
         // Token 생성
-        return JwtUtil.createToken(selectedUser.getLoginId() ,secretKey ,expireTimeMs);
+        return JwtUtil.createTokenDto(selectedUser.getLoginId(), secretKey);
     }
 
     /**
@@ -182,5 +179,18 @@ public class UserService {
         
         // DB에 저장
         return userRepository.save(updateUser);
+    }
+
+    /**
+     [AuthenticationException]:  AccessToken이 만료됐을 때 RefreshToken으로 AccessToken을 재발급하는 서비스
+     refreshToken:               RefreshToken
+
+     return:                    AccessToken
+     **/
+    public String refresh(String refreshToken) {
+        JwtUtil.isExpired(refreshToken, secretKey);
+        String accessToken = JwtUtil.createAccessToken(JwtUtil.getLoginId(refreshToken, secretKey), secretKey);
+
+        return accessToken;
     }
 }

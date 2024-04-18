@@ -3,16 +3,21 @@ package com.maker.Smart_To_Do_List.controller;
 
 import com.maker.Smart_To_Do_List.domain.User;
 import com.maker.Smart_To_Do_List.dto.*;
+import com.maker.Smart_To_Do_List.exception.AppException;
 import com.maker.Smart_To_Do_List.service.JwtService;
 import com.maker.Smart_To_Do_List.service.ListService;
 import com.maker.Smart_To_Do_List.service.UserService;
 import com.maker.Smart_To_Do_List.service.VerificationService;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -96,18 +101,24 @@ public class UserController {
 
      * Response
      HTTP Status:   200 (OK)
-     String:        Access Token ([수정할 사항]  Refresh Token구현이 되면, Token Dto를 새로 만들어야 할 듯)
+     TokenDto:      AccessToken, RefreshToken
      **/
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginDto){
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginDto, HttpServletResponse response){
 
         // 로그인 서비스
-        String token = userService.login(
+        TokenDto tokenDto = userService.login(
                 loginDto.getLoginId(),
                 loginDto.getLoginPw()
         );
 
-        return ResponseEntity.ok().body(token);
+        Cookie cookie = new Cookie("refreshToken", tokenDto.getRefreshToken());
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
+
+        return new ResponseEntity<>(tokenDto.getAccessToken(), HttpStatus.OK);
     }
 
     /**
@@ -124,6 +135,9 @@ public class UserController {
     public ResponseEntity<?> getInfo(HttpServletRequest request){
         // 요청 헤더에 담긴 Access Token을 통해 유저 조회
         User user = jwtService.getUser(request);
+
+        request.getCookies();
+
 
         // 조회된 유저에서 유저 정보를 추출해 Dto로 생성
         UserInfoDto userDto = userService.getInfo(user);
@@ -232,5 +246,34 @@ public class UserController {
                 changeMainListId);
 
         return new ResponseEntity<>(updateUser.getMainToDoListId(), HttpStatus.OK);
+    }
+
+    /**
+     * GET
+     [refresh]:             AccessToken 재발급 API
+
+     request:               요청
+
+     * Response
+     HTTP Status:           200 (OK)
+     String:                AccessToken
+     **/
+    @GetMapping("/refresh")
+    public ResponseEntity<String> refresh(HttpServletRequest request) throws AuthenticationException {
+        Cookie[] cookies = request.getCookies();
+
+        String cookieValue = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("refreshToken")) {
+                    cookieValue = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        String accessToken = userService.refresh(cookieValue);
+
+        return new ResponseEntity<>(accessToken, HttpStatus.OK);
     }
 }
